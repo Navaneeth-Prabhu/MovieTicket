@@ -1,0 +1,115 @@
+/* #app { height: 100% }
+html,
+body {
+  position: relative;
+  height: 100%;
+} */
+
+/* body {
+  background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+} */
+
+
+.swiper {
+  width: 100%;
+  /* height: 500px; */
+  margin-bottom: 100px;
+}
+
+.swiper-slide {
+  /* text-align: center; */
+  font-size: 18px;
+  /* background: #fff; */
+  margin-bottom: 100px;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cardContent{
+    padding-top: 1rem;
+    line-height: 1rem;
+
+  }
+  
+  .cardContent .title{
+    color: white;
+    font-size: 16px;
+    margin-bottom: 1rem;
+    font-weight: 400;
+  }
+  .description{
+    color: gray;
+    font-size: 12px;
+  }
+
+
+  @media only screen and (max-width: 870px) {
+    .swiper-button-prev,
+    .swiper-button-next{
+        display: none !important;
+      }
+      .section{
+        padding: 0 3rem !important;
+    }
+    
+  }
+  @media only screen and (max-width: 860px) {
+
+    
+  }
+
+  .swiper-button-prev {
+    background-image: url(../../../images/prev.png);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+    background-color: rgb(128, 128, 128);
+    /* border-radius: 10rem; */
+    height: 10px;
+    width: 10px;
+    left: 7px !important;
+  }
+  .swiper-button-next {
+
+    background-image: url(../../../images/next.png);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+    background-color: rgb(128, 128, 128);
+    /* border-radius: 8rem; */
+    /* right: 7rem; */
+    /* color: red; */
+    height: 10px;
+    width: 10px;
+    right: 0px !important;
+  }
+
+  .swiper-button-prev::after {
+    display: none;
+  }
+  .swiper-button-next::after {
+    display: none;
+  }
