@@ -1,8 +1,21 @@
 const { Adminlogin , addStaff,getStaff,blockStaff,unblockStaff,TheaterList,approve,reject} = require("../Controllers/AdminControllers")
-const {addMovieInfo} = require("../Controllers/MovieControllers")
+const {addMovieInfo ,addmovie} = require("../Controllers/MovieControllers")
 const router = require("express").Router();
 
+const multer = require("multer");
 
+const storage = multer.diskStorage({
+    destination: "./public/movies/",
+    filename: (req, file, cb) => {
+      console.log(req.params.id)
+      req.imageName = `${req.params.id}.jpg`;
+      cb(null, req.imageName);
+    },
+  });
+  
+  const upload = multer({
+    storage: storage,
+  });
 
 router.post("/")
 
@@ -17,6 +30,7 @@ router.get('/rejectTheater/:id',reject)
 
 
 router.post("/movieinfo", addMovieInfo);
+router.post("/movieImage/upload/:id", upload.single("image"), addmovie);
 // router.get("/api/users/movieInfo",movieInfo)
 
 module.exports = router

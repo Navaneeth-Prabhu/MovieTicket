@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const TheaterRoutes = require("./Routes/TheaterRoutes")
 const cookieParser = require("cookie-parser")
 const AdminRoute = require('./Routes/AdminRoutes')
+const UserRoute = require('./Routes/UserRoutes')
 const app = express();
 
 app.listen(3001, ()=>{
@@ -27,3 +28,4 @@ app.use(cookieParser())
 app.use(express.json())
 app.use("/theater",TheaterRoutes)
 app.use('/admin',AdminRoute)
+app.use('/',UserRoute)
