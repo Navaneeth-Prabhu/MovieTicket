@@ -5,6 +5,7 @@ import "swiper/css/bundle";
 import "react-toastify/dist/ReactToastify.css"
 
 function App() {
+
   return (
     <BrowserRouter>
       <Routes />

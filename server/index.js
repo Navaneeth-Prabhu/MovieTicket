@@ -20,7 +20,7 @@ mongoose.connect("mongodb://localhost:27017/TicketBooking",{
 
 app.use(cors({
     origin:["http://localhost:3000"],
-    method:["GET","POST","PATCH","PUT"],
+    method:"*",
     credentials:true,
 }))
 app.use(cookieParser())

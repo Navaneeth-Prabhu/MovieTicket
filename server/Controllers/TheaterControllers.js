@@ -42,13 +42,7 @@ module.exports.register = async (req, res, next) => {
   try {
     const { email, password,name,theater,city,address,state } = req.body;
     const user = await User.create({ email, password,name,theater,city,address,state });
-    const token = createToken(user._id);
 
-    res.cookie("jwt", token, {
-      withCredentials: true,
-      httpOnly: false,
-      maxAge: maxAge * 1000,
-    });
 
     res.status(201).json({ user: user._id, created: true });
   } catch (err) {

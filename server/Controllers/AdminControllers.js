@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 // const Application = require("../models/ApplicationModels")
 // const Admin = require("../models/AdminModels");
 const { response } = require("express");
+// const { default: Movie } = require("../../client/src/pages/Admin/Movies");
 const { ObjectId } = require("mongoose").Types;
 
 const maxAge = 1 * 24 * 60 * 60;
@@ -39,36 +40,64 @@ const handleErrors = (err) => {
   return errors;
 };
 
+// module.exports.Adminlogin = async(req,res,next)=> {
+
+//     try {
+//         // console.log("admin",req.body);
+//         const {email,password}=req.body;
+//         console.log(req.body);
+//         const admin = await Admin.findOne({email,password});
+//         console.log("aa",admin);
+//         if(!admin.block){
+//             // console.log("helooooooooooooooooooooooooooooooooooo");
+
+//             const token = createToken(admin._id);
+
+//             res.cookie("jwt",token,{
+//                 withCrdentials:true,
+//                 httpOnly:false,
+//                 message:maxAge * 1000,
+//             })
+//             res.status(200).json({admin:admin._id,created:true})
+//         }else{
+//             console.log("blocked")
+
+//             res.json({errors:"blocked",created:false})
+//         }
+//     } catch (err) {
+//         // console.log(err.message);
+//         const errors = handleErrors(err)
+//         console.log("errrr",errors);
+//         res.json({errors,created:false})
+//     }
+// };
 module.exports.Adminlogin = async(req,res,next)=> {
 
-    try {
-        // console.log("admin",req.body);
-        const {email,password}=req.body;
-        console.log(req.body);
-        const admin = await Admin.findOne({email,password});
-        console.log("aa",admin);
-        if(!admin.block){
-            // console.log("helooooooooooooooooooooooooooooooooooo");
+  try {
+      const {email,password}=req.body;
+      const user = await Admin.login(email,password);
+      console.log("aaaaaaaaaaa",user);
+      if(!user.Block){
 
-            const token = createToken(admin._id);
-
-            res.cookie("jwt",token,{
-                withCrdentials:true,
-                httpOnly:false,
-                message:maxAge * 1000,
-            })
-            res.status(200).json({admin:admin._id,created:true})
-        }else{
-            console.log("blocked")
-
-            res.json({errors:"blocked",created:false})
-        }
-    } catch (err) {
-        // console.log(err.message);
-        const errors = handleErrors(err)
-        console.log("errrr",errors);
-        res.json({errors,created:false})
-    }
+          const token = createToken(user._id);
+  
+          res.cookie("jwt",token,{
+              withCrdentials:true,
+              httpOnly:false,
+              message:maxAge * 1000,
+          })
+          res.status(200).json({user:user._id,created:true})
+      }else{
+          console.log("blocked")
+                 
+          res.json({errors:"blocked",created:false})
+      }
+  } catch (err) {
+      // console.log(err.message);
+      const errors = handleErrors(err)
+      console.log("errrr",errors);
+      res.json({errors,created:false})
+  }
 };
 
 // module.exports.Adminlogin = async (req, res) => {
@@ -153,11 +182,12 @@ module.exports.approve = async (req, res) => {
     const user = await Theater.findByIdAndUpdate(
       { _id: ObjectId(id) },
       { $set: { isApproved: true } }
-    );
+    ); 
 
     res.json(user);
   } catch (err) {
     console.log(err);
+    //try later 
   }
 };
 module.exports.reject = async (req, res) => {
@@ -175,3 +205,12 @@ module.exports.reject = async (req, res) => {
     console.log(err);
   }
 };
+
+// module.exports.movieInfo = async(req,res)=>{
+//   try {
+//     const movie = await Movie.find({})
+//     res.json(movie)
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }

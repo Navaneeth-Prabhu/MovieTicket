@@ -7,14 +7,16 @@ import Slide from '../../components/User/Slider2'
 
 
 
+
 function Home() {
   return (
    <>
+
    <Navbar/>
 
    <Banner/>
 
-   <MovieRow/>
+  
    <Slider/>
 
    <Slide/>

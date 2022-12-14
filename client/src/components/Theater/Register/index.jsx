@@ -29,7 +29,7 @@ function Index() {
                   if (email) generateError(email);
                   else if (password) generateError(password);
                 } else {
-                  navigate("/theater");
+                  navigate("/theater/login");
                 }
               }
         }catch(err) {

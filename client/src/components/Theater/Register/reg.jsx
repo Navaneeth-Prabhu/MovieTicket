@@ -55,7 +55,8 @@ export default function SignUp() {
                   if (email) generateError(email);
                   else if (password) generateError(password);
                 } else {
-                  navigate("/theater");
+                  console.log();
+                  navigate("/theater/login");
                 }
               }
         }catch(err) {

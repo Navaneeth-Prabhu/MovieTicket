@@ -22,13 +22,14 @@ export default function Slider() {
   return (
     <>
     <div className="section">
-    <h1>helo</h1>
+    <h2 className="head"> Streming now </h2>
     {/* <div className="cards"> */}
 
       <Swiper
-        slidesPerView={4.5}
+        slidesPerView={5}
         spaceBetween={30}
-        slidesPerGroup={4.5}
+        slidesPerGroup={5}
+        speed={600}
         pagination={{
           clickable: false,
         }}
@@ -53,8 +54,8 @@ export default function Slider() {
                 spaceBetween:15
             },
             1240:{
-              slidesPerGroup:4.5,
-                slidesPerView:4.5,
+              slidesPerGroup:5,
+                slidesPerView:5,
                 spaceBetween:5
             }
         }}

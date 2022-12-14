@@ -1,13 +1,13 @@
 import React from "react";
 import "./index.css";
 
-function index() {
+function Index() {
   return (
     <>
       <div className="movieBanner">
         <div className="overlay">
           <div className="gradient">
-            <img src={require("../../../images/1508269.jpg")} alt="" />
+            <img src={require("../../../images/Rectangle 2.jpg")} alt="" />
           </div>
         </div>
       </div>
@@ -18,4 +18,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;

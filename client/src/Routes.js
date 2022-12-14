@@ -28,7 +28,7 @@ function Routess() {
 
     
         <Route exact path ="/" element = {<Userhome/>} />
-        <Route exact path ="/details" element = {<Details/>} />
+        <Route exact path ="/moviedetails" element = {<Details/>} />
 
 
 
@@ -43,11 +43,11 @@ function Routess() {
         <Route exact path="/admin" element={<Dashboard />} />
         <Route exact path="/admin/login" element={<AdminLogin />} />    
         <Route exact path="/admin/addstaff" element={<AddStaff />} />  
+        <Route exact path="/admin/theater" element={<Theater />} />  
         <Route exact path="/admin/movies" element={<Movie />} />
         <Route exact path="/admin/movies/addMovies" element={<AddMovies />} />  
-        <Route exact path="/admin/theater" element={<Theater />} />  
-        {/* <Route exact path="/admin/staff" element={<Staff />} />     */}
-        {/* <Route exact path="/admin/dashboard" element={<AdminDashboard />} />  */}
+      
+
        
       </Routes>
     // </BrowserRouter> 

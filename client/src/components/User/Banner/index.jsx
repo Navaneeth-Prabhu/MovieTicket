@@ -1,7 +1,7 @@
 import React from "react";
 import './index.css'
 
-function index() {
+function Index() {
   return (
     <div className="gradient">
       <div className="overlay">
@@ -22,4 +22,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;

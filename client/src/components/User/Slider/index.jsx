@@ -10,11 +10,11 @@ export default class Responsive extends Component {
       dots: true,
       infinite: false,
       speed: 500,
-      slidesToShow: 4.5,
-      slidesToScroll: 4.5,
+      slidesToShow: 5,
+      slidesToScroll: 5,
       initialSlide: 0,
-      sliderPerView:4.5,
-      slidesPerGroup:4.5,
+      // sliderPerView:4.5,
+      // slidesPerGroup:4.5,
       
       // swipe:false,
       responsive: [
@@ -58,7 +58,7 @@ export default class Responsive extends Component {
     };
     return (
       <div className="section">
-        <h2 className="head"> Responsive </h2>
+        <h2 className="head"> Upcoming </h2>
         <Slider {...settings}>
           <div className="card" >
             <div className="cardImage">
