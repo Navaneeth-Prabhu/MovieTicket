@@ -14,6 +14,7 @@ function Index() {
         <div className="moviePoster">
           <img src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")} alt="" />
         </div>
+        
     </>
   );
 }

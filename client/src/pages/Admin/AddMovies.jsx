@@ -20,7 +20,7 @@ function AddMovies() {
             <SideBar />
             <main className="content">
               <Topbar></Topbar>
-              <AddMoviess/>
+              {/* <AddMoviess/> */}
               <AddMovie/>
             </main>
           </div>

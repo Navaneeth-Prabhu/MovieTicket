@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 // Import Swiper styles
 import "swiper/css";
@@ -15,10 +16,30 @@ import { Pagination, Navigation } from "swiper";
 
 export default function Slider() {
   const navigate = useNavigate();
+  const [data, setData] = useState([]);
 
   const details = () => {
     navigate("/detials")
   };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/movieInfo")
+      .then(({ data }) => {
+        console.log(data);
+        setData(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const [width, setWidth] = useState(window.innerWidth);
+  const updateWidth = () => {
+    setWidth(window.innerWidth);
+  };
+
+
   return (
     <>
     <div className="section">
@@ -27,7 +48,7 @@ export default function Slider() {
 
       <Swiper
         slidesPerView={5}
-        spaceBetween={30}
+        spaceBetween={5}
         slidesPerGroup={5}
         speed={600}
         pagination={{
@@ -61,165 +82,29 @@ export default function Slider() {
         }}
       >
         <SwiperSlide>
+
           {" "}
+          {data.map((movie) => (
+        
+     
           <div className="card" onClick={details}>
             <div className="cardImage">
               <img
-                src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
+                src={`https://aws-movieticket-bucket.s3.amazonaws.com/${movie._id}.jpg`}
+                // src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
                 alt=""
               />
             </div>
             <div className="cardContent">
-              <p className="title">Avatar: The Way of Water</p>
-              <p className="description">fffff</p>
+              <p className="title">{movie.title}</p>
+              {/* <p className="title">{m}</p> */}
+              <p className="description">{movie.Genre}</p>
               <p className="description">asdfasdf</p>
             </div>
           </div>
+           ))}
         </SwiperSlide>
-        <SwiperSlide>
-          {" "}
-          <div className="card">
-            <div className="cardImage">
-              <img
-                src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
-                alt=""
-              />
-            </div>
-            <div className="cardContent">
-              <p className="title">Avatar: The Way of Water</p>
-              <p className="description">fff</p>
-              <p className="description">asdfasdf</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          {" "}
-          <div className="card">
-            <div className="cardImage">
-              <img
-                src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
-                alt=""
-              />
-            </div>
-            <div className="cardContent">
-              <p className="title">Avatar: The Way of Water</p>
-              <p className="description">fff</p>
-              <p className="description">asdfasdf</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          {" "}
-          <div className="card">
-            <div className="cardImage">
-              <img
-                src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
-                alt=""
-              />
-            </div>
-            <div className="cardContent">
-              <p className="title">Avatar: The Way of Water</p>
-              <p className="description">fff</p>
-              <p className="description">asdfasdf</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          {" "}
-          <div className="card">
-            <div className="cardImage">
-              <img
-                src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
-                alt=""
-              />
-            </div>
-            <div className="cardContent">
-              <p className="title">Avatar: The Way of Water</p>
-              <p className="description">fff</p>
-              <p className="description">asdfasdf</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          {" "}
-          <div className="card">
-            <div className="cardImage">
-              <img
-                src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
-                alt=""
-              />
-            </div>
-            <div className="cardContent">
-              <p className="title">Avatar: The Way of Water</p>
-              <p className="description">fff</p>
-              <p className="description">asdfasdf</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          {" "}
-          <div className="card">
-            <div className="cardImage">
-              <img
-                src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
-                alt=""
-              />
-            </div>
-            <div className="cardContent">
-              <p className="title">Avatar: The Way of Water</p>
-              <p className="description">fff</p>
-              <p className="description">asdfasdf</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          {" "}
-          <div className="card">
-            <div className="cardImage">
-              <img
-                src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
-                alt=""
-              />
-            </div>
-            <div className="cardContent">
-              <p className="title">Avatar: The Way of Water</p>
-              <p className="description">fff</p>
-              <p className="description">asdfasdf</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          {" "}
-          <div className="card">
-            <div className="cardImage">
-              <img
-                src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
-                alt=""
-              />
-            </div>
-            <div className="cardContent">
-              <p className="title">Avatar: The Way of Water</p>
-              <p className="description">fff</p>
-              <p className="description">asdfasdf</p>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          {" "}
-          <div className="card">
-            <div className="cardImage">
-              <img
-                src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
-                alt=""
-              />
-            </div>
-            <div className="cardContent">
-              <p className="title">Avatar: The Way of Water</p>
-              <p className="description">fff</p>
-              <p className="description">asdfasdf</p>
-            </div>
-          </div>
-        </SwiperSlide>
+       
       </Swiper>
     {/* </div> */}
     </div>

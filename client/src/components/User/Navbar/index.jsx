@@ -1,16 +1,18 @@
-
- /* eslint-disable */
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
-import Modal from "../Register";
+// import Dropdown from "react-bootstrap/Dropdown";
+import Modal from "../Register/index";
 import "./index.css";
 
 function Navbar({ user }) {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+
+  const logout = () => {
+    window.open("http://localhost:3001/auth/logout", "_self");
+  };
 
   const handleNav = () => {
     setClick(!click);
@@ -59,21 +61,34 @@ function Navbar({ user }) {
                 Stream
               </Link>
             </li>
+
+            {user ? (
+              <li className="nav-item">
+                <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+                  <Dropdown>
+                    <Dropdown.Toggle variant="success">
+                      {user.displayName}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Link>
+              </li>
+            ) : (
+              <li  className="nav-item">
+                {button && (
+                  <li className="nav-links">
+                    <Modal
+                      open={openModal}
+                      onClose={() => setOpenModal(false)}
+                    />
+                  </li>
+                )}
+              </li>
+            )}
           </ul>
-          {user ? (
-            <>
-              <li className="listItem">{user.displayName}</li>
-              <li className="listItem" ></li>
-            </>
-          ) : (
-            <>
-              {button && (
-                <>
-                  <Modal open={openModal} onClose={() => setOpenModal(false)} />
-                </>
-              )}
-            </>
-          )}
         </div>
       </div>
     </>

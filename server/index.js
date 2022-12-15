@@ -5,7 +5,20 @@ const TheaterRoutes = require("./Routes/TheaterRoutes")
 const cookieParser = require("cookie-parser")
 const AdminRoute = require('./Routes/AdminRoutes')
 const UserRoute = require('./Routes/UserRoutes')
+const authRouter = require('./Routes/auth')
 const app = express();
+
+const passport = require("passport");
+const passportsetup = require('./passport')
+const cookieSession = require("cookie-session");
+
+
+
+app.use(
+    cookieSession({ name: "session", keys: ["justin"], maxAge: 24 * 60 * 60 * 1000 })
+  );
+  app.use(passport.initialize());
+  app.use(passport.session());
 
 app.listen(3001, ()=>{
 console.log("server started");
@@ -29,3 +42,4 @@ app.use(express.json())
 app.use("/theater",TheaterRoutes)
 app.use('/admin',AdminRoute)
 app.use('/',UserRoute)
+app.use('/auth',authRouter)

@@ -63,7 +63,7 @@ export default class Responsive extends Component {
           <div className="card" >
             <div className="cardImage">
               <img
-                src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
+                src={"../../../images/Everything_Everywhere_All_at_Once.jpg"}
                 alt=""
               />
             </div>

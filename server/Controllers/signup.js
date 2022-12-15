@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../Models/UserModel");
-const { generateToken } = require("../../utils/generatetoken");
+const { generateToken } = require("./generateToken");
 
 const handleErrors = (err) => {
   let errors = { email: "", password: "" };
