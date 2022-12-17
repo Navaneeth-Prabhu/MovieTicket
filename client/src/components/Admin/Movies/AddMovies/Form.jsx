@@ -28,6 +28,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 
+// import './index.css'
+
 const ErrorText = ({ children, ...props }) => (
   <Typography sx={{ color: "error.main" }} {...props}>
     {children}
@@ -41,14 +43,16 @@ const validFileTypes = ["image/jpg", "image/jpeg", "image/png"];
 const URL = "/api/admin/movieImage/upload";
 
 export default function FormMovie() {
-  const [error, setError] = useState("");
-  const [isSubmit, setIsSubmit] = useState(false);
+  // const [error, setError] = useState("");
+  // const [isSubmit, setIsSubmit] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  console.log("asdfadfasdfasdf",errors);
 
   const onSubmit = async (data) => {
     console.log("helo", data);
@@ -76,16 +80,15 @@ export default function FormMovie() {
       });
   };
 
-  const generateError = (error) =>
-    toast.error(error, {
-      position: "bottom-right",
-    });
+  // const generateError = (error) =>
+  //   toast.error(error, {
+  //     position: "bottom-right",
+  //   });
 
   return (
     <ThemeProvider>
-      <Container component="main" maxWidth="xm">
+      <Container component="main" maxWidth="xm" color="secondary">
         {/* <CssBaseline /> */}
-
         <Typography component="h1" variant="h5">
           AddMovie
         </Typography>
@@ -97,7 +100,10 @@ export default function FormMovie() {
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
               <Grid item lg={6} xs={12}>
+                <div>
+
                 <TextField
+                className="focus"
                   variant="filled"
                   label="Name"
                   color="secondary"
@@ -111,6 +117,21 @@ export default function FormMovie() {
                     pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
                   })}
                 />
+                <span className="text-danger">
+                  {errors.name?.type === "required" && (
+                    <span>name is required</span>
+                  )}
+                  {errors.name?.type === "minLength" && (
+                    <span>name must morethan or equal to 4 Character</span>
+                  )}
+                  {errors.name?.type === "maxLength" && (
+                    <span>name must less than 20 Character</span>
+                  )}
+                  {errors.name?.type === "pattern" && (
+                    <span>Should not have spaces</span>
+                  )}
+                </span>
+                </div>
               </Grid>
               <Grid item xs={12} lg={6}>
                 <TextField
@@ -128,7 +149,7 @@ export default function FormMovie() {
                     pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
                   })}
                 />
-                <span className="text-danger">
+                <span className="text-danger" color="secondary" >
                   {errors.name?.type === "required" && (
                     <span>name is required</span>
                   )}
@@ -246,7 +267,7 @@ export default function FormMovie() {
                 </Button>
                 <span className="text-danger"></span>
                 {/* {error && <ErrorText>{error}</ErrorText>} */}
-                {/* {uploadError && <ErrorText>{uploadError}</ErrorText>} */}
+               
               </Grid>
             </Grid>
 

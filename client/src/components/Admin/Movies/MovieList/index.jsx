@@ -81,7 +81,7 @@ function Movies() {
 
   useEffect(() => {
     axios
-      .get("/api/users/movieInfo")
+      .get("/movieInfo")
       .then(({ data }) => {
         console.log(data);
         setData(data);

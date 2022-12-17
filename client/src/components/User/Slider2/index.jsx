@@ -19,7 +19,7 @@ export default function Slider() {
   const [data, setData] = useState([]);
 
   const details = () => {
-    navigate("/detials")
+    navigate("/moviedetails")
   };
 
   useEffect(() => {

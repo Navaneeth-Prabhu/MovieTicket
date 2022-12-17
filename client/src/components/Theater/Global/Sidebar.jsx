@@ -117,8 +117,8 @@ function SideBar() {
             setSelected={setSelected}
           />
           <Item
-            title="Theaters"
-            to="/theater"
+            title="Screen"
+            to="screen"
             icon={<LocalMoviesIcon />}
             selected={selected}
             setSelected={setSelected}

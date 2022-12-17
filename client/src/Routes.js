@@ -18,6 +18,8 @@ import Details from './pages/User/MovieDetials';
 import Theaterhome from './pages/Theater/Home'
 import TheaterLogin from './pages/Theater/Login'
 import TheaterReg from './pages/Theater/Reg'
+import TheaterScreen from './pages/Theater/Screen'
+import AddTheaterscreen from './pages/Theater/addScreen'
 
 
 function Routess() {
@@ -36,6 +38,8 @@ function Routess() {
         <Route exact path ="/theater" element = {<Theaterhome/>} />
         <Route exact path ="/theater/login" element = {<TheaterLogin/>} />
         <Route exact path ="/theater/reg" element = {<TheaterReg/>} />
+        <Route exact path ="/theater/screen" element = {<TheaterScreen/>} />
+        <Route exact path ="/theater/addScreen" element = {<AddTheaterscreen/>} />
         
 
 

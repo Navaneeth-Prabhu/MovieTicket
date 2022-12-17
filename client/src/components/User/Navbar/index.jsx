@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-// import Dropdown from "react-bootstrap/Dropdown";
+import Dropdown from "react-bootstrap/Dropdown";
 import Modal from "../Register/index";
 import "./index.css";
 

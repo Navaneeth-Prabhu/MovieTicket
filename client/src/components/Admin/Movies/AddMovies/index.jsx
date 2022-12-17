@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 
-import "./index.css";
+// import "./index.css";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@mui/icons-material";
