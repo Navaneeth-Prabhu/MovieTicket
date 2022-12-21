@@ -11,7 +11,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useState, useEffect } from "react";
 // import axios from "../../../axios/axios";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -35,16 +35,15 @@ const ErrorText = ({ children, ...props }) => (
     {children}
   </Typography>
 );
-// const multer = require("multer");
-// const upload = multer({ dest: "uploads/" });
+
 
 
 const validFileTypes = ["image/jpg", "image/jpeg", "image/png"];
 const URL = "/api/admin/movieImage/upload";
 
 export default function FormMovie() {
-  // const [error, setError] = useState("");
-  // const [isSubmit, setIsSubmit] = useState(false);
+
+ const navigate = useNavigate()
 
   const {
     register,
@@ -55,7 +54,7 @@ export default function FormMovie() {
   console.log("asdfadfasdfasdf",errors);
 
   const onSubmit = async (data) => {
-    console.log("helo", data);
+    console.log("asdfasdfasdf", data);
     const formData = new FormData();
 
     
@@ -74,6 +73,7 @@ export default function FormMovie() {
           .then(({ data }) => {
             console.log(data);
           });
+          navigate("/admin/movies")
       })
       .catch((error) => {
         console.log(error);
@@ -140,12 +140,13 @@ export default function FormMovie() {
                   color="secondary"
                   focused
                   fullWidth
+                  type={'text'}
                   multiline
                   margin="normal"
                   {...register("description", {
                     required: true,
                     minLength: 4,
-                    maxLength: 20,
+                    maxLength: 100,
                     pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
                   })}
                 />
@@ -236,7 +237,7 @@ export default function FormMovie() {
                   {...register("youtubeLink", {
                     required: true,
                     minLength: 4,
-                    maxLength: 20,
+                    maxLength: 100,
                     pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
                   })}
                 />

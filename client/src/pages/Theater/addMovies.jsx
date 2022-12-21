@@ -1,6 +1,6 @@
 import React from 'react'
-import AddScreen from '../../components/Theater/Screens/AddScreen'
-import ShowScreen from '../../components/Theater/Screens/ShowScreen'
+// import AddScreen from '../../components/Theater/Screens/AddScreen'
+import AddShow from '../../components/Theater/Screens/addMovieShows'
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../../thems";
 import Topbar from "../../components/Theater/Global/Topbar";
@@ -21,8 +21,8 @@ function AddTheaterscreen() {
             <SideBar />
             <main className="content">
               <Topbar></Topbar>
-        {/* <ShowScreen/> */}
-              <AddScreen/>
+        <AddShow/>
+             
             </main>
           </div>
         </ProSidebarProvider>

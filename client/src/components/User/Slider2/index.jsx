@@ -60,9 +60,9 @@ export default function Slider() {
         clickable={true}
         breakpoints={{
             0:{
-                slidesPerView:1.5,
+                slidesPerView:2,
                 spaceBetween:5,
-                slidesPerGroup:1.5,
+                slidesPerGroup:2,
             },
             480:{
                 slidesPerView:2,
@@ -70,8 +70,8 @@ export default function Slider() {
                 slidesPerGroup:2,
             },
             768:{
-              slidesPerGroup:3.5,
-                slidesPerView:3.5,
+              slidesPerGroup:3,
+                slidesPerView:3,
                 spaceBetween:15
             },
             1240:{

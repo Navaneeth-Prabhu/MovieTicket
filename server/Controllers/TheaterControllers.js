@@ -1,5 +1,8 @@
 const User = require("../Models/TheaterModel");
+const Movie = require("../Models/MovieModel")
 const jwt = require("jsonwebtoken");
+
+
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
@@ -52,18 +55,6 @@ module.exports.register = async (req, res, next) => {
   }
 };
 
-// module.exports.login = async (req, res) => {
-//   const { email, password } = req.body;
-//   try {
-//     const user = await User.login(email, password);
-//     const token = createToken(user._id);
-//     res.cookie("jwt", token, { httpOnly: false, maxAge: maxAge * 1000 });
-//     res.status(200).json({ user: user._id, status: true });
-//   } catch (err) {
-//     const errors = handleErrors(err);
-//     res.json({ errors, status: false });
-//   }
-// };
 module.exports.login = async(req,res,next)=> {
 
   try {
@@ -92,3 +83,92 @@ module.exports.login = async(req,res,next)=> {
       res.json({errors,created:false})
   }
 };
+
+module.exports.addScreen =async(req,res,next)=>{
+  try {
+    
+    const {name , row , col}=req.body
+    const token = req.cookies.jwt;
+    console.log(token);
+    decoded = jwt.decode(token)
+    id = decoded.id
+    console.log("decoded",decoded.id);
+    console.log("adsf",req.body);
+    await User.findOneAndUpdate({_id:id},{$push:{Screen:{
+      screenName :name,
+      row:row,
+      col:col
+    }}}
+
+    )
+
+  } catch (error) {
+    console.log('error');
+  }
+}
+
+module.exports.getScreen = async(req,res,next)=>{
+  try {
+    const token = req.cookies.jwt;
+    // console.log(token);
+    decoded = jwt.decode(token)
+    id = decoded.id
+    console.log("decoded",decoded.id);
+   
+    let screen = await User.findOne({_id:id})
+    console.log(screen.Screen);
+    res.json(screen.Screen)
+    // console.log(screen);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+module.exports.getMovies = async(req,res,next)=>{
+  try {
+    let movie = await Movie.find({})
+    res.json(movie)
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+module.exports.addShow = async(req,res,next)=>{
+  try {
+    console.log(req.body);
+    const {ShowTime , name , price, status, screen} = req.body
+    const token = req.cookies.jwt;
+    decoded = jwt.decode(token)
+    id = decoded.id
+    console.log(screen);
+
+    let show = await User.find({_id:id, "Screen.screenName":screen})
+
+    console.log(show.length);
+    // show.length
+    if(show.length>0){
+      let theater = await User.findOneAndUpdate({_id:id , "Screen.screenName":screen},{$set:{"Screen.$.show":{
+        status:status, 
+        movie:name,
+        price:price,
+        ShowTime:ShowTime
+      }}})
+      console.log("set",theater);
+    }else{
+
+      let theater = await User.findOneAndUpdate({_id:id },{$push:{"Screen.$.show":{
+        status:status, 
+        movie:name,
+        price:price,
+        ShowTime:ShowTime
+      }}})
+      console.log("push",theater);
+    }
+   
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+

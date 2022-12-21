@@ -10,13 +10,21 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useState, useEffect } from "react";
-
+// import axios from "../../../axios/axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 
+import InputLabel from "@mui/material/InputLabel";
+
 import { useForm } from "react-hook-form";
 import axios from "../../../../axios/axios";
+import MenuItem from "@mui/material/MenuItem";
+
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+
+// import './index.css'
 
 const ErrorText = ({ children, ...props }) => (
   <Typography sx={{ color: "error.main" }} {...props}>
@@ -38,13 +46,31 @@ const style = {
   p: 4,
 };
 
-export default function FormMovie() {
-  const navigate = useNavigate()
+export default function AddShow() {
+  
+const navigate = useNavigate()
   const [open, setOpen] = React.useState(false);
-  const [name, setname] = React.useState("");
+
+  // const [price,setprice] = useState('')
+  const [movie, setmovie] = useState([])
+  const [name,setname] = useState()
+  const [price,setprice] = useState()
+  const [status,setstatus] = useState()
+  const [screen,setscreen] = useState([])
+  const [sname,setsname] = useState()
+console.log(screen);
 
   const handleChange = (event) => {
     setname(event.target.value);
+  };
+  const handlePrice = (event) => {
+    setprice(event.target.value);
+  };
+  const handleStatus = (event) => {
+    setstatus(event.target.value);
+  };
+  const handleScreen = (event) => {
+    setsname(event.target.value);
   };
 
   const {
@@ -53,13 +79,34 @@ export default function FormMovie() {
     formState: { errors },
   } = useForm();
 
-  console.log("asdfadfasdfasdf", errors);
+  
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/theater/getMovies").then(({data})=>{
+      console.log("fffffffffffff",data);
+      setmovie(data)
+    })
+    axios.get("http://localhost:3001/theater/getScreen").then(({data})=>{
+      console.log("screennn",data);
+      setscreen(data)
+    })
+
+  },[])
+  
 
   const onSubmit = async (data) => {
-    console.log("helooooo", data);
+    console.log("fffaaa",name);
+    console.log("fffaaa",price);
+    console.log("fffaaa",status);
+    console.log("data",data);
+    data.name = name
+    data.price = price
+    data.status = status
+    data.screen = sname
 
-    await axios.post("http://localhost:3001/theater/addScreen",data)
-  navigate("/theater")
+    await axios.post("http://localhost:3001/theater/addShow", data)
+
+    navigate("/theater/")
   };
 
   return (
@@ -67,30 +114,52 @@ export default function FormMovie() {
       <Container component="main" maxWidth="xm" color="secondary">
         {/* <CssBaseline /> */}
         <Typography component="h1" variant="h5">
-          addScreen
+          AddMovie
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
-          
-          <Box noValidate >
+          <Box noValidate>
             <Grid
               container
               rowSpacing={1}
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
+               
+                 
+                    
+              <Grid item xs={12} lg={6}>
+                <FormControl variant="filled" color="secondary" fullWidth>
 
+                  <InputLabel id="demo-simple-select-filled-label">
+                    Movie Name
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-filled-label"
+                    id="demo-simple-select-filled"
+                   value={name}
+                    onChange={handleChange}
+                    >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {movie.map((mname) => (
+                    <MenuItem value ={mname.title}>{mname.title}</MenuItem>
+                      ))}
+                  
+                   
+                  </Select>
+                </FormControl>
+              </Grid>
 
-              <Grid item lg={4} xs={4}>
+              <Grid item lg={6} xs={12}>
                 <div>
                   <TextField
                     className="focus"
                     variant="filled"
-                    label="Name"
+                    label="Busness Days"
                     color="secondary"
-                    type="text"
-                   
                     fullWidth
                     margin="1"
-                    {...register("name", {
+                    {...register("weekly days", {
                       required: true,
                       minLength: 4,
                       maxLength: 20,
@@ -113,54 +182,19 @@ export default function FormMovie() {
                   </span>
                 </div>
               </Grid>
-              <Grid item lg={4} xs={4}>
-                <div>
-                  <TextField
-                    className="focus"
-                    variant="filled"
-                    label="Row"
-                    color="secondary"
-                    type="number"
-                    fullWidth
-                    onChange={handleChange}
-                    margin="1"
-                    {...register("row", {
-                      required: true,
-                      minLength: 1,
-                      maxLength: 2,
-                      pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
-                    })}
-                  />
-                  <span className="text-danger">
-                    {errors.name?.type === "required" && (
-                      <span>name is required</span>
-                    )}
-                    {errors.name?.type === "minLength" && (
-                      <span>name must morethan or equal to 4 Character</span>
-                    )}
-                    {errors.name?.type === "maxLength" && (
-                      <span>name must less than 20 Character</span>
-                    )}
-                    {errors.name?.type === "pattern" && (
-                      <span>Should not have spaces</span>
-                    )}
-                  </span>
-                </div>
-              </Grid>
-              <Grid item lg={4} xs={4}>
+              <Grid item lg={6} xs={12}>
                 <div>
                   <TextField
                     className=""
                     variant="filled"
-                    label="Column"
+                    label="Showtime"
                     color="secondary"
-                    type="number"
                     fullWidth
                     margin="1"
-                    {...register("col", {
+                    {...register("ShowTime", {
                       required: true,
-                      minLength: 1,
-                      maxLength: 2,
+                      minLength: 4,
+                      maxLength: 20,
                       pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
                     })}
                   />
@@ -181,27 +215,69 @@ export default function FormMovie() {
                 </div>
               </Grid>
 
-
-              {/* <Grid item xs={4} lg={4}>
+              <Grid item xs={12} lg={6}>
                 <FormControl variant="filled" color="secondary" fullWidth>
                   <InputLabel id="demo-simple-select-filled-label">
-                   2d or 3d
+                    Status
                   </InputLabel>
                   <Select
-                    labelId="2D or 3D"
+                    labelId="Status"
                     id="demo-simple-select-filled"
-                    value={name}
-                    onChange={handleChange}
+                   value={status}
+                    onChange={handleStatus}
                   >
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value={"IMAX"}>IMAX</MenuItem>
-                    <MenuItem value={"Dolby"}>Dolby</MenuItem>
+                    <MenuItem value={"pending"}>Pending</MenuItem>
+                    <MenuItem value={"canclled"}>canclled</MenuItem>
+                    <MenuItem value={"open"}>Open</MenuItem>
                   </Select>
                 </FormControl>
-              </Grid> */}
+              </Grid>
+              <Grid item xs={12} lg={6}>
+                <FormControl variant="filled" color="secondary" fullWidth>
+                  <InputLabel id="demo-simple-select-filled-label">
+                   Screen
+                  </InputLabel>
+                  <Select
+                    labelId="Screen"
+                    id="demo-simple-select-filled"
+                   value={sname}
+                    onChange={handleScreen}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                  
+                    {screen.map((data)=>(
 
+                    <MenuItem value={data.screenName}>{data.screenName}</MenuItem>
+                    ))} 
+
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} lg={6}>
+                <FormControl variant="filled" color="secondary" fullWidth>
+                  <InputLabel id="demo-simple-select-filled-label">
+                    Price
+                  </InputLabel>
+                  <Select
+                    labelId="Price"
+                    id="demo-simple-select-filled"
+                    value={price}
+                    onChange={handlePrice}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={"120"}>120</MenuItem>
+
+                    <MenuItem value={"140"}>140</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
             </Grid>
 
             <Button

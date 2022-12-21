@@ -22,7 +22,7 @@ function Screen() {
             <main className="content">
               <Topbar></Topbar>
         <ShowScreen/>
-              {/* <AddScreen/> */}
+              <AddScreen/>
             </main>
           </div>
         </ProSidebarProvider>
