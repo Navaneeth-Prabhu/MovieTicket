@@ -11,8 +11,8 @@ body,
 }
 
 .app {
-  display: flex;
-  position: relative;
+  display: flex !important;
+  position: relative !important;
 }
 
 ::-webkit-scrollbar {

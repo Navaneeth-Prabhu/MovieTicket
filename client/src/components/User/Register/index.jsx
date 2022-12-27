@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import "./model.css";
 import Modal from '@mui/material/Modal';
-import { Button } from "../../User/Buttons/Button";
+// import { Button } from "../../User/Buttons/Button";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "../../../axios/axios";
+import Button from '@mui/material/Button';
 import { Experimental_CssVarsProvider } from "@mui/material";
 
 const style = {
@@ -65,7 +66,7 @@ function Modals() {
 
   return (
     <div>
-      <Button buttonStyle="btn--outline" onClick={handleOpen}>
+      <Button variant="outlined" onClick={handleOpen} sx={{color:"white",borderColor:"white",border:1.5}}>
         Sign Up
       </Button>
       <Modal
@@ -112,9 +113,10 @@ function Modals() {
               </div>
             </form>
             <hr></hr>
-            <div className="fluid ui button blue" onClick={google}>
+            <Button variant="contained" onClick={google}>Google</Button>
+            {/* <div variant="contained" onClick={google}>
               Google
-            </div>
+            </div> */}
           </div>
         </Box>
       </Modal>

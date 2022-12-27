@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
+// import { useHistory } from 'react-router-dom';
 import axios from "axios";
 
 // Import Swiper styles
@@ -17,16 +18,31 @@ import { Pagination, Navigation } from "swiper";
 export default function Slider() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [movieDet, setmovieDet] = useState('')
 
-  const details = () => {
-    navigate("/moviedetails")
-  };
+
+  // const details = () => {
+  //   // axios.get(`http://localhost:3001/movieDetails/${id}`)
+  //   // navigate(`/moviedetails/`)
+  //   console.log(data);
+  // };
+  // const handleClick = movie => {
+  //   console.log("iiiiiiiiiiiiiiiid",movie);
+  //   // const data = {};
+  //   // navigate(`/newpage?data=${encodeURIComponent(JSON.stringify(data))}`);
+  // };
+  function handleClick(modetial) {
+    // console.log(modetial);
+    // setmovieDet(modetial)
+    // console.log(movieDet);
+    navigate(`/moviedetails?data=${encodeURIComponent(JSON.stringify(modetial))}`);
+  }
 
   useEffect(() => {
     axios
       .get("http://localhost:3001/movieInfo")
       .then(({ data }) => {
-        console.log(data);
+        // console.log(data);
         setData(data);
       })
       .catch((error) => {
@@ -87,7 +103,7 @@ export default function Slider() {
           {data.map((movie) => (
         
      
-          <div className="card" onClick={details}>
+          <div className="card" onClick={() => handleClick(movie)}>
             <div className="cardImage">
               <img
                 src={`https://aws-movieticket-bucket.s3.amazonaws.com/${movie._id}.jpg`}

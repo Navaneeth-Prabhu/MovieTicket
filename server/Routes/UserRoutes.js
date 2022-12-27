@@ -7,6 +7,7 @@ const {getImages,getMovieInformation}= require('../Controllers/MovieControllers'
 router.get('/images/:key' ,getImages)
 
 router.get('/movieInfo' ,getMovieInformation)
+router.get('/movieDetails/:id')
 router.post('/signup',signup);
 
 

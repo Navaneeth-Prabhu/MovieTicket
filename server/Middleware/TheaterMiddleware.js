@@ -2,7 +2,9 @@ const Theater = require("../Models/TheaterModel");
 const jwt = require("jsonwebtoken");
 
 module.exports.checkTheater = (req, res, next) => {
-  const token = req.cookies.jwt;
+  const token = req.cookies;
+  console.log("asdfasdfasdfasdf");
+  console.log(token);
   if (token) {
     jwt.verify(
       token,

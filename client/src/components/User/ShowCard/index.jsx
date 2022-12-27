@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 // import Button from '../Buttons/Button'
 
 import './card.css'
@@ -14,13 +15,20 @@ import { fontSize, grid } from '@mui/system';
 export default function ShowCard() {
   return (
     <Card sx={{background:'#121212',color:'white' , marginTop:3}}>
-        {/* <Box sx={{display:'grid',gridTemplateColumns: 'repeat(3, 1fr)'}}></Box> */}
+
+        {/* <Box  xs={{display:'grid',}}> */}
+        <Grid md={3}>
+
       <CardContent sx={{padding:'0px 24px'}}>
         <Typography gutterBottom variant="h6" component="div" sx={{margin:0}}>
           THEATER 
         </Typography>
 
       </CardContent>
+        </Grid>
+
+       
+    <Grid md={9}>
       <CardActions>
       <Box sx={{  display: 'flex',
           flexWrap: 'wrap',
@@ -38,6 +46,12 @@ export default function ShowCard() {
        
        </Box>
       </CardActions>
+
+    </Grid>
+       
+
+
+      
     </Card>
   );
 }

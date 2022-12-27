@@ -48,6 +48,8 @@ const getImages = asyncHandler(async(req, res) => {
   
   const getMovieInformation = asyncHandler(async(req,res)=>{
       try {
+        let id = req.params.id;
+        console.log("iddddddddddddddd",id);
          const movie = await Movie.find({})
         //  console.log(movie)
          res.status(200).json(movie)

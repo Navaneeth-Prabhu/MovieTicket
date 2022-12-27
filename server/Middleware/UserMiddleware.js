@@ -2,7 +2,8 @@ const User = require("../models/UserModels");
 const jwt = require("jsonwebtoken");
 
 module.exports.checkUser = (req, res, next) => {
-  const token = req.cookies.jwt;
+  const token = req.cookies;
+  console.log(token);
   if (token) {
     // console.log("in authmiddleware");
     jwt.verify(

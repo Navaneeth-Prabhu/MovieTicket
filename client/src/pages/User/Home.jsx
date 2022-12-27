@@ -23,6 +23,9 @@ function Home() {
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": true,
         },
+        
+         
+        
       })
         .then((response) => {
           if (response.status === 200) return response.json();
@@ -47,8 +50,8 @@ function Home() {
 
   
    <Slider/>
-
    <Slide/>
+<p>asdfasdfasdf</p>
 
    </>
   )

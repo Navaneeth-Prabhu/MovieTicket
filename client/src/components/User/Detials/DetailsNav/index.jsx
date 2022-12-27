@@ -7,7 +7,7 @@ function index() {
   return (
     <div className="cont">
     <div className='cont2'>
-      caro
+      card
     </div>
   </div>
   )

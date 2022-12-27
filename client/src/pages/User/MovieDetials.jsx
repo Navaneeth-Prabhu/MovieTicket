@@ -3,6 +3,7 @@ import Navbar from '../../components/User/Navbar'
 import Details from '../../components/User/Detials'
 import DetailsNav from '../../components/User/Detials/DetailsNav'
 import ShowCard from '../../components/User/ShowCard'
+import Trailler from '../../components/User/Trailler'
 
 
 
@@ -13,10 +14,11 @@ function MovieDetials() {
 
       <Navbar/>
        <Details/>
-      <DetailsNav/>
-      <ShowCard/>
-      <ShowCard/>
-      <ShowCard/>
+      {/* <DetailsNav/> */}
+      {/* <ShowCard/> */}
+      {/* <Trailler></Trailler> */}
+      {/* <ShowCard/> */}
+      {/* <ShowCard/> */}
     </div>
   )
 }
