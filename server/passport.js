@@ -1,6 +1,8 @@
+// import axios from 'axios'
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passport = require("passport");
 require('dotenv').config()
+
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
@@ -14,10 +16,12 @@ passport.use(
         callbackURL: "/auth/google/callback",
       },
       async function (req,accessToken, refreshToken, profile, done) {
+       
+        console.log('Profile',profile);           
         return done(null, profile);
       }
-    )
-  );
+      )
+      );
 
   passport.serializeUser((user, done) => {
     // console.log(user)

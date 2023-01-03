@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser")
 const AdminRoute = require('./Routes/AdminRoutes')
 const UserRoute = require('./Routes/UserRoutes')
 const authRouter = require('./Routes/auth')
+const MessageRouter = require('./Routes/MessageRoutes')
 const app = express();
 
 const passport = require("passport");
@@ -15,7 +16,7 @@ const cookieSession = require("cookie-session");
 
 
 app.use(
-    cookieSession({ name: "session", keys: ["justin"], maxAge: 24 * 60 * 60 * 1000 })
+    cookieSession({ name: "session", keys: ["navaneeth"], maxAge: 24 * 60 * 60 * 1000 })
   );
   app.use(passport.initialize());
   app.use(passport.session());
@@ -43,3 +44,4 @@ app.use("/theater",TheaterRoutes)
 app.use('/admin',AdminRoute)
 app.use('/',UserRoute)
 app.use('/auth',authRouter)
+app.use('/message',MessageRouter)

@@ -96,7 +96,7 @@ function SideBar() {
         <Box paddingRight={isCollapsed ? undefined : "0%"}>
           <Item
             title="Dashboard"
-            to="/"
+            to="/theater"
             icon={<HomeOutlinedIcon />}
             selected={selected}
             setSelected={setSelected}
@@ -111,14 +111,14 @@ function SideBar() {
           </Typography>
           <Item
             title="Movies"
-            to="/movies"
+            to="/theater/addMovies"
             icon={<TheaterComedyIcon />}
             selected={selected}
             setSelected={setSelected}
           />
           <Item
             title="Screen"
-            to="screen"
+            to="/theater/screen"
             icon={<LocalMoviesIcon />}
             selected={selected}
             setSelected={setSelected}
@@ -140,7 +140,7 @@ function SideBar() {
           </Typography>
           <Item
             title="Users"
-            to="/addstaff"
+            to="/theater/chat"
             icon={<PersonOutlinedIcon />}
             selected={selected}
             setSelected={setSelected}

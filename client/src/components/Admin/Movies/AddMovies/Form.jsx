@@ -18,17 +18,14 @@ import { ToastContainer, toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import axios from "../../../../axios/axios";
 
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
-import dayjs from "dayjs";
-import Stack from "@mui/material/Stack";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-
+import Checkbox from "@mui/material/Checkbox";
+import Autocomplete from "@mui/material/Autocomplete";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 // import './index.css'
+
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const ErrorText = ({ children, ...props }) => (
   <Typography sx={{ color: "error.main" }} {...props}>
@@ -36,44 +33,55 @@ const ErrorText = ({ children, ...props }) => (
   </Typography>
 );
 
-
+const top100Films = [
+  { Gener: "Action" },
+  { Gener: "Romance" },
+  { Gener: "Dramas" },
+  { Gener: "Thriller" },
+  { Gener: "Horror" },
+  { Gener: "Sci-fi" },
+  { Gener: "Fantasy" },
+];
 
 const validFileTypes = ["image/jpg", "image/jpeg", "image/png"];
 const URL = "/api/admin/movieImage/upload";
 
 export default function FormMovie() {
-
- const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
+    // params,
     formState: { errors },
   } = useForm();
 
-  console.log("asdfadfasdfasdf",errors);
+  console.log("asdfadfasdfasdf", errors);
 
   const onSubmit = async (data) => {
     console.log("asdfasdfasdf", data);
     const formData = new FormData();
 
-    
-
     formData.append("image", data.file[0]);
-    await axios.post("http://localhost:3001/admin/movieinfo", data)
+    await axios
+      .post("http://localhost:3001/admin/movieinfo", data)
       .then(async (response) => {
         console.log(response.data._id);
         let id = response.data._id;
-         axios
-          .post(`http://localhost:3001/admin/movieImage/upload/${id}`, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
+        axios
+          .post(
+            `http://localhost:3001/admin/movieImage/upload/${id}`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
           .then(({ data }) => {
             console.log(data);
           });
-          navigate("/admin/movies")
+        navigate("/admin/movies");
       })
       .catch((error) => {
         console.log(error);
@@ -101,36 +109,35 @@ export default function FormMovie() {
             >
               <Grid item lg={6} xs={12}>
                 <div>
-
-                <TextField
-                className="focus"
-                  variant="filled"
-                  label="Name"
-                  color="secondary"
-                  focused
-                  fullWidth
-                  margin="normal"
-                  {...register("title", {
-                    required: true,
-                    minLength: 4,
-                    maxLength: 20,
-                    pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
-                  })}
-                />
-                <span className="text-danger">
-                  {errors.name?.type === "required" && (
-                    <span>name is required</span>
-                  )}
-                  {errors.name?.type === "minLength" && (
-                    <span>name must morethan or equal to 4 Character</span>
-                  )}
-                  {errors.name?.type === "maxLength" && (
-                    <span>name must less than 20 Character</span>
-                  )}
-                  {errors.name?.type === "pattern" && (
-                    <span>Should not have spaces</span>
-                  )}
-                </span>
+                  <TextField
+                    className="focus"
+                    variant="filled"
+                    label="Name"
+                    color="secondary"
+                    focused
+                    fullWidth
+                    margin="normal"
+                    {...register("title", {
+                      required: true,
+                      minLength: 4,
+                      maxLength: 20,
+                      pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
+                    })}
+                  />
+                  <span className="text-danger">
+                    {errors.name?.type === "required" && (
+                      <span>name is required</span>
+                    )}
+                    {errors.name?.type === "minLength" && (
+                      <span>name must morethan or equal to 4 Character</span>
+                    )}
+                    {errors.name?.type === "maxLength" && (
+                      <span>name must less than 20 Character</span>
+                    )}
+                    {errors.name?.type === "pattern" && (
+                      <span>Should not have spaces</span>
+                    )}
+                  </span>
                 </div>
               </Grid>
               <Grid item xs={12} lg={6}>
@@ -140,7 +147,7 @@ export default function FormMovie() {
                   color="secondary"
                   focused
                   fullWidth
-                  type={'text'}
+                  type={"text"}
                   multiline
                   margin="normal"
                   {...register("description", {
@@ -150,7 +157,7 @@ export default function FormMovie() {
                     pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
                   })}
                 />
-                <span className="text-danger" color="secondary" >
+                <span className="text-danger" color="secondary">
                   {errors.name?.type === "required" && (
                     <span>name is required</span>
                   )}
@@ -195,6 +202,34 @@ export default function FormMovie() {
                   )}
                 </span>
               </Grid>
+              {/* <Grid item lg={6} xs={12}>
+                <Autocomplete
+                  multiple
+                  id="checkboxes-tags-demo"
+                  options={top100Films}
+                  disableCloseOnSelect
+                  getOptionLabel={(option) => option.Gener}
+                  renderOption={(props, option, { selected }) => (
+                    <li {...props}>
+                      <Checkbox
+                        icon={icon}
+                        checkedIcon={checkedIcon}
+                        style={{ marginRight: 8 }}
+                        checked={selected}
+                      />
+                      {option.Gener}
+                    </li>
+                  )}
+                  style={{ width: 500 }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Checkboxes"
+                      placeholder="Favorites"
+                    />
+                  )}
+                />
+              </Grid> */}
               <Grid item xs={12} lg={6}>
                 <TextField
                   variant="filled"
@@ -268,11 +303,10 @@ export default function FormMovie() {
                 </Button>
                 <span className="text-danger"></span>
                 {/* {error && <ErrorText>{error}</ErrorText>} */}
-               
               </Grid>
             </Grid>
 
-            <Button 
+            <Button
               type="submit"
               fullWidth
               variant="contained"

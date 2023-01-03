@@ -6,13 +6,13 @@ import Dashboard from "./pages/Admin/Dashboard";
 import AdminLogin from "./pages/Admin/Login"
 import AddStaff from "./pages/Admin/AddStaff"
 import AddMovies from './pages/Admin/AddMovies'
-import Movie from "./pages/Admin/Movies";
+import Moviee from "./pages/Admin/Movies";
 import Theater from "./pages/Admin/Theater";
 
 
 
 import Userhome from './pages/User/Home';
-// import Userhome from './pages/User/Profile';
+import UserProfile from './pages/User/Profile';
 // import Details from './pages/User/MovieDetials';
 import Details from './pages/User/Detail/Detail';
 import Trailler from "./pages/User/Trailler";
@@ -24,18 +24,25 @@ import TheaterReg from './pages/Theater/Reg'
 import TheaterScreen from './pages/Theater/Screen'
 // import AddTheaterscreen from './pages/Theater/addScreen'
 import AddMoviesscreen from './pages/Theater/addMovies'
+import Chat from './pages/Theater/chat'
+
+// import Movie from "./context/movieContext";
 
 
 function Routess() {
 
   return (
     // <BrowserRouter>
+   
+
+  
       <Routes>
 
-    
+
         <Route exact path ="/" element = {<Userhome/>} />
         <Route exact path ="/moviedetails" element = {<Details/>} />
         <Route exact path ="/movie/trailler" element = {<Trailler/>} />
+        <Route exact path ="/profile" element = {<UserProfile/>} />
 
 
 
@@ -46,6 +53,7 @@ function Routess() {
         <Route exact path ="/theater/screen" element = {<TheaterScreen/>} />
         {/* <Route exact path ="/theater/addScreen" element = {<AddTheaterscreen/>} /> */}
         <Route exact path ="/theater/addMovies" element = {<AddMoviesscreen/>} />
+        <Route exact path ="/theater/chat" element = {<Chat/>} />
         
 
 
@@ -54,12 +62,13 @@ function Routess() {
         <Route exact path="/admin/login" element={<AdminLogin />} />    
         <Route exact path="/admin/addstaff" element={<AddStaff />} />  
         <Route exact path="/admin/theater" element={<Theater />} />  
-        <Route exact path="/admin/movies" element={<Movie />} />
+        <Route exact path="/admin/movies" element={<Moviee />} />
         <Route exact path="/admin/movies/addMovies" element={<AddMovies />} />  
       
 
        
       </Routes>
+   
     // </BrowserRouter> 
   );
 }

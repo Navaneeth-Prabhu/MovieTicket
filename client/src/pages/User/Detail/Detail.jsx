@@ -1,36 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import React, { useEffect, useState,useContext } from "react";
+import { useNavigate, useParams } from "react-router";
 import Navbar from "../../../components/User/Navbar";
-
-// import tmdbApi from '../../../api/tmdbApi';
-// import apiConfig from '../../../api/apiConfig';
-
+import { MovieContext } from "../../../context/movieContext";
 import "./detail.scss";
-// import CastList from './CastList';
-// import VideoList from './VideoList';
 
-// import MovieList from '../../components/movie-list/MovieList';
 
 const Detail = () => {
-  const { category, id } = useParams();
+  // const [movieDetail, setmovieDetail] = useState()
+  const navigate = useNavigate()
+  const{MovieDetails} = useContext(MovieContext)
+  // const { category, id } = useParams();
 
-  const [item, setItem] = useState(null);
+
 
   useEffect(() => {
-    const getDetail = async () => {
-      // const response = await tmdbApi.detail(category, id, {params:{}});
-      // setItem(response);
-      window.scrollTo(0, 0);
-    };
-    getDetail();
-  }, [category, id]);
+    const {} = MovieDetails
+  }, []);
 
   return (
     <>
       <Navbar />
-      {/* <h1 class="text-sky-400">hellooo</h1> */}
-      {/* <img className='banner' src={require("../../../images/Rectangle 2.jpg")} alt="" /> */}
-      {/* {{ backgroundImage: "url(/image.png)" }} */}
+     
       <div
         className="banner"
         style={{ backgroundImage: `url(../../../images/Rectangle 2.jpg)` }}
@@ -38,7 +28,7 @@ const Detail = () => {
       {/* <div className="banner" src={require("../../../../images/Rectangle 2.jpg")}></div> */}
       {/* <div className="banner" style={{backgroundImage: `url(${apiConfig.originalImage(item.backdrop_path || item.poster_path)})`}}></div> */}
       <div className="mb-3 movie-content container">
-        <div className="movie-content__poster">
+        <div className="movie-content__poster" onClick={()=>navigate('/movie/trailler')}>
           <img
             className="movie-content__poster img"
             src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
@@ -48,7 +38,7 @@ const Detail = () => {
           {/* <div className="movie-content__poster__img" style={{backgroundImage: `url(${apiConfig.originalImage(item.poster_path || item.backdrop_path)})`}}></div> */}
         </div>
         <div className="movie-content__info">
-          <h1 className="title">EVERYTHING EVERYWHERE ALL AT ONCE</h1>
+          <h1 className="title">{MovieDetails.title}</h1>
           <div className="genres">
             {/* {
                                         

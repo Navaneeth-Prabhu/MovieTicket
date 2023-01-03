@@ -6,7 +6,7 @@ import Slider from '../../components/User/Slider'
 import Slide from '../../components/User/Slider2'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-
+import Movie from '../../context/movieContext'
 
 
 
@@ -43,6 +43,7 @@ function Home() {
   
   return (
    <>
+{/* <Movie> */}
 
    <Navbar user={user}/>
 
@@ -51,7 +52,8 @@ function Home() {
   
    <Slider/>
    <Slide/>
-<p>asdfasdfasdf</p>
+
+{/* </Movie> */}
 
    </>
   )

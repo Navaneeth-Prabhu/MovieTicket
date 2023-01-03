@@ -21,7 +21,7 @@ export default function ShowCard() {
 
       <CardContent sx={{padding:'0px 24px'}}>
         <Typography gutterBottom variant="h6" component="div" sx={{margin:0}}>
-          THEATER 
+            
         </Typography>
 
       </CardContent>

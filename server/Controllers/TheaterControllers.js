@@ -172,3 +172,18 @@ module.exports.addShow = async(req,res,next)=>{
   }
 }
 
+module.exports.getAllTheater = async(req,res,next)=>{
+  try {
+
+    const token = req.cookies.jwt;
+    // console.log(token);
+    // decoded = jwt.decode(token)
+    // id = decoded.id
+    // console.log("its working")
+    const user = await User.find({}).select(['email','theater','_id'])
+    // const user = await User.find({})
+    res.json(user)
+  } catch (error) {
+    console.log(error)
+  }
+}

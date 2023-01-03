@@ -98,17 +98,29 @@
 // export default Navbar;
 
 import React, { useRef, useEffect } from "react";
-
 import { Link, useLocation } from "react-router-dom";
-
 import { useState } from "react";
 
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
+import { Box } from "@mui/system";
 import Dropdown from "react-bootstrap/Dropdown";
+
 import Modal from "../Register/index";
+// import { makeStyles } from '@material-ui/styles';
 
 import "./nav.scss";
 
 // import logo from '../../assets/tmovie.png';
+
 
 const headerNav = [
   {
@@ -124,18 +136,116 @@ const headerNav = [
     path: "/tv",
   },
 ];
+const listItems = [
+  {
+    // listIcon: <Home />,
+    listText: "Home"
+  },
+  {
+    // listIcon: <AssignmentInd />,
+    listText: "Resume"
+  },
+  {
+    // listIcon: <Apps />,
+    listText: "Portfolio"
+  },
+  {
+    // listIcon: <ContactMail />,
+    listText: "Contacts"
+    
+  }
+];
+
 
 function Navbar({ user }) {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+  
+  const { pathname } = useLocation();
+  const headerRef = useRef(null);
+  const [open, setOpen] = useState(false);
+  // const classes = useStyles();
 
+  // const useStyles = makeStyles({
+  //   drawerPaper: {
+  //     borderRadius: '20px 20px 0 0',
+  //   },
+  // });
   const logout = () => {
     window.open("http://localhost:3001/auth/logout", "_self");
   };
 
-  const { pathname } = useLocation();
-  const headerRef = useRef(null);
+  const toggleDrawer = () => (event) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setOpen(!open);
+  };
+  // let anchor = left
+  const list = () => (
+
+    <Box
+      sx={{ width: 350 ,
+        height:"100%",
+      display:'flex',
+      flexDirection:'column'}}
+      // role="presentation"
+      // onClick={toggleDrawer()}
+      // onKeyDown={toggleDrawer()}
+      
+    >
+      <List>asdfasdf</List>
+
+      <Box
+      sx={{ width: 350 ,
+        height:"100%",
+      display:'flex',
+      flexDirection:'column',
+      justifyContent:'space-between'}}
+      role="presentation"
+      onClick={toggleDrawer()}
+      onKeyDown={toggleDrawer()}>
+
+      
+
+      <List>
+        {listItems.map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <Divider />
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text.listText} />
+            </ListItemButton>
+            
+          </ListItem>
+        ))}
+      </List>
+        <Button onClick={logout} variant="outlined" sx={{bottom:1}}>LogOut</Button>
+      {/* <Divider /> */}
+      {/* <List>
+        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List> */}
+      </Box>
+    </Box>
+  );
+
+
 
   const active = headerNav.findIndex((e) => e.path === pathname);
 
@@ -173,15 +283,33 @@ function Navbar({ user }) {
           {user ? (
             <li className="nav-item">
               {/* <Link to="/" className="nav-links" onClick={closeMobileMenu}> */}
-              <Dropdown>
-                <Dropdown.Toggle variant="success">
-                  {user.displayName}
-                </Dropdown.Toggle>
+              {/* <Dropdown> */}
 
-                <Dropdown.Menu>
+                {/* <Dropdown.Toggle onClick={toggleSlider} variant="success"> */}
+                  {/* {user.displayName} */}
+                {/* </Dropdown.Toggle> */}
+                
+                {/* <React.Fragment key={anchor}> */}
+
+          <div onClick={toggleDrawer()}>{user.displayName}</div>
+          <SwipeableDrawer
+          open={open} anchor="right" onClose={toggleDrawer()} onOpen={toggleDrawer()}
+          sx={{borderRadius:'20px 20px 0 0'}}
+          >
+            {list()}
+          </SwipeableDrawer>
+        {/* </React.Fragment> */}
+
+            {/* <Drawer open={open} anchor="right" onClose={toggleSlider}>
+              {sideList()}
+            </Drawer> */}
+                
+
+
+                {/* <Dropdown.Menu>
                   <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+                </Dropdown.Menu> */}
+              {/* </Dropdown> */}
               {/* </Link> */}
             </li>
           ) : (
