@@ -11,7 +11,7 @@ router.post("/addScreen",addScreen);
 router.get("/getScreen",getScreen);
 router.get("/getMovies",getMovies);
 router.post("/addShow",addShow);
-router.get("/allTheater",getAllTheater);
+router.get("/allTheater/:id",getAllTheater);
 
 // router.post("/addmsg", addMessage);
 // router.post("/getmsg", getMessages);

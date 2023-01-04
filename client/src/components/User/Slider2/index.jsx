@@ -44,7 +44,6 @@ export default function Slider() {
     axios
       .get("http://localhost:3001/movieInfo")
       .then(({ data }) => {
-        // console.log(data);
         setData(data);
       })
       .catch((error) => {

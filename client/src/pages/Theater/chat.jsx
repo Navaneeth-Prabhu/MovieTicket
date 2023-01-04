@@ -5,45 +5,52 @@ import Topbar from "../../components/Theater/Global/Topbar";
 import "./dashboard.css";
 import SideBar from "../../components/Theater/Global/Sidebar";
 import { ProSidebarProvider } from "react-pro-sidebar";
-// import ChatContainer from "../../components/Theater/Chat";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Contacts from "../../components/Theater/Chat/Contacts/contacts";
 import Welcome from "../../components/Theater/Chat/welcome";
 import ChatContainer from "../../components/Theater/Chat/Container/chatContainer";
+import jwt_decode from "jwt-decode";
+import { useCookies } from "react-cookie";
+import {io} from 'socket.io-client'
 
 function Chat() {
+  const host = "http://localhost:3001"
   const navigate = useNavigate();
+  const [cookies] = useCookies([]);
   const socket = useRef();
   const [contacts, setContacts] = useState([]);
   const [currentChat, setCurrentChat] = useState(undefined);
   const [currentUser, setCurrentUser] = useState(undefined);
 
-  // useEffect(async () => {
-  //   if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-  //     navigate("/login");
-  //   } else {
-  //     setCurrentUser(
-  //       await JSON.parse(
-  //         localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //       )
-  //     );
-  //   }
-  // }, []);
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     socket.current = io(host);
-  //     socket.current.emit("add-user", currentUser._id);
-  //   }
-  // }, [currentUser]);
+  useEffect( () => {
+    async function setUser(){
+        const token = cookies.jwt;
+        const decoded = await jwt_decode(token);
+        setCurrentUser(decoded.id);
+    }
+    setUser()
+  }, []);
+  // console.log("curr",currentUser)
+  
+  useEffect(() => {
+    if (currentUser) {
+      socket.current = io(host);
+      socket.current.emit("add-user", currentUser);
+    }
+  }, [currentUser]);
 
 
   useEffect(() => {
     async function fetchData(){
-
-      const data = await axios.get("http://localhost:3001/theater/allTheater");
-      console.log(data);
+      const token = cookies.jwt;
+      const decoded = await jwt_decode(token);
+      console.log("jwt",decoded.id)
+      const id =(decoded.id)
+      // console.log("state",currentUser);
+      const data = await axios.get(`http://localhost:3001/theater/allTheater/${id}`);
+      // console.log(data);
       setContacts(data.data)
     }
     fetchData();

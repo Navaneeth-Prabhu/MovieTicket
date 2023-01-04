@@ -6,11 +6,11 @@ const MessageSchema = mongoose.Schema(
       text: { type: String, required: true },
     },
     users: Array,
-    // sender: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   // ref: "Theater",
-    //   required: true,
-    // },
+    sender: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "theaters",
+      required: true,
+    },
   },
   {
     timestamps: true,
