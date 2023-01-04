@@ -8,6 +8,7 @@ import AddStaff from "./pages/Admin/AddStaff"
 import AddMovies from './pages/Admin/AddMovies'
 import Moviee from "./pages/Admin/Movies";
 import Theater from "./pages/Admin/Theater";
+import AdminChat from './pages/Admin/chat'
 
 
 
@@ -40,9 +41,10 @@ function Routess() {
 
 
         <Route exact path ="/" element = {<Userhome/>} />
-        <Route exact path ="/moviedetails" element = {<Details/>} />
+        <Route exact path ="/moviedetails/:id" element = {<Details/>} />
         <Route exact path ="/movie/trailler" element = {<Trailler/>} />
         <Route exact path ="/profile" element = {<UserProfile/>} />
+        
 
 
 
@@ -64,6 +66,7 @@ function Routess() {
         <Route exact path="/admin/theater" element={<Theater />} />  
         <Route exact path="/admin/movies" element={<Moviee />} />
         <Route exact path="/admin/movies/addMovies" element={<AddMovies />} />  
+        <Route exact path ="/admin/chat" element = {<AdminChat/>} />
       
 
        

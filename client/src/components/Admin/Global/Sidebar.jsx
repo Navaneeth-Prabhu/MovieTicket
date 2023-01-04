@@ -146,8 +146,8 @@ function SideBar() {
             setSelected={setSelected}
           />
           <Item
-            title="Calendar"
-            to="/calendar"
+            title="Chat Support"
+            to="/admin/chat"
             icon={<CalendarTodayOutlinedIcon />}
             selected={selected}
             setSelected={setSelected}

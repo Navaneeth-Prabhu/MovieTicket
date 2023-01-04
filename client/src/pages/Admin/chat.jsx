@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../../thems";
-import Topbar from "../../components/Theater/Global/Topbar";
+import Topbar from "../../components/Admin/Global/Topbar";
 import "./dashboard.css";
-import SideBar from "../../components/Theater/Global/Sidebar";
+import SideBar from "../../components/Admin/Global/Sidebar";
 import { ProSidebarProvider } from "react-pro-sidebar";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Contacts from "../../components/Theater/Chat/Contacts/contacts";
-import Welcome from "../../components/Theater/Chat/welcome";
-import ChatContainer from "../../components/Theater/Chat/Container/chatContainer";
+import Contacts from "../../components/Admin/Chat/Contacts/contacts";
+import Welcome from "../../components/Admin/Chat/welcome";
+import ChatContainer from "../../components/Admin/Chat/Container/chatContainer";
 import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
 import {io} from 'socket.io-client'
@@ -26,10 +26,10 @@ function Chat() {
 
   useEffect( () => {
     async function setUser(){
-        const token = cookies.jwt;
+        const token = cookies.adminjwt;
         const decoded = await jwt_decode(token);
+        console.log("adminnnnnnnnnnn",decoded.id)
         setCurrentUser(decoded.id);
-        console.log("theaterrrrrr",decoded.id)
     }
     setUser()
   }, []);
@@ -45,12 +45,13 @@ function Chat() {
 
   useEffect(() => {
     async function fetchData(){
-      const token = cookies.jwt;
+      const token = cookies.adminjwt;
       const decoded = await jwt_decode(token);
       console.log("jwt",decoded.id)
       const id =(decoded.id)
       // console.log("state",currentUser);
-      const data = await axios.get(`http://localhost:3001/theater/allAdminStaff`);
+      // const data = await axios.get(`http://localhost:3001/theater/allTheater/${id}`);
+      const data = await axios.get(`http://localhost:3001/admin/allTheater`);
       // console.log(data);
       setContacts(data.data)
     }
@@ -59,6 +60,17 @@ function Chat() {
   
 
 
+  // useEffect(async () => {
+  //   // if (currentUser) {
+  //   // if (currentUser.isAvatarImageSet) {
+  //   const data = await axios.get("http://localhost:3001/theater/allTheater");
+  //   console.log("in use effect");
+  //   setContacts(data.data);
+  //   // } else {
+  //   // navigate("/setAvatar");
+  //   // }
+  //   // }
+  // }, [currentUser]);
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
   };
@@ -75,7 +87,7 @@ function Chat() {
 
               <Container>
                 <div className="container">
-                  <Contacts contacts={contacts} changeChat={handleChatChange} currentUser={currentUser} />
+                  <Contacts contacts={contacts} changeChat={handleChatChange} />
                   {currentChat === undefined ? (
             <Welcome />
           ) : (

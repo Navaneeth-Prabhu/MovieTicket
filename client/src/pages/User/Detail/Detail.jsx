@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState,useContext } from "react";
 import { useNavigate, useParams } from "react-router";
 import Navbar from "../../../components/User/Navbar";
@@ -9,12 +10,13 @@ const Detail = () => {
   // const [movieDetail, setmovieDetail] = useState()
   const navigate = useNavigate()
   const{MovieDetails} = useContext(MovieContext)
-  // const { category, id } = useParams();
+  const { id } = useParams();
+  console.log(id)
 
 
 
-  useEffect(() => {
-    const {} = MovieDetails
+  useEffect(async() => {
+    await axios.get("")
   }, []);
 
   return (

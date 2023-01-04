@@ -105,11 +105,13 @@ export default function Slider() {
         
      
           <div className="card" onClick={() => {setMovieDetails(movie) 
-          navigate('/moviedetails') }}>
+          navigate(`/moviedetails/${movie._id}`) }}>
             <div className="cardImage">
               <img
-                src={`https://aws-movieticket-bucket.s3.amazonaws.com/${movie._id}.jpg`}
-                // src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
+                // src={`https://aws-movieticket-bucket.s3.amazonaws.com/${movie._id}.jpg`}
+                // src={`../../../images/${movie._id}.jpg`}
+                // src={}
+                src={require(`../../../../../server/public/movies/${movie._id}.jpg`)}
                 alt=""
               />
             </div>

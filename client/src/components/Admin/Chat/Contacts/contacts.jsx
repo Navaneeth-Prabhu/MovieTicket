@@ -7,8 +7,7 @@ function Contacts({contacts,currentUser,changeChat}) {
 
     useEffect(() => {
       if(currentUser){
-        // console.log("asdfasdf",currentUser);
-        setCurrentUserName(currentUser.name)
+        setCurrentUserName(currentUser.username)
       }
 
     }, [currentUser])
@@ -17,6 +16,7 @@ function Contacts({contacts,currentUser,changeChat}) {
     setCurrentSelected(index);
     changeChat(contact);
   };
+  
   return (
     <>
     <Container>
@@ -35,13 +35,13 @@ function Contacts({contacts,currentUser,changeChat}) {
                   onClick={() => changeCurrentChat(index, contact)}
                 >
                   <div className="avatar">
-                    <img
+                    {/* <img
                       src={`data:image/svg+xml;base64,${contact.avatarImage}`}
                       alt=""
-                    />
+                    /> */}
                   </div>
                   <div className="username">
-                    <h3>{contact.name}</h3>
+                    <h3>{contact.theater}</h3>
                   </div>
                 </div>
               );

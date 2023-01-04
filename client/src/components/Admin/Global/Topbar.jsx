@@ -23,7 +23,7 @@ function Topbar() {
   const[cookies,setCookies,removeCookie]=useCookies([]);
   useEffect(() => {
     const verifyUser = async() =>{
-      if(!cookies.jwt){
+      if(!cookies.adminjwt){
           navigate("/admin/login")
       }else{
           const { data } = await axios.post(
@@ -34,7 +34,7 @@ function Topbar() {
               }
             );
             if (!data.status) {
-              removeCookie("jwt");
+              removeCookie("adminjwt");
               navigate("/admin/login");
             } else {
               toast(`welcome.... ${data.user} `, {
@@ -48,7 +48,7 @@ function Topbar() {
   
 
   const logOut =()=>{
-      removeCookie("jwt")
+      removeCookie("adminjwt")
       navigate('/admin/login')
   }
 

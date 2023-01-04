@@ -81,7 +81,7 @@ module.exports.Adminlogin = async(req,res,next)=> {
 
           const token = createToken(user._id);
   
-          res.cookie("jwt",token,{
+          res.cookie("adminjwt",token,{
               withCrdentials:true,
               httpOnly:false,
               message:maxAge * 1000,

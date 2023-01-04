@@ -49,7 +49,7 @@ export default function SignIn() {
       );
       if (data) {
         if (data.errors) {
-          console.log("data",data);
+          
           const { email, password } = data.errors;
           if (email) generateError(email);
           else if

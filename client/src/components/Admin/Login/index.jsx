@@ -26,7 +26,7 @@ export default function SignIn() {
   const [cookies] = useCookies([]);
   const navigate = useNavigate();
   useEffect(() => {
-    if (cookies.jwt) {
+    if (cookies.adminjwt) {
       navigate("/admin");
     }
   },[cookies,navigate] );

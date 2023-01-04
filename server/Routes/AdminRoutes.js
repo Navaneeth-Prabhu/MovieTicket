@@ -1,5 +1,6 @@
 const { Adminlogin , addStaff,getStaff,blockStaff,unblockStaff,TheaterList,approve,reject} = require("../Controllers/AdminControllers")
 const {addMovieInfo ,addmovie} = require("../Controllers/MovieControllers")
+const {getTheater} = require("../Controllers/messageController")
 const router = require("express").Router();
 
 const multer = require("multer");
@@ -27,6 +28,7 @@ router.get('/block/:id',blockStaff)
 router.get('/unblock/:id',unblockStaff)
 router.get('/approveTheater/:id',approve)
 router.get('/rejectTheater/:id',reject)
+router.get('/allTheater',getTheater)
 
 
 router.post("/movieinfo", addMovieInfo);
