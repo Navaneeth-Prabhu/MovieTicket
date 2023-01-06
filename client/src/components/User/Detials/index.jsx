@@ -6,7 +6,7 @@ function Index() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const data = JSON.parse(queryParams.get('data'));
-  console.log("asfdasdfasdfasDF",data);
+  // console.log("asfdasdfasdfasDF",data);
   return (
     <>
       {/* <div className="movieBanner">

@@ -13,25 +13,22 @@ body {
   margin: 0;
   padding: 0;
 } */
-.card{
-  min-width: 240px;
-  /* padding: 10px !important; */
-}
+
 
 
 .swiper {
-  width: 100%;
-  /* height: 500px; */
-  margin-bottom: 100px;
+  /* width: 100%; */
+  /* height: 600px; */
+  /* margin-bottom: 100px; */
 }
 
 .swiper-slide {
-  /* text-align: center; */
+  /* max-width: 500px; */
   font-size: 18px;
-  /* background: #fff; */
+  
   margin-bottom: 100px;
 
-  /* Center slide text vertically */
+
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -46,12 +43,12 @@ body {
   align-items: center;
 }
 
-.swiper-slide img {
+/* .swiper-slide img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} */
 .cardContent{
     padding-top: 1rem;
     line-height: 1rem;
@@ -80,9 +77,16 @@ body {
     }
     
   }
-  @media only screen and (max-width: 860px) {
+  @media only screen and (max-width: 480px) {
 
-    
+    .card {
+      height: 250 !important;
+      width: 50% !important;
+      margin-top: 20px;
+      font-family: Roboto, sans-serif;
+      transition: .3s;
+      cursor: pointer;
+    }
   }
 
   .swiper-button-prev {
@@ -119,4 +123,25 @@ body {
   }
   .swiper-button-next::after {
     display: none;
+  }
+  .card {
+    max-width: 240px;
+
+    width: 90%;
+    margin-top: 20px;
+    font-family: Roboto, sans-serif;
+    transition: .3s;
+    cursor: pointer;
+    height: 350px;
+  }
+
+  
+  .card img {
+    
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+  }
+  .swiper-slide{
+    height: max-content;
   }

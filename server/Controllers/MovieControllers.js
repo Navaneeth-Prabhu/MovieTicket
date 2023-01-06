@@ -48,8 +48,29 @@ const getImages = asyncHandler(async(req, res) => {
   
   const getMovieInformation = asyncHandler(async(req,res)=>{
       try {
-        let id = req.params.id;
+        // let id = req.params.id;
         // console.log("iddddddddddddddd",id);
+         const movie = await Movie.find({})
+        //  console.log(movie)
+         res.status(200).json(movie)
+      } catch (error) {
+          console.log(error)
+      }
+  })
+  const getMovie = asyncHandler(async(req,res)=>{
+      try {
+        let id = req.params.id;
+        console.log("iddddddddddddddd",id);
+         const movie = await Movie.find({_id:id})
+        //  console.log(movie)
+         res.status(200).json(movie)
+      } catch (error) {
+          console.log(error)
+      }
+  })
+  const allMovie = asyncHandler(async(req,res)=>{
+      try {
+        
          const movie = await Movie.find({})
         //  console.log(movie)
          res.status(200).json(movie)
@@ -63,5 +84,7 @@ module.exports = {
     addmovie,
     addMovieInfo,
     getImages,
-    getMovieInformation
+    getMovieInformation,
+    getMovie,
+    allMovie
 }

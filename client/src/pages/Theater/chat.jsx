@@ -29,7 +29,7 @@ function Chat() {
         const token = cookies.jwt;
         const decoded = await jwt_decode(token);
         setCurrentUser(decoded.id);
-        console.log("theaterrrrrr",decoded.id)
+       
     }
     setUser()
   }, []);
@@ -47,11 +47,11 @@ function Chat() {
     async function fetchData(){
       const token = cookies.jwt;
       const decoded = await jwt_decode(token);
-      console.log("jwt",decoded.id)
+     
       const id =(decoded.id)
-      // console.log("state",currentUser);
+      
       const data = await axios.get(`http://localhost:3001/theater/allAdminStaff`);
-      // console.log(data);
+   
       setContacts(data.data)
     }
     fetchData();

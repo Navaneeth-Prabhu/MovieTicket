@@ -10,18 +10,21 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import "./index.css";
+import "./slider.css";
 
 // import required modules
 import { Navigation } from "swiper";
 import { MovieContext } from "../../../context/movieContext";
+import { useDispatch } from "react-redux";
+import { movieInfo } from "../../../redux/actions/movieAction";
 
 export default function Slider() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   // const [movieDet, setmovieDet] = useState('')
 
-  const{setMovieDetails} = useContext(MovieContext)
+  // const{setMovieDetails} = useContext(MovieContext)
+  const dispatch = useDispatch()
 
   // const details = () => {
   //   // axios.get(`http://localhost:3001/movieDetails/${id}`)
@@ -64,9 +67,9 @@ export default function Slider() {
     {/* <div className="cards"> */}
 
       <Swiper
-        slidesPerView={5}
-        spaceBetween={5}
-        slidesPerGroup={5}
+        slidesPerView={4}
+        spaceBetween={4}
+        slidesPerGroup={4}
         speed={600}
         pagination={{
           clickable: false,
@@ -78,7 +81,7 @@ export default function Slider() {
         breakpoints={{
             0:{
                 slidesPerView:2,
-                spaceBetween:5,
+                spaceBetween:2,
                 slidesPerGroup:2,
             },
             480:{
@@ -92,38 +95,38 @@ export default function Slider() {
                 spaceBetween:15
             },
             1240:{
-              slidesPerGroup:5,
-                slidesPerView:5,
-                spaceBetween:5
+              slidesPerGroup:4,
+                slidesPerView:4,
+                spaceBetween:4
             }
         }}
       >
-        <SwiperSlide>
-
           {" "}
           {data.map((movie) => (
+        <SwiperSlide>
+
         
      
-          <div className="card" onClick={() => {setMovieDetails(movie) 
+          {/* <div className="card" onClick={() => {setMovieDetails(movie)  */}
+          <div className="card" onClick={() => {dispatch(movieInfo(movie)) 
           navigate(`/moviedetails/${movie._id}`) }}>
-            <div className="cardImage">
+      
               <img
                 // src={`https://aws-movieticket-bucket.s3.amazonaws.com/${movie._id}.jpg`}
-                // src={`../../../images/${movie._id}.jpg`}
-                // src={}
                 src={require(`../../../../../server/public/movies/${movie._id}.jpg`)}
                 alt=""
               />
-            </div>
+            
             <div className="cardContent">
               <p className="title">{movie.title}</p>
-              {/* <p className="title">{m}</p> */}
               <p className="description">{movie.Genre}</p>
               <p className="description">asdfasdf</p>
             </div>
           </div>
-           ))}
+           
         </SwiperSlide>
+           ))}
+       
        
       </Swiper>
     {/* </div> */}

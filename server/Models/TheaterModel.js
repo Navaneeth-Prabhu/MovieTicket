@@ -66,3 +66,4 @@ theaterSchema.statics.login = async function(email,password){
 
 
 module.exports = mongoose.model("Theaters",theaterSchema)
+

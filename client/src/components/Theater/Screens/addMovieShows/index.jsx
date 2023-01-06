@@ -14,7 +14,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
-
+import dayjs from 'dayjs';
+import Stack from '@mui/material/Stack';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import InputLabel from "@mui/material/InputLabel";
 
 import { useForm } from "react-hook-form";
@@ -58,6 +63,11 @@ const navigate = useNavigate()
   const [status,setstatus] = useState()
   const [screen,setscreen] = useState([])
   const [sname,setsname] = useState()
+  const [value, setValue] = useState(dayjs(new Date()));
+
+  const handleChangeDate = (newValue) => {
+    setValue(newValue);
+  };
 console.log(screen);
 
   const handleChange = (event) => {
@@ -181,6 +191,17 @@ console.log(screen);
                     )}
                   </span>
                 </div>
+              </Grid>
+              <Grid item lg={6} xs={12}>
+                
+                {/* <DesktopDatePicker
+          label="Date desktop"
+          inputFormat="MM/DD/YYYY"
+          value={value}
+          onChange={handleChangeDate}
+          renderInput={(params) => <TextField {...params} />}
+        />
+                 */}
               </Grid>
               <Grid item lg={6} xs={12}>
                 <div>

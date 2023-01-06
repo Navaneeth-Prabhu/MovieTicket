@@ -6,7 +6,7 @@ import {
   import axios from "../axios/axios";
   
   export const registration = (datas) => async (dispatch) => {
-      console.log(datas)
+      // console.log(datas)
     try {
       dispatch({ type: USER_LOGIN_REQUEST });
       let { data } = await axios.post("/api/users/signup", datas);

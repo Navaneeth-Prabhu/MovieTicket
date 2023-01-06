@@ -17,6 +17,7 @@ import UserProfile from './pages/User/Profile';
 // import Details from './pages/User/MovieDetials';
 import Details from './pages/User/Detail/Detail';
 import Trailler from "./pages/User/Trailler";
+import ShowTime from "./pages/User/ShowTime";
 
 
 import Theaterhome from './pages/Theater/Home'
@@ -42,9 +43,10 @@ function Routess() {
 
         <Route exact path ="/" element = {<Userhome/>} />
         <Route exact path ="/moviedetails/:id" element = {<Details/>} />
+        <Route exact path ="/moviedetails/:id" element = {<Details/>} />
         <Route exact path ="/movie/trailler" element = {<Trailler/>} />
         <Route exact path ="/profile" element = {<UserProfile/>} />
-        
+        <Route exact path="/buytickets/:id/select_screen" element={<ShowTime />} /> 
 
 
 

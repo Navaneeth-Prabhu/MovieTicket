@@ -2,7 +2,6 @@
 import Banner from '../../components/User/Banner'
 import Navbar from '../../components/User/Navbar'
 import MovieRow from '../../components/User/MovieRow'
-import Slider from '../../components/User/Slider'
 import Slide from '../../components/User/Slider2'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -50,7 +49,8 @@ function Home() {
    <Banner/>
 
   
-   <Slider/>
+   <Slide/>
+   <Slide/>
    <Slide/>
 
 {/* </Movie> */}

@@ -1,36 +1,38 @@
-// import { combineReducers, createStore, applyMiddleware } from "redux";
-// import { userLoginReducer } from "./reducers/userReducer";
-// import { getMoviesReducer, movieInfo } from "./reducers/movieReducer";
+import { combineReducers, createStore, applyMiddleware } from "redux";
+// import { userLoginReducer } from "./redux/reducers/userReducer";
+import { getMoviesReducer, movieInfo } from "./redux/reducers/movieReducer";
 // import {
-//   approveTheater,
-//   fetchTheater,
-//   theaterLogin,
-//   theaterScreenAdd,
-//   screenList,
+// //   approveTheater,
+// //   fetchTheater,
+// //   theaterLogin,
+// //   theaterScreenAdd,
+// //   screenList,
 // } from "./reducers/theaterReducer";
-// import thunk from "redux-thunk";
+import thunk from "redux-thunk";
+import { dateInfoReducer } from "./redux/reducers/bookingReducer";
 
-// const reducer = combineReducers({
+const reducer = combineReducers({
 //   userLogin: userLoginReducer,
-//   getMovies: getMoviesReducer,
+  getMovies: getMoviesReducer,
 //   theaterLogin,
 //   getTheaters: fetchTheater,
 //   approveTheater,
 //   theaterScreenAdd,
 //   screenList,
-//   movieInfo,
-// });
+  movieInfo,
+  dateData:dateInfoReducer
+});
 
-// const userInfoFromStorage = localStorage.getItem("userInfo")
-//   ? JSON.parse(localStorage.getItem("userInfo"))
-//   : null;
+const userInfoFromStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
+  : null;
 
-//   const initialState = {
-//   userLogin: { userInfo: userInfoFromStorage },
-// };
+  const initialState = {
+  userLogin: { userInfo: userInfoFromStorage },
+};
 
-// const middleware = [thunk];
+const middleware = [thunk];
 
-// const store = createStore(reducer,initialState, applyMiddleware(...middleware));
+const store = createStore(reducer,initialState, applyMiddleware(...middleware));
 
-// export default store;
+export default store;

@@ -83,7 +83,7 @@ function Movies() {
     axios
       .get("/movieInfo")
       .then(({ data }) => {
-        console.log(data);
+        // console.log(data);
         setData(data);
       })
       .catch((error) => {

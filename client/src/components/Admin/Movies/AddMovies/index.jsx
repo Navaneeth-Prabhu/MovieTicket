@@ -45,7 +45,6 @@ function AddMoviess() {
     axios
       .post("/api/admin/movieinfo", data)
       .then(async(response) => {
-        console.log(response.data._id);
         let id = response.data._id
         await axios.post(`/api/admin/movieImage/upload/${id}`,formData,{
           headers: {

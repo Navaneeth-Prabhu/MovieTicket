@@ -86,7 +86,6 @@ module.exports.login = async(req,res,next)=> {
 
 module.exports.addScreen =async(req,res,next)=>{
   try {
-    
     const {name , row , col}=req.body
     const token = req.cookies.jwt;
     console.log(token);
@@ -103,22 +102,17 @@ module.exports.addScreen =async(req,res,next)=>{
     )
 
   } catch (error) {
-    console.log('error');
+    console.log('errorrr');
   }
 }
 
 module.exports.getScreen = async(req,res,next)=>{
   try {
-    const token = req.cookies.jwt;
-    // console.log(token);
-    decoded = jwt.decode(token)
-    id = decoded.id
-    console.log("decoded",decoded.id);
-   
+    let id = req.params.id;
+   console.log("iiiiiiiiiiiiiiddddddd",id);
     let screen = await User.findOne({_id:id})
     console.log(screen.Screen);
     res.json(screen.Screen)
-    // console.log(screen);
   } catch (error) {
     console.log(error);
   }
@@ -134,59 +128,44 @@ module.exports.getMovies = async(req,res,next)=>{
   }
 }
 
-module.exports.addShow = async(req,res,next)=>{
-  try {
-    console.log(req.body);
-    const {ShowTime , name , price, status, screen} = req.body
-    const token = req.cookies.jwt;
-    decoded = jwt.decode(token)
-    id = decoded.id
-    console.log(screen);
+// module.exports.addShow = async(req,res,next)=>{
+//   try {
+//     console.log(req.body);
+//     const {ShowTime , name , price, status, screen} = req.body
+//     const token = req.cookies.jwt;
+//     decoded = jwt.decode(token)
+//     id = decoded.id
+//     console.log(screen);
 
-    let show = await User.find({_id:id, "Screen.screenName":screen})
+//     let show = await User.find({_id:id, "Screen.screenName":screen})
 
-    console.log(show.length);
-    // show.length
-    if(show.length>0){
-      let theater = await User.findOneAndUpdate({_id:id , "Screen.screenName":screen},{$set:{"Screen.$.show":{
-        status:status, 
-        movie:name,
-        price:price,
-        ShowTime:ShowTime
-      }}})
-      console.log("set",theater);
-    }else{
+//     console.log(show.length);
+//     // show.length
+//     if(show.length>0){
+//       let theater = await User.findOneAndUpdate({_id:id , "Screen.screenName":screen},{$set:{"Screen.$.show":{
+//         status:status, 
+//         movie:name,
+//         price:price,
+//         ShowTime:ShowTime
+//       }}})
+//       console.log("set",theater);
+//     }else{
 
-      let theater = await User.findOneAndUpdate({_id:id },{$push:{"Screen.$.show":{
-        status:status, 
-        movie:name,
-        price:price,
-        ShowTime:ShowTime
-      }}})
-      console.log("push",theater);
-    }
+//       let theater = await User.findOneAndUpdate({_id:id },{$push:{"Screen.$.show":{
+//         status:status, 
+//         movie:name,
+//         price:price,
+//         ShowTime:ShowTime
+//       }}})
+//       console.log("push",theater);
+//     }
    
     
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-// module.exports.getAllTheater = async(req,res,next)=>{
-//   try {
-
-//     const token = req.cookies.jwt;
-//     // console.log(token);
-//     // decoded = jwt.decode(token)
-//     // id = decoded.id
-//     // console.log("its working")
-//     const user = await User.find({}).select(['email','theater','_id'])
-//     // const user = await User.find({})
-//     res.json(user)
 //   } catch (error) {
-//     console.log(error)
+//     console.log(error);
 //   }
 // }
+
 
 module.exports.getAllTheater = async (req, res, next) => {
   try {
@@ -199,5 +178,111 @@ module.exports.getAllTheater = async (req, res, next) => {
     return res.json(users);
   } catch (ex) {
     next(ex);
+  }
+};
+
+module.exports.getShowsInformation = async(req, res,next) => {
+  try {
+    console.log("hhhhhhhhhhhhelllllloooooo");
+    const date = req.params.date;
+    const day = req.params.day;
+    const id = req.params.id;
+    console.log(date, day, id);
+    const data = await User.find(
+      { "Screen.showInfo.movieName": id },
+      { "Screen.showInfo.$": 1, theater: 1 }
+    );
+    console.log("data",data);
+    let gotDate = [];
+    for (let i = 0; i < data.length; i++) {
+      // gotDate.push(data[i].theater)
+      const start = new Date(data[i].Screen[0].showInfo[0].startDate);
+      const end = new Date(data[i].Screen[0].showInfo[0].endDate);
+      console.log(start.getDate(),end.getDate())
+      if (date >= start.getDate() && date <= end.getDate()) {
+        console.log("helloo")
+        console.log(start.getDate())
+        console.log(end.getDate())
+        console.log(date)
+        gotDate.push({
+          theaterName: data[i].theater,
+          data: data[i].Screen[0].showInfo[0],
+        });
+      }
+    }
+    console.log("gotDate",gotDate);
+    res.json(gotDate);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.addShow = async (req, res) => {
+  try {
+    console.log(req.body);
+    const { id, screen, time, movieName, dateData } = req.body;
+    const data = await User.findOne({
+      Screen: { $elemMatch: { screenName: screen } },
+    }).select("Screen");
+    // console.log(data.Screen);
+    const gotScreen = data.Screen.filter((val) => val.screenName === screen);
+
+    const movieid = await User.findOne({
+      _id: req.body.theaterId,
+      Screen: {
+        $elemMatch: { showInfo: { $elemMatch: { movieName: movieName } } },
+      },
+    }).select("Screen");
+    console.log(movieid);
+    if (movieid) {
+      console.log("heeloo njan moviella");
+      for (let i = 0; i < req.body.dateData.length; i++) {
+        const hi = await User.updateOne(
+          {
+            _id:id,
+            Screen: {
+              $elemMatch: {
+                showInfo: { $elemMatch: { movieName: movieName } },
+              },
+            },
+          },
+          { $push: { "Screen.$.showInfo.0.dateData": req.body.dateData[i] } }
+        );
+
+        console.log(hi);
+      }
+    } else {
+      const updatingSeats = await User.updateOne(
+        {
+          _id: id,
+          Screen: { $elemMatch: { screenName: gotScreen[0].screenName } },
+        },
+        { $push: { "Screen.$.showInfo": req.body } }
+      );
+      console.log(updatingSeats);
+      res.json({ status: "true" });
+    }
+
+    // console.log(movieid.Screen[0].showInfo)
+
+    // console.log(gotScreen[0]);
+    // let date = [time]
+    // let seating = [];
+    // let seats = [];
+    // for (let i = 0; i < date.length; i++) {
+    //   let time = date[i];
+    //   for (let i = 0; i < gotScreen[0].row; i++) {
+    //     let arr = [];
+    //     let id = String.fromCharCode(i + 65);
+    //     for (let j = 0; j < gotScreen[0].Numbers; j++) {
+    //       arr.push({ index: `${id}${j + 1}`, isReserved: false, user: "" });
+    //     }
+    //     seats.push(arr);
+    //   }
+    //   seating.push({ time, seats });
+    // }
+    // console.log(seating);
+  } catch (error) {
+    console.log(error);
   }
 };

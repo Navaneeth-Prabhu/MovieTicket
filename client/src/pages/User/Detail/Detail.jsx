@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState,useContext } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import Navbar from "../../../components/User/Navbar";
 import { MovieContext } from "../../../context/movieContext";
@@ -11,13 +12,21 @@ const Detail = () => {
   const navigate = useNavigate()
   const{MovieDetails} = useContext(MovieContext)
   const { id } = useParams();
-  console.log(id)
+  // console.log("idddd",id)
+  const movieInfo = useSelector(state=>state.movieInfo)
+  const {movieInformation} = movieInfo
+  
+  
+  
+  // useEffect(() => {
+  //   async function getMovie(){
+  //     console.log("asdfhopiweh qowiehrower qwhr co");
 
-
-
-  useEffect(async() => {
-    await axios.get("")
-  }, []);
+  //     await axios.get(`http://localhost:3001/moviedetails/${id}`)
+  //   }
+  //   // await axios.get("moviedetails/")
+  //     getMovie()
+  // }, []);
 
   return (
     <>
@@ -31,16 +40,16 @@ const Detail = () => {
       {/* <div className="banner" style={{backgroundImage: `url(${apiConfig.originalImage(item.backdrop_path || item.poster_path)})`}}></div> */}
       <div className="mb-3 movie-content container">
         <div className="movie-content__poster" onClick={()=>navigate('/movie/trailler')}>
-          <img
-            className="movie-content__poster img"
-            src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
-            alt=""
-          />
+        <img 
+                // src={`https://aws-movieticket-bucket.s3.amazonaws.com/${movie._id}.jpg`}
+                src={require(`../../../../../server/public/movies/${movieInformation._id}.jpg`)}
+                alt=""
+              />
             <div className="traillerbtn button">watch trailler</div>
           {/* <div className="movie-content__poster__img" style={{backgroundImage: `url(${apiConfig.originalImage(item.poster_path || item.backdrop_path)})`}}></div> */}
         </div>
         <div className="movie-content__info">
-          <h1 className="title">{MovieDetails.title}</h1>
+          <h1 className="title">{movieInformation.title}</h1>
           <div className="genres">
             {/* {
                                         
@@ -68,9 +77,12 @@ const Detail = () => {
               <h1>3d /2d</h1> <h2>english</h2>
             </div>
           </div>
-          <div className="button">
+          <div className="button" onClick={()=>navigate(`/buytickets/${movieInformation._id}/select_screen`)}>
+                <button>Book Tickets</button>
+              </div>
+          {/* <div className="button">
             Book Tickets
-          </div>
+          </div> */}
         </div>
       </div>
     </>

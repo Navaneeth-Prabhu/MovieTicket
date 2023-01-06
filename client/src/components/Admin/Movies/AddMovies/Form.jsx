@@ -56,7 +56,7 @@ export default function FormMovie() {
     formState: { errors },
   } = useForm();
 
-  console.log("asdfadfasdfasdf", errors);
+
 
   const onSubmit = async (data) => {
     console.log("asdfasdfasdf", data);
@@ -66,7 +66,7 @@ export default function FormMovie() {
     await axios
       .post("http://localhost:3001/admin/movieinfo", data)
       .then(async (response) => {
-        console.log(response.data._id);
+
         let id = response.data._id;
         axios
           .post(
@@ -78,9 +78,7 @@ export default function FormMovie() {
               },
             }
           )
-          .then(({ data }) => {
-            console.log(data);
-          });
+          .then(({ data }) => {});
         navigate("/admin/movies");
       })
       .catch((error) => {

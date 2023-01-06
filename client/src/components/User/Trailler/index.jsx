@@ -17,7 +17,7 @@ function Trailler() {
       try {
         const youtubeUrl = MovieDetails.youtubeLink;
         const videoId = youtubeUrl.split('v=')[1];
-        console.log("asdfasdfasdfasfasdf",videoId);
+        
         videoRef.current.src = `https://www.youtube.com/embed/${videoId}`;
       } catch (error) {
         console.error(error);

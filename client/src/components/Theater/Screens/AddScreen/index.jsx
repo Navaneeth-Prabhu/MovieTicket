@@ -122,7 +122,7 @@ export default function FormMovie() {
                     color="secondary"
                     type="number"
                     fullWidth
-                    onChange={handleChange}
+                
                     margin="1"
                     {...register("row", {
                       required: true,

@@ -39,7 +39,7 @@ export default function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-        console.log(values);
+        // console.log(values);
       const { data } = await axios.post(
         "/admin/login",values
         ,
