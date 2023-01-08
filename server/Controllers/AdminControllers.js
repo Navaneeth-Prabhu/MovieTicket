@@ -40,37 +40,6 @@ const handleErrors = (err) => {
   return errors;
 };
 
-// module.exports.Adminlogin = async(req,res,next)=> {
-
-//     try {
-//         // console.log("admin",req.body);
-//         const {email,password}=req.body;
-//         console.log(req.body);
-//         const admin = await Admin.findOne({email,password});
-//         console.log("aa",admin);
-//         if(!admin.block){
-//             // console.log("helooooooooooooooooooooooooooooooooooo");
-
-//             const token = createToken(admin._id);
-
-//             res.cookie("jwt",token,{
-//                 withCrdentials:true,
-//                 httpOnly:false,
-//                 message:maxAge * 1000,
-//             })
-//             res.status(200).json({admin:admin._id,created:true})
-//         }else{
-//             console.log("blocked")
-
-//             res.json({errors:"blocked",created:false})
-//         }
-//     } catch (err) {
-//         // console.log(err.message);
-//         const errors = handleErrors(err)
-//         console.log("errrr",errors);
-//         res.json({errors,created:false})
-//     }
-// };
 module.exports.Adminlogin = async(req,res,next)=> {
 
   try {
@@ -100,18 +69,6 @@ module.exports.Adminlogin = async(req,res,next)=> {
   }
 };
 
-// module.exports.Adminlogin = async (req, res) => {
-//   const { email, password } = req.body;
-//   try {
-//     const user = await Admin.login(email, password);
-//     const token = createToken(user._id);
-//     res.cookie("jwt", token, { httpOnly: false, maxAge: maxAge * 1000 });
-//     res.status(200).json({ user: user._id, status: true });
-//   } catch (err) {
-//     const errors = handleErrors(err);
-//     res.json({ errors, status: false });
-//   }
-// };
 module.exports.addStaff = async (req, res, next) => {
   try {
     const { email, password,name } = req.body;

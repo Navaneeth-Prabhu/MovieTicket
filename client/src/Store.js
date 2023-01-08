@@ -9,7 +9,7 @@ import { getMoviesReducer, movieInfo } from "./redux/reducers/movieReducer";
 // //   screenList,
 // } from "./reducers/theaterReducer";
 import thunk from "redux-thunk";
-import { dateInfoReducer } from "./redux/reducers/bookingReducer";
+import { dateInfoReducer, dateInformation } from "./redux/reducers/bookingReducer";
 
 const reducer = combineReducers({
 //   userLogin: userLoginReducer,
@@ -20,7 +20,8 @@ const reducer = combineReducers({
 //   theaterScreenAdd,
 //   screenList,
   movieInfo,
-  dateData:dateInfoReducer
+  dateData:dateInfoReducer,
+  dateInformationSelected:dateInformation,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

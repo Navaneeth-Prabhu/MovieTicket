@@ -145,3 +145,10 @@ body {
   .swiper-slide{
     height: max-content;
   }
+
+  .titleline{
+    border-image: linear-gradient(to right,#ff0c0c, rgba(78, 159, 12, 0)) 30;
+border-bottom: 3px;
+border-style: solid;
+margin-bottom: 12px;
+}

@@ -24,7 +24,9 @@ const movieSchema = new mongoose.Schema(
     youtubeLink:{
         type:String,  
     },
-
+    Review:{
+      type:Array
+    }
   },
   {
     timestamps: true,

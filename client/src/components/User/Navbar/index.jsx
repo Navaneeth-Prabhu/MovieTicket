@@ -1,102 +1,3 @@
-// import React, { useEffect } from "react";
-// import { useState } from "react";
-// import { Link } from "react-router-dom";
-// import Dropdown from "react-bootstrap/Dropdown";
-// import Modal from "../Register/index";
-// import "./index.css";
-
-// function Navbar({ user }) {
-//   const [click, setClick] = useState(false);
-//   const [button, setButton] = useState(true);
-//   const [openModal, setOpenModal] = useState(false);
-
-//   const logout = () => {
-//     window.open("http://localhost:3001/auth/logout", "_self");
-//   };
-
-//   const handleNav = () => {
-//     setClick(!click);
-//   };
-
-//   const closeMobileMenu = () => {
-//     setClick(false);
-//   };
-
-//   const showButton = () => {
-//     if (window.innerWidth <= 960) {
-//       setButton(false);
-//     } else {
-//       setButton(true);
-//     }
-//   };
-//   useEffect(() => {
-//     showButton();
-//   }, []);
-
-//   window.addEventListener("resize", showButton);
-
-//   return (
-//     <>
-//       <div className="navbar">
-//         <div className="navbar-container">
-//           <Link to="/" className="navbar-logo">
-//             MOVIE+
-//           </Link>
-//           <div className="menu-icon" onClick={handleNav}>
-//             <i className={click ? "fas fa-times" : "fas fa-bars"} />
-//           </div>
-//           <ul className={click ? "nav-menu active" : "nav-menu"}>
-//             <li className="nav-item">
-//               <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-//                 Home
-//               </Link>
-//             </li>
-//             <li className="nav-item">
-//               <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-//                 New Releases
-//               </Link>
-//             </li>
-//             <li className="nav-item">
-//               <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-//                 Stream
-//               </Link>
-//             </li>
-
-//             {user ? (
-//               <li className="nav-item">
-//                 <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-//                   <Dropdown>
-//                     <Dropdown.Toggle variant="success">
-//                       {user.displayName}
-//                     </Dropdown.Toggle>
-
-//                     <Dropdown.Menu>
-//                       <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
-//                     </Dropdown.Menu>
-//                   </Dropdown>
-//                 </Link>
-//               </li>
-//             ) : (
-//               <li  className="nav-item">
-//                 {button && (
-//                   <li className="nav-links">
-//                     <Modal
-//                       open={openModal}
-//                       onClose={() => setOpenModal(false)}
-//                     />
-//                   </li>
-//                 )}
-//               </li>
-//             )}
-//           </ul>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-
-// export default Navbar;
-
 import React, { useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
@@ -109,8 +10,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import LocalActivitySharpIcon from '@mui/icons-material/LocalActivitySharp';
+import ContactSupportSharpIcon from '@mui/icons-material/ContactSupportSharp';
+import SettingsSharpIcon from '@mui/icons-material/SettingsSharp';
 import { Box } from "@mui/system";
 import Dropdown from "react-bootstrap/Dropdown";
 
@@ -138,20 +41,22 @@ const headerNav = [
 ];
 const listItems = [
   {
-    // listIcon: <Home />,
-    listText: "Home"
+    listIcon: <AccountCircleRoundedIcon />,
+    listText: "Profile",
+    path:"/profile"
   },
   {
-    // listIcon: <AssignmentInd />,
-    listText: "Resume"
+    listIcon: <LocalActivitySharpIcon />,
+    listText: "Your Orders",
+    path:"/orderhistory"
   },
   {
-    // listIcon: <Apps />,
-    listText: "Portfolio"
+    listIcon: <ContactSupportSharpIcon />,
+    listText: "Help & Support",
   },
   {
-    // listIcon: <ContactMail />,
-    listText: "Contacts"
+    listIcon: <SettingsSharpIcon />,
+    listText: "Account & Settings"
     
   }
 ];
@@ -217,30 +122,20 @@ function Navbar({ user }) {
         {listItems.map((text, index) => (
           <ListItem key={text} disablePadding>
             <Divider />
+            <Link to={text.path}>
             <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <ListItemIcon sx={{color:'white'}}>
+                {text.listIcon}
               </ListItemIcon>
               <ListItemText primary={text.listText} />
             </ListItemButton>
+              </Link>
             
           </ListItem>
         ))}
       </List>
-        <Button onClick={logout} variant="outlined" sx={{bottom:1}}>LogOut</Button>
-      {/* <Divider /> */}
-      {/* <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List> */}
+        <Button onClick={logout} variant="outlined" sx={{bottom:1,margin:1,border:1.5,color:'white'}}>LogOut</Button>
+
       </Box>
     </Box>
   );
@@ -282,35 +177,14 @@ function Navbar({ user }) {
 
           {user ? (
             <li className="nav-item">
-              {/* <Link to="/" className="nav-links" onClick={closeMobileMenu}> */}
-              {/* <Dropdown> */}
 
-                {/* <Dropdown.Toggle onClick={toggleSlider} variant="success"> */}
-                  {/* {user.displayName} */}
-                {/* </Dropdown.Toggle> */}
-                
-                {/* <React.Fragment key={anchor}> */}
-
-          <div onClick={toggleDrawer()}>{user.displayName}</div>
+          <div onClick={toggleDrawer()}>{user.name}</div>
           <SwipeableDrawer
           open={open} anchor="right" onClose={toggleDrawer()} onOpen={toggleDrawer()}
           sx={{borderRadius:'20px 20px 0 0'}}
           >
             {list()}
           </SwipeableDrawer>
-        {/* </React.Fragment> */}
-
-            {/* <Drawer open={open} anchor="right" onClose={toggleSlider}>
-              {sideList()}
-            </Drawer> */}
-                
-
-
-                {/* <Dropdown.Menu>
-                  <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
-                </Dropdown.Menu> */}
-              {/* </Dropdown> */}
-              {/* </Link> */}
             </li>
           ) : (
             <li className="nav-item">

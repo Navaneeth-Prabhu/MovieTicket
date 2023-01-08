@@ -14,6 +14,7 @@ import AdminChat from './pages/Admin/chat'
 
 import Userhome from './pages/User/Home';
 import UserProfile from './pages/User/Profile';
+import OrderHistory from './pages/User/OrderHistory';
 // import Details from './pages/User/MovieDetials';
 import Details from './pages/User/Detail/Detail';
 import Trailler from "./pages/User/Trailler";
@@ -46,6 +47,7 @@ function Routess() {
         <Route exact path ="/moviedetails/:id" element = {<Details/>} />
         <Route exact path ="/movie/trailler" element = {<Trailler/>} />
         <Route exact path ="/profile" element = {<UserProfile/>} />
+        <Route exact path ="/orderhistory" element = {<OrderHistory/>} />
         <Route exact path="/buytickets/:id/select_screen" element={<ShowTime />} /> 
 
 

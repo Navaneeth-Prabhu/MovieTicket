@@ -4,12 +4,12 @@ import { BsHeartFill, BsCircleFill } from "react-icons/bs";
 import { VscDeviceMobile } from "react-icons/vsc";
 import { IoFastFoodOutline } from "react-icons/io5";
 import styles from "../../../components/User/Cinemas.module.css";
-// import { handleAddingSeatingData, handleSelectNameTime } from "../../Redux/booking_details/actions";
+import { handleAddingSeatingData, handleSelectNameTime } from "../../../redux/actions/bookingAction";
 // import 'antd/dist/antd.css';
 import { Modal, Button } from "antd";
 import Seating from "../../../components/User/Seating/index";
 // import Seating from "../Seating";
-// import SummaryPage from "../../Pages/SummeryPage"
+import SummaryPage from "../../../components/User/SummaryPage";
 
 function ShowTimePage({ filters }) {
   const cinemas_data = useSelector((state) => state.movieInfo);
@@ -18,7 +18,7 @@ function ShowTimePage({ filters }) {
   const date_data = useSelector((state) => state.dateData);
 
   const { dateInfo } = date_data;
-  console.log(dateInfo);
+  console.log("dateinfo",dateInfo);
   //   console.log(dateInfo[0].Screen[0]);
 
   // for (let i = 0; i < dateInfo.length; i++) {
@@ -90,19 +90,19 @@ function ShowTimePage({ filters }) {
   };
 
   const handleClick = (name, time) => {
-    // dispatch(handleSelectNameTime(name, time))
+    dispatch(handleSelectNameTime(name, time))
     showModal();
   };
 
   const handleCloseSeatingModal = (seatingData) => {
     setSeatingModalOpen(false);
-    // setFoodModalOpen(true);
-    // dispatch(handleAddingSeatingData(seatingData));
+    setFoodModalOpen(true);
+    dispatch(handleAddingSeatingData(seatingData));
   };
 
-  // const handleCloseFoodModal = () => {
-  //     setFoodModalOpen(false)
-  // }
+  const handleCloseFoodModal = () => {
+      setFoodModalOpen(false)
+  }
 
   const handleCloseSeatingButton = () => {
     setSeatingModalOpen(false);
@@ -110,7 +110,8 @@ function ShowTimePage({ filters }) {
   return seatingModalOpen ? <Seating handleCloseSeatingButton={handleCloseSeatingButton} seatingActive={seatingModalOpen} handleCloseSeatingModal={handleCloseSeatingModal} /> : (
 //   return (
     <div className={styles.container}>
-      {/* <SummaryPage foodModalOpen={foodModalOpen} handleCloseFoodModal={handleCloseFoodModal} /> */}
+      <SummaryPage foodModalOpen={foodModalOpen} handleCloseFoodModal={handleCloseFoodModal} />
+      {/* <SummaryPage/> */}
       <Modal
         title="Terms & Conditions"
         open={visible}
@@ -186,7 +187,7 @@ function ShowTimePage({ filters }) {
         </div>
       </div>
       <div style={{ padding: "15px" }}>
-        {dateInfo?.map((time, index) => {
+        {dateInfo.data?.map((time, index) => {
             return(
                <div key={time.theaterName} className={styles.container__card}>
             <div className={styles.container__card__title}>

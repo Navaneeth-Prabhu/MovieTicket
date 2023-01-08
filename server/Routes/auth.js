@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { session } = require("passport");
 const passport = require("passport");
 
 const CLIENT_URL = "http://localhost:3000/";
@@ -6,13 +7,12 @@ const CLIENT_URL = "http://localhost:3000/";
 router.get("/login/success", (req, res) => {
   try {
     if (req.user) {
-     
-      // console.log(req.user);
+      // console.log("login success ",req.user.emails[0].value);
       res.status(200).json({
         success: true,
         message: "successfull",
         user: req.user,
-        //cookies: req.cookies
+        // cookies: req.cookies
       });
     }
   } catch (error) {
@@ -28,11 +28,13 @@ router.get("/login/failed", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  req.logout();
+  res.clearCookie('session')
+  // req.logout()
   res.redirect(CLIENT_URL);
+
 });
 
-router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+router.get("/google", passport.authenticate("google", { scope: ["profile","email"] }));
 
 router.get(
   "/google/callback",

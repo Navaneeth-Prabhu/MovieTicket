@@ -128,44 +128,6 @@ module.exports.getMovies = async(req,res,next)=>{
   }
 }
 
-// module.exports.addShow = async(req,res,next)=>{
-//   try {
-//     console.log(req.body);
-//     const {ShowTime , name , price, status, screen} = req.body
-//     const token = req.cookies.jwt;
-//     decoded = jwt.decode(token)
-//     id = decoded.id
-//     console.log(screen);
-
-//     let show = await User.find({_id:id, "Screen.screenName":screen})
-
-//     console.log(show.length);
-//     // show.length
-//     if(show.length>0){
-//       let theater = await User.findOneAndUpdate({_id:id , "Screen.screenName":screen},{$set:{"Screen.$.show":{
-//         status:status, 
-//         movie:name,
-//         price:price,
-//         ShowTime:ShowTime
-//       }}})
-//       console.log("set",theater);
-//     }else{
-
-//       let theater = await User.findOneAndUpdate({_id:id },{$push:{"Screen.$.show":{
-//         status:status, 
-//         movie:name,
-//         price:price,
-//         ShowTime:ShowTime
-//       }}})
-//       console.log("push",theater);
-//     }
-   
-    
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
 
 module.exports.getAllTheater = async (req, res, next) => {
   try {
@@ -235,7 +197,6 @@ module.exports.addShow = async (req, res) => {
     }).select("Screen");
     console.log(movieid);
     if (movieid) {
-      console.log("heeloo njan moviella");
       for (let i = 0; i < req.body.dateData.length; i++) {
         const hi = await User.updateOne(
           {

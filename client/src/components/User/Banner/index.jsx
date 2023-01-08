@@ -45,13 +45,13 @@ function Index() {
 
               
           <div class="top-left">
-            <h1>joker</h1>
+            {/* <h1>joker</h1>
             <p className="discription">
            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores quos
            consectetur nisi impedit laudantium numquam aperiam expedita et eius
            quibusdam, dignissimos iure cum fugiat ipsum. Exercitationem iusto
            ducimus animi alias.
-         </p> 
+         </p>  */}
           </div>
           </div>
         {/* <div className="bannerImage" style={{width:'100%',height:'500px'}}>
