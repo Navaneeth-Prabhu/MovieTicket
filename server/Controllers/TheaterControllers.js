@@ -145,7 +145,7 @@ module.exports.getAllTheater = async (req, res, next) => {
 
 module.exports.getShowsInformation = async(req, res,next) => {
   try {
-    console.log("hhhhhhhhhhhhelllllloooooo");
+
     const date = req.params.date;
     const day = req.params.day;
     const id = req.params.id;
@@ -172,7 +172,7 @@ module.exports.getShowsInformation = async(req, res,next) => {
         });
       }
     }
-    console.log("gotDate",gotDate);
+    // console.log("gotDate",gotDate);
     res.json(gotDate);
   } catch (error) {
     console.log(error);

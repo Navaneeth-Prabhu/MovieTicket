@@ -21,6 +21,7 @@ import Modal from "../Register/index";
 // import { makeStyles } from '@material-ui/styles';
 
 import "./nav.scss";
+import { useSelector } from "react-redux";
 
 // import logo from '../../assets/tmovie.png';
 
@@ -63,6 +64,10 @@ const listItems = [
 
 
 function Navbar({ user }) {
+  const userLogin = useSelector((state) => state.userLogin);
+  // const { userInfo } = userLogin;
+  console.log("userinfoooo",userLogin);
+
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const [openModal, setOpenModal] = useState(false);

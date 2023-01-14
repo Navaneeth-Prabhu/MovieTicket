@@ -9,10 +9,9 @@ import Typography from "@mui/material/Typography";
 import Slide from "@mui/material/Slide";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ClearIcon from '@mui/icons-material/Clear';
-// import styles from "../styles/summery.css";
-import styles from '../styles/summery.css';
+import styles from "../styles/summery.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import PaymentsPage from "../../User/PaymentPage/index";
+import PaymentsPage from "../PaymentPage/index";
 import { handleAddTotalPrice } from "../../../redux/actions/bookingAction";
 // import Food from '../Components/SummeryPage/Food';
 
@@ -22,8 +21,10 @@ function SummaryPage({ foodModalOpen, handleCloseFoodModal }) {
   const [proceed, setProceed] = React.useState(false);
 //   const city = useSelector((state) => state.app.city);
 //   const foodArray = useSelector((state) => state.food.foodArray);
-  const booking_details = useSelector((state) => state.dateInformationSelected);
-  console.log(booking_details)
+const booking_details = useSelector(state=>state.dateInformationSelected)  
+const movieInformation = useSelector(state => state.movie)
+console.log("summery pag................e" ,movieInformation)
+const {movie,loading} = movieInformation
   const dispatch = useDispatch();
 //   React.useEffect(() => {
 //     let sum = 0;
@@ -37,7 +38,6 @@ function SummaryPage({ foodModalOpen, handleCloseFoodModal }) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-  // console.log(foodArray, totalFood)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -55,10 +55,7 @@ function SummaryPage({ foodModalOpen, handleCloseFoodModal }) {
     setProceed(true);
   };
   return (
-    <div>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open full-screen dialog
-      </Button> */}
+    <div className="">
       <Dialog
         fullScreen
         open={foodModalOpen}
@@ -76,7 +73,7 @@ function SummaryPage({ foodModalOpen, handleCloseFoodModal }) {
               <ChevronLeftIcon />
             </IconButton>
             <Typography variant="h6" style={{ flex: 1, color: "white" }}>
-              {booking_details.movie_name}
+              {movie?.title}
             </Typography>
             <Button autoFocus color="inherit" onClick={handleCloseFoodModal}>
               <ClearIcon />
@@ -91,11 +88,11 @@ function SummaryPage({ foodModalOpen, handleCloseFoodModal }) {
             <div>Booking Summery</div>
             <div className={styles.categories}>
               <div style={{ textTransform: "uppercase" }}>
-                {booking_details.cinemas_name}
+                {booking_details.dateInfo?.name}
               </div>
               <div>Rs {booking_details.price}</div>
             </div>
-            <span>AUDI 5</span>
+            <span>{booking_details.dateInfo?.screen}</span>
             <div className={styles.categories}>
               <div style={{ fontSize: "12px", lineHeight: "25px" }}>
                 Internet handeling fees
@@ -151,7 +148,7 @@ function SummaryPage({ foodModalOpen, handleCloseFoodModal }) {
             </div>
             <div className={styles.cancellation_policy}>
               You can cancel the tickets 20 min(s) before the show. Refunds will
-              be done according to <a href="">Cancellation Policy</a>
+              be done according to Cancellation Policy
             </div>
           </div>
         </div>

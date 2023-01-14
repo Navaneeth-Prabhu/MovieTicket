@@ -85,32 +85,26 @@
 }
 
 .gradient {
-    background-color: #121212;
+    background-color: #1E1E1E;
     z-index: 1;
     /* -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(#121212), to(transparent)); */
-    -webkit-mask-image: linear-gradient(to left ,#121212 10%, transparent);
-    mask-image: linear-gradient #121212, transparent;
+    -webkit-mask-image: linear-gradient(to bottom ,#1E1E1E 10%, transparent);
+    mask-image: linear-gradient #1E1E1E, transparent;
   }
-  .topGradient{
-      background: #121212;
-    z-index: 1;
-    /* -webkit-mask-image: linear-gradient(to left ,#121212 10%, transparent); */
-    /* -webkit-mask-image: linear-gradient(180deg, rgba(42,41,41,1) 0%, rgba(40,39,39,0.8494748241093313) 30%, rgba(35,35,35,0.0035364487591911242) 100%);; */
-/* background: linear-gradient(180deg, rgba(42,41,41,1) 0%, rgba(40,39,39,0.8494748241093313) 30%, rgba(35,35,35,0.0035364487591911242) 100%); */
-  }
+
   .overlay {
     background-color: #181818;
     z-index: -11;
     /* -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(black), to(transparent)); */
-    -webkit-mask-image: linear-gradient(to bottom ,#121212 60%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom ,#1E1E1E 60%, transparent);
     mask-image: linear-gradient #121212, transparent;
   }
   .topGradient {
-    background-color: #181818;
-    z-index: -11;
+    background-color: #1E1E1E;
+    z-index: 11;
     /* -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(black), to(transparent)); */
-    -webkit-mask-image: linear-gradient(to top ,#121212 60%, transparent);
-    mask-image: linear-gradient #121212, transparent;
+    -webkit-mask-image: linear-gradient(to top ,#1E1E1E 50%, transparent);
+    mask-image: linear-gradient #1E1E1E, transparent;
   }
   .swiper {
     width: 100%;
@@ -155,9 +149,17 @@
   }
 
  .containerr {
-    
+    width: 100%;
     text-align: center;
     color: white;
+    max-height: 50rem;
+    /* min-height: 50rem; */
+  }
+
+  .containerr img{
+    width: max-content;
+    height: fit-content;
+    
   }
 
 
@@ -168,3 +170,4 @@
     text-align: center;
   }
   
+

@@ -9,6 +9,8 @@ import { useForm } from "react-hook-form";
 import axios from "../../../axios/axios";
 import Button from '@mui/material/Button';
 import { Experimental_CssVarsProvider } from "@mui/material";
+import { useDispatch,useSelector } from "react-redux";
+import { registration } from "../../../redux/actions/userAction";
 
 const style = {
   position: "absolute",
@@ -23,6 +25,9 @@ const style = {
 };
 
 function Modals() {
+  // const userLogin = useSelector((state) => state.userLogin);
+  // console.log("userloginnnnn",userLogin)
+  const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -44,16 +49,18 @@ function Modals() {
 
   const onSubmit = async (data) => {
     console.log(data);
-    axios.post("http://localhost:3001/signup", data).then((response) => {
-      console.log(response.data);
-      if (response.data.status) {
-        handleClose();
+    dispatch(registration(data))
+    // axios.post("http://localhost:3001/signup", data).then((response) => {
+    //   console.log(response.data);
+    //   if (response.data.status) {
+    //     handleClose();
         
-        navigate("/");
-      } else {
-        generateError(errors);
-      }
-    });
+    //     navigate("/");
+    //   } else {
+    //     generateError(errors);
+    //   }
+    // });
+    
   };
   console.log(errors);
   const helo = () => {

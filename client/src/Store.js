@@ -1,27 +1,20 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
-// import { userLoginReducer } from "./redux/reducers/userReducer";
-import { getMoviesReducer, movieInfo } from "./redux/reducers/movieReducer";
-// import {
-// //   approveTheater,
-// //   fetchTheater,
-// //   theaterLogin,
-// //   theaterScreenAdd,
-// //   screenList,
-// } from "./reducers/theaterReducer";
+import { userLoginReducer } from "./redux/reducers/userReducer";
+import { getMoviesReducer, movieInfo,movieInfoById ,theaterMovies } from "./redux/reducers/movieReducer";
 import thunk from "redux-thunk";
-import { dateInfoReducer, dateInformation } from "./redux/reducers/bookingReducer";
+import { dateInfoReducer, dateInformation ,seatInfomation,selectDateInfo} from "./redux/reducers/bookingReducer";
 
 const reducer = combineReducers({
-//   userLogin: userLoginReducer,
+  userLogin: userLoginReducer,
   getMovies: getMoviesReducer,
-//   theaterLogin,
-//   getTheaters: fetchTheater,
-//   approveTheater,
-//   theaterScreenAdd,
-//   screenList,
   movieInfo,
-  dateData:dateInfoReducer,
+  dateData :dateInfoReducer ,
   dateInformationSelected:dateInformation,
+  date:selectDateInfo,
+  seats:seatInfomation,
+  movie:movieInfoById,
+  theaterMovies,
+
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

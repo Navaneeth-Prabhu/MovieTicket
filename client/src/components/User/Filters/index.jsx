@@ -8,7 +8,7 @@ function Filter({ handleFilters, filters }) {
     <div
       style={{
         width:"100%",
-        backgroundColor: "white",
+        backgroundColor: "#1D1E22",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",

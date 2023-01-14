@@ -15,17 +15,14 @@ import "./slider.css";
 // import required modules
 import { Navigation } from "swiper";
 import { MovieContext } from "../../../context/movieContext";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { movieInfo } from "../../../redux/actions/movieAction";
 
 export default function Slider() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  // const [movieDet, setmovieDet] = useState('')
 
-  // const{setMovieDetails} = useContext(MovieContext)
   const dispatch = useDispatch();
-
 
   function handleClick(modetial) {
     // setmovieDet(modetial)
@@ -34,14 +31,16 @@ export default function Slider() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/movieInfo")
+      .get("http://localhost:3001/GetTheaterMovies")
       .then(({ data }) => {
         setData(data);
       })
+
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
 
   const [width, setWidth] = useState(window.innerWidth);
   const updateWidth = () => {
@@ -54,6 +53,9 @@ export default function Slider() {
         <div className="flex w-full content-center">
           <h2 className="text-2xl m-0 ml-4"> Streming now </h2>
           <div className="titleline flex-1 w-full m-0 ml-2"></div>
+          <div className="showmore" onClick={()=>{
+            navigate('/SeeAll')
+          }}><p>show all</p></div>
         </div>
         {/* <div className="cards"> */}
 
@@ -99,7 +101,7 @@ export default function Slider() {
               <div
                 className="card"
                 onClick={() => {
-                  dispatch(movieInfo(movie));
+                  // dispatch(movieInfo(movie));
                   navigate(`/moviedetails/${movie._id}`);
                 }}
               >
@@ -111,7 +113,7 @@ export default function Slider() {
 
                 <div className="cardContent">
                   <p className="title">{movie.title}</p>
-                  <p className="description">{movie.Genre}</p>
+                  <p className="description m-0">{movie.Genre}</p>
                   <p className="description">asdfasdf</p>
                 </div>
               </div>

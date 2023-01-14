@@ -62,7 +62,6 @@ global.onlineUsers= new Map();
 io.on("connection",(socket)=>{
     global.chatSocket = socket;
     socket.on('add-user',(userId)=>{
-        // console.log("userid",userId);
         global.onlineUsers.set(userId,socket.id)
         
     })
@@ -79,3 +78,4 @@ app.use('/admin',AdminRoute)
 app.use('/',UserRoute)
 app.use('/auth',authRouter)
 app.use('/message',MessageRouter)
+// app.use('/api/user',reservation)

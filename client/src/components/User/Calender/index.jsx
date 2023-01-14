@@ -4,20 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 
 import styles from "../Cinemas.module.css";
 import "react-multi-carousel/lib/styles.css";
-import { handleSelectDate } from "../../../redux/actions/bookingAction";
+import { handleSelectDate,selectDate } from "../../../redux/actions/bookingAction";
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 function Calendar() {
   let currentDate = new Date().getDate();
   let currentDay = new Date().getDay();
+  let currentMonth = new Date().getMonth();
+  let currentYear = new Date().getFullYear();
   let [selectedDate, setSelectedDate] = useState(0);
   const dispatch = useDispatch();
   const movieInfo = useSelector((state) => state.movieInfo);
-  const { movieInformation } = movieInfo;
-//   console.log(movieInformation);
-  // const date = useSelector(state => state.booking_details);
-//   console.log(selectedDate);
+  const { movie } = movieInfo.movieInformation;
 
-  // console.log(currentDay)
+
   let dates = [];
   let weekdays = [
     "Sunday",
@@ -32,11 +32,23 @@ function Calendar() {
     if (currentDate > 30) currentDate = 1;
     if (currentDay === 7) currentDay = 0;
 
-    dates.push({ date: currentDate, day: weekdays[currentDay] });
+    dates.push({
+      date: currentDate,
+      day: weekdays[currentDay],
+      month: currentMonth,
+      year: currentYear,
+    });
     currentDate++;
     currentDay++;
   }
-
+  // const CustomRightArrow = ({ onClick, ...rest }) => {
+  //   const {
+  //     onMove,
+  //     carouselState: { currentSlide, deviceType }
+  //   } = rest;
+  //   // onMove means if dragging or swiping in progress.
+  //   return <ArrowRightIcon onClick={() => onClick()} />;
+  // };
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -60,39 +72,51 @@ function Calendar() {
     setSelectedDate(index);
   };
   return (
-    <div style={{ width: 250 }}>
-      <Carousel
-        className={styles.arrow}
-        responsive={responsive}
-        removeArrowOnDeviceType={["mobile"]}
-      >
-        {dates?.map((item, index) => (
-          <div
-            className={styles.dateItem}
-            onClick={() => {
-              handleDateChange(index);
-              dispatch(handleSelectDate(dates[index].date, dates[index].day,movieInformation._id));
-            }}
+    <div  style={{ width: 250 }}>
+    <Carousel
+      className={styles.arrow}
+      // centerMode={true}
+      // customRightArrow={<CustomRightArrow />}
+      responsive={responsive}
+      removeArrowOnDeviceType={["mobile"]}
+    >
+      {dates?.map((item, index) => (
+        // console.log("item",item.month),
+        <div
+          className={styles.dateItem}
+          onClick={() => {
+            handleDateChange(index);
+            dispatch(
+              handleSelectDate(
+                dates[index].date,
+                dates[index].day,
+                // dates[index].month,
+                movie._id
+              )
+            );
+            dispatch(selectDate(dates[index].date, dates[index].day, dates[index].month, dates[index].year));
+          }}
+          style={
+            index === selectedDate
+              ? { backgroundColor: "", color: "white" ,border:"solid",borderColor:"rgb(29, 30, 34)", borderRadius:"0px" ,borderBottomColor:"red" ,borderTopColor:"red"}
+              : { backgroundColor: "transparent" }
+          }
+          key={item.date}
+        >
+          <p style={{color:'white',margin:0}}>{item.day.slice(0, 3)}</p>
+          <h2
             style={
-              index === selectedDate
-                ? { backgroundColor: "#FF1203", color: "white" }
-                : { backgroundColor: "transparent" }
+              index === selectedDate ? { color: "white" } : { color: "white" }
             }
-            key={item.date}
           >
-            <h2
-              style={
-                index === selectedDate ? { color: "white" } : { color: "black" }
-              }
-            >
-              {item.date}
-            </h2>
-            <p>{item.day.slice(0, 3)}</p>
-          </div>
-        ))}
-      </Carousel>
-    </div>
-  );
+            {item.date}
+          </h2>
+          {/* <p style={{color:'white'}}>{item.month.slice(0, 3)}</p> */}
+        </div>
+        
+      ))}
+    </Carousel>
+  </div>
+);
 }
-
 export default Calendar;

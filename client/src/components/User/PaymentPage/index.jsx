@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Slide from "@mui/material/Slide";
 import { useDispatch, useSelector } from "react-redux";
 import FirstSection from "./FirstSection";
-import styles from "./payment.css";
+import styles from "./payment.module.css";
 import SecondSection from "./SecondSection";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -16,6 +16,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Link, useNavigate } from "react-router-dom";
 
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import { postBookingDetails } from "../../../redux/actions/bookingAction";
 // import { getBookingDetails, postBookingDetails } from '../Redux/booking/action';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -38,16 +39,6 @@ const Counter = () => (
   </CountdownCircleTimer>
 );
 
-// const useStyles = makeStyles((theme) => ({
-//   appBar: {
-//     position: "relative",
-//     background: "#1F2533",
-//   },
-//   title: {
-//     marginLeft: theme.spacing(2),
-//     flex: 1,
-//   },
-// }));
 
 function PaymentsPage({ proceed }) {
   // const classes = useStyles();
@@ -55,22 +46,48 @@ function PaymentsPage({ proceed }) {
   // const city = useSelector((state) => state.app.city);
   // const booking_details = useSelector((state) => state.booking_details);
   const dispatch = useDispatch();
+
   const [counter, setCounter] = React.useState(true);
   const navigate = useNavigate();
-
+  const booking_details = useSelector((state) => state.dateInformationSelected);
+  const movieInfo = useSelector((state) => state.movieInfo);
+  const user = useSelector((state) => state.userLogin);
+  const selectDate = useSelector((state) => state.date);
+  const { date } = selectDate;
+  // const { userInfo } = user;
+  const { dateInfo, silver } = booking_details;
+  const { movie } = movieInfo.movieInformation;
   const handleClose = () => {
     setState(false);
   };
 
   const handlePayment = () => {
-    setState(true)
-      // dispatch(postBookingDetails(booking_details))
-      .then((res) => {
-        if (res) {
-          console.log("POSTED");
-          // dispatch(getBookingDetails());
-        }
-      });
+    setState(true);
+    const dates = new Date();
+    dates.setFullYear(date.year);
+    dates.setMonth(date.month); // 0 represents January
+    dates.setDate(date.date);
+
+    const isoString = dates.toISOString();
+    const dateOnly = isoString.substring(0, 10);
+    const data = {
+      cinemaId: dateInfo.theaterId,
+      cinemaScreen: dateInfo.screen,
+      startAt: dateInfo.time,
+      ticketPrice: "120",
+      seats: silver,
+      total: booking_details.price,
+      movieId: movie._id,
+      // phone: userInfo.phone,
+      showDate: dateOnly,
+      bookedDate: new Date(),
+    };
+    dispatch(postBookingDetails(data)).then((res) => {
+      if (res) {
+        console.log("POSTED");
+        // dispatch(getBookingDetails());
+      }
+    });
     setTimeout(() => {
       setCounter(false);
     }, 2000);
@@ -90,11 +107,9 @@ function PaymentsPage({ proceed }) {
       >
         <AppBar style={{ position: "relative", background: "#1F2533" }}>
           <Toolbar>
-            <Typography variant="h6" style={{ flex: 1,}}>
+            <Typography variant="h6" style={{ flex: 1 }}>
               <svg height="40" width="150">
-                <Link to="/">
-                  
-                </Link>
+                <Link to="/"></Link>
               </svg>
             </Typography>
           </Toolbar>
@@ -146,13 +161,24 @@ function PaymentsPage({ proceed }) {
           ) : (
             <div
               style={{
+                display:"flex",
+                flexDirection:"column",
+                alignItems:"center",
+                justifyContent:"center",
                 textAlign: "center",
                 color: "white",
-                background: "#F84464",
-                padding: "100px 50px",
+                background: "#FF1203",
+                padding: "10px",
                 borderRadius: "5px",
               }}
             >
+              <div className="qr">
+              <img
+                className="h-full w-full"
+                src={require(`../../../images/My_Gallery (1).png`)}
+                alt=""
+              />
+              </div>
               <h1>Congratulations!</h1>
               <div style={{ fontSize: "20px" }}>We have got your tickets</div>
             </div>

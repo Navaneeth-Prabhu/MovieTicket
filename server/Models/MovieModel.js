@@ -25,7 +25,10 @@ const movieSchema = new mongoose.Schema(
         type:String,  
     },
     Review:{
-      type:Array
+      type:Array,
+    },
+    Language:{
+      type:Array,
     }
   },
   {

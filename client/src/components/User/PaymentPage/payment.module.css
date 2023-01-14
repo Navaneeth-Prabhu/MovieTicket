@@ -20,7 +20,7 @@
 .contact > div:first-child,
 .cardDetails > div:first-child {
 	cursor: text;
-	background: #f84464;
+	background: #ff3124;
 	color: #fff;
 	font-size: 100%;
 	font-weight: 400;
@@ -61,7 +61,7 @@
 	letter-spacing: 2px;
 	display: inline-block;
 	margin: 12px;
-	background: #f84464;
+	background: #ff3124;
 }
 
 .cardDetails {
@@ -146,7 +146,7 @@
 	margin: 10px 0;
 }
 .payment button {
-	background: #f84464;
+	background: #ff3124;
 	border-radius: 8px;
 	color: #fff;
 	font-weight: 500;
@@ -244,7 +244,7 @@
 	text-align: center;
 }
 .proceedBtn {
-	background: #f84464;
+	background: #FF1203;
 	color: #fff;
 	padding: 10px 10px;
 	margin: 15px 30px;

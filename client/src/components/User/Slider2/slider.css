@@ -16,12 +16,6 @@ body {
 
 
 
-.swiper {
-  /* width: 100%; */
-  /* height: 600px; */
-  /* margin-bottom: 100px; */
-}
-
 .swiper-slide {
   /* max-width: 500px; */
   font-size: 18px;
@@ -43,27 +37,24 @@ body {
   align-items: center;
 }
 
-/* .swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-} */
+
 .cardContent{
-    padding-top: 1rem;
+    padding-top: .5rem;
     line-height: 1rem;
 
   }
+
   
   .cardContent .title{
     color: white;
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 1rem;
     font-weight: 400;
+    line-height: 1.5rem;
   }
   .description{
     color: gray;
-    font-size: 12px;
+    font-size: 14px;
   }
 
 
@@ -102,6 +93,7 @@ body {
     width: 40px !important;
     left: 0px !important;
     top: 40% !important;
+    /* visibility: hidden; */
   }
   .swiper-button-next {
 
@@ -116,8 +108,15 @@ body {
     width: 40px !important;
     right: 7px !important;
     top: 40% !important;
+    /* visibility: hidden; */
   }
 
+  /* .swiper-button-prev:hover {
+    visibility: visible;
+  }
+  .swiper-button-next:hover {
+    visibility: visible;
+  } */
   .swiper-button-prev::after {
     display: none;
   }
@@ -133,6 +132,7 @@ body {
     transition: .3s;
     cursor: pointer;
     height: 350px;
+   
   }
 
   
@@ -141,6 +141,10 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 10px;
+    background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(0,255,63,0) 100%); 
+    /* -webkit-mask-image: linear-gradient(to top, transparent 0%, black 10%); */
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, #121212 20%);
+    mask-image: linear-gradient(to bottom, transparent 25%, black 75%);
   }
   .swiper-slide{
     height: max-content;

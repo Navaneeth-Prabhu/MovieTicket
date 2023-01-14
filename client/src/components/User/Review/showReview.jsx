@@ -2,21 +2,32 @@ import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
+// import "swiper/css";
+// import "swiper/css/pagination";
 
-import "./carsole.css";
+// import "./carsole.css";
 import { Pagination } from "swiper";
 import { style } from "@mui/system";
 import StarIcon from "@mui/icons-material/Star";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-function ShowReview() {
-  const movieInfo = useSelector((state) => state.movieInfo);
-  const { movieInformation } = movieInfo;
+function ShowReview({movieInfo,submit}) {
+  
+  const { movie } = movieInfo;
+  const [review, setreview] = useState()
+  
 
-  console.log(movieInformation);
+  useEffect(() => {
+    async function getReview (){
+     const {data} = await axios.get(`http://localhost:3001/getAllReview/${movie._id}`)
+
+     setreview(data)
+      
+    }
+    getReview()
+  }, [submit])
+  
 
   return (
     <>
@@ -30,9 +41,9 @@ function ShowReview() {
           modules={[Pagination]}
           className="swiperr "
         >
-          {movieInformation.Review?.map((item, index) => (
-            <SwiperSlide className="bg-white">
-              <div className="flex flex-col w-full">
+          {review?.map((item, index) => (
+            <SwiperSlide className="bg-white max-h-35 rounded">
+              <div className="flex flex-col w-full max-h-38">
                 <div className="head flex justify-between text-black text-gray-800 w-full px-5">
                   <div className="user font-bold">User</div>
                   <div className="rating font-bold">

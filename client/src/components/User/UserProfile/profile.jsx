@@ -23,14 +23,7 @@ function profile() {
     <div className="profileBg">
       <h1>hellooo</h1>
       <Navbar>
-        {/* <List>
-                <ListItemButton>
-        <ListItemIcon>
-          <SendIcon />
-        </ListItemIcon>
-        <ListItemText primary="profile" />
-      </ListItemButton>
-                </List> */}
+
       </Navbar>
       <Container sx={{ display: "flex", justifyContent: "center" }}>
         <Box
@@ -41,6 +34,7 @@ function profile() {
             backgroundColor: "#232323",
             color: "white",
             borderRadius: "6px",
+            boxShadow:"rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px"
           }}
         >
           <Box
@@ -52,7 +46,8 @@ function profile() {
               borderRadius: "5px 5px 0 0",
               display:'flex',
               alignItems:'center',
-              padding:'30px'
+              padding:'30px',
+              boxShadow:"rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px"
             }}
           >
             Heading
@@ -70,15 +65,11 @@ function profile() {
                     style: {
                       borderColor: 'red',
                       border:'10px',
-                      color:'white'
+                      color:'white',
+                      boxShadow: "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
                     },
                   }}
-                // sx={{borderColor:'white'}}
-            //   color="error"
-            //   label="Soft"
-            // color="white"
-            // style={{borderColor:'white'}}
-            // color='white'
+
               variant="outlined"
               border='5px'
               fullWidth
@@ -94,7 +85,8 @@ function profile() {
                 </Grid>
                 <Grid item xs={4} md={8}>
                 <TextField
-                sx={{borderColor:'white'}}
+                sx={{borderColor:'white',
+                boxShadow: "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"}}
             //   color="error"
             //   label="Soft"
             

@@ -58,7 +58,7 @@
     /* position: absolute; */
     width: 100%;
     padding-top: 90px;
-    background-color: #fafafa;
+    background-color: #18181A;
     height: 92vh;
     overflow-x: scroll;
   }
@@ -107,6 +107,17 @@
   }
   
   .seats {
+    border: 1px solid #ffffff;
+    /* margin: 10px; */
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-size: 12px;
+    background-color: #DADADA;
+    color: #000000;
+  }
+  
+  /* .seats {
     border: 1px solid #1ea83c;
     margin: 10px;
     width: 20px;
@@ -115,10 +126,11 @@
     font-size: 12px;
     color: #1ea83c;
   }
-  
+   */
   .seats:hover {
-    border: 1px solid #1ea83c;
-    background-color: #1ea83c;
+    border: 1px solid #FF1203;
+    /* background-color: #1ea83c; */
+    background-color: #FF1203;
     color: #fafafa;
     cursor: pointer;
   }
@@ -133,10 +145,10 @@
   }
   
   .disable {
-    background-color: #fafafa;
-    color: #fafafa;
+    background-color: #18181A;
+    color: #18181A;
     border: none;
-    margin: 10px;
+    /* margin: 10px; */
     width: 20px;
     height: 20px;
     text-align: center;
@@ -146,17 +158,19 @@
   .reserved {
     background-color: gray;
     color: grey;
-    margin: 10px;
+    /* margin: 10px; */
     width: 20px;
     height: 20px;
     text-align: center;
     font-size: 12px;
+    pointer-events: none;
   }
   
   .select {
-    background-color: #1ea83c;
+    /* background-color: #1ea83c; */
+    background-color: #FF1203;
     color: #f5f5fa;
-    margin: 10px;
+    /* margin: 10px; */
     width: 20px;
     height: 20px;
     text-align: center;

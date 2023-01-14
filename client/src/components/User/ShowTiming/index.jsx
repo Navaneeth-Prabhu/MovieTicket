@@ -4,7 +4,7 @@ import { BsHeartFill, BsCircleFill } from "react-icons/bs";
 import { VscDeviceMobile } from "react-icons/vsc";
 import { IoFastFoodOutline } from "react-icons/io5";
 import styles from "../../../components/User/Cinemas.module.css";
-import { handleAddingSeatingData, handleSelectNameTime } from "../../../redux/actions/bookingAction";
+import { getSeatInformation,handleAddingSeatingData, handleSelectNameTime } from "../../../redux/actions/bookingAction";
 // import 'antd/dist/antd.css';
 import { Modal, Button } from "antd";
 import Seating from "../../../components/User/Seating/index";
@@ -12,38 +12,24 @@ import Seating from "../../../components/User/Seating/index";
 import SummaryPage from "../../../components/User/SummaryPage";
 
 function ShowTimePage({ filters }) {
-  const cinemas_data = useSelector((state) => state.movieInfo);
-  const { movieInformation } = cinemas_data;
-  // console.log(movieInformation);
+  const [gotTime,setGotTime] =useState('')
+  const movieInformation = useSelector(state => state.movieInfo)
+  const {movie} = movieInformation.movieInformation
+  console.log("mmmmmmoooooooooo",movie)
+  // const {movie,loading} = movieInformation
   const date_data = useSelector((state) => state.dateData);
 
   const { dateInfo } = date_data;
-  console.log("dateinfo",dateInfo);
-  //   console.log(dateInfo[0].Screen[0]);
-
-  // for (let i = 0; i < dateInfo.length; i++) {
-
-  // }
+  console.log('dateinfo',dateInfo);
 
   const dispatch = useDispatch();
-  //   const cinemas_data = useSelector(state => state.cinemas.cinemas_data);
-  // const date = useSelector(state => state.booking_details.date);
   const data = useSelector((state) => state.booking_details);
-  // const dispatch = useDispatch();
-  // console.log(cinemas_data);
-  let filteredData = cinemas_data;
+  
   const [seatingModalOpen, setSeatingModalOpen] = useState(false);
   const [foodModalOpen, setFoodModalOpen] = useState(false);
+  const selectDate = useSelector((state) => state.date);
+  const { date } = selectDate;
 
-  const handleFilter = () => {
-    if (filters.length) {
-      filteredData = cinemas_data?.filter((item) => {
-        return filters.indexOf(item.sub_region) >= 0;
-      });
-    }
-  };
-
-  handleFilter();
   React.useEffect(() => {
     window.scrollTo(window.scrollX, 0);
   }, [seatingModalOpen]);
@@ -60,7 +46,7 @@ function ShowTimePage({ filters }) {
     return strTime;
   }
 
-  useEffect(() => {}, []);
+  // useEffect(() => {}, []);
 
   const time = formatAMPM(new Date());
   const amOrPm = time[time.length - 2] + time[time.length - 1];
@@ -76,7 +62,23 @@ function ShowTimePage({ filters }) {
   };
 
   const handleOk = () => {
+    const dates = new Date();
+    dates.setFullYear(date.year);
+    dates.setMonth(date.month); // 0 represents January
+    dates.setDate(date.date);
+    const isoString = dates.toISOString();
+    const dateOnly = isoString.substring(0, 10);
+
+    console.log("dateOnly",dateOnly ,gotTime,movie._id);
     setConfirmLoading(true);
+    dispatch(
+      getSeatInformation(
+        dateOnly,
+        movie._id,
+        dateInfo[0].data.theaterId,
+        gotTime
+      )
+    );
     setTimeout(() => {
       setSeatingModalOpen(!seatingModalOpen);
       setVisible(false);
@@ -89,29 +91,40 @@ function ShowTimePage({ filters }) {
     setVisible(false);
   };
 
-  const handleClick = (name, time) => {
-    dispatch(handleSelectNameTime(name, time))
+  const handleClick = (name, time, screen, theaterId) => {
+    console.log("helooooooooooooooooooooooooooooooo",name, time);
+    setGotTime(time)
+    dispatch(handleSelectNameTime(name, time, screen, theaterId));
     showModal();
   };
 
   const handleCloseSeatingModal = (seatingData) => {
     setSeatingModalOpen(false);
     setFoodModalOpen(true);
+    console.log(seatingData);
     dispatch(handleAddingSeatingData(seatingData));
   };
 
   const handleCloseFoodModal = () => {
-      setFoodModalOpen(false)
-  }
+    setFoodModalOpen(false);
+  };
 
   const handleCloseSeatingButton = () => {
     setSeatingModalOpen(false);
   };
-  return seatingModalOpen ? <Seating handleCloseSeatingButton={handleCloseSeatingButton} seatingActive={seatingModalOpen} handleCloseSeatingModal={handleCloseSeatingModal} /> : (
-//   return (
+  return seatingModalOpen ? (
+    <Seating
+      handleCloseSeatingButton={handleCloseSeatingButton}
+      seatingActive={seatingModalOpen}
+      handleCloseSeatingModal={handleCloseSeatingModal}
+    />
+  ) : (
+    //   return (
     <div className={styles.container}>
-      <SummaryPage foodModalOpen={foodModalOpen} handleCloseFoodModal={handleCloseFoodModal} />
-      {/* <SummaryPage/> */}
+      <SummaryPage
+        foodModalOpen={foodModalOpen}
+        handleCloseFoodModal={handleCloseFoodModal}
+      />
       <Modal
         title="Terms & Conditions"
         open={visible}
@@ -126,7 +139,7 @@ function ShowTimePage({ filters }) {
             type="primary"
             loading={confirmLoading}
             onClick={handleOk}
-            style={{ backgroundColor: "rgb(255, 18, 3)", border: "none" }}
+            style={{ backgroundColor: "#FF1203", border: "none" }}
           >
             Accept
           </Button>,
@@ -187,103 +200,110 @@ function ShowTimePage({ filters }) {
         </div>
       </div>
       <div style={{ padding: "15px" }}>
-        {dateInfo.data?.map((time, index) => {
-            return(
-               <div key={time.theaterName} className={styles.container__card}>
-            <div className={styles.container__card__title}>
-              <BsHeartFill className={styles.container__card__title__icon} />
-              <h4>{time.theaterName}</h4>
-            </div>
-            <div className={styles.container__card__info}>
-              <div className={styles.container__card__info__options}>
-                <div style={{ color: "#49BA8E" }}>
-                  <VscDeviceMobile />
-                  <span>M-Ticket</span>
-                </div>
-                <div style={{ color: "#FFB23F" }}>
-                  <IoFastFoodOutline />
-                  <span>F&B</span>
-                </div>
+        {dateInfo?.map((theater, index) => {
+          return (
+            <div key={theater.theaterName} className={styles.container__card}>
+              <div className={styles.container__card__title}>
+                <BsHeartFill className={styles.container__card__title__icon} />
+                <h4>{theater.theaterName}</h4>
               </div>
-              <div className={styles.container__card__info__times__container}>
-                <div>
-                  {/* {dateInfo?.map((time, index) => { */}
-                  {/* console.log(time); */}
-                  {/* return ( */}
+              <div className={styles.container__card__info}>
+                <div className={styles.container__card__info__options}>
+                  <div style={{ color: "#49BA8E" }}>
+                    <VscDeviceMobile />
+                    <span>M-Ticket</span>
+                  </div>
+                  <div style={{ color: "#FFB23F" }}>
+                    <IoFastFoodOutline />
+                    <span>F&B</span>
+                  </div>
+                </div>
+                <div className={styles.container__card__info__times__container}>
                   <div>
-                    {time.data.time.map((time, index) => {
-                      // const showTime = time.time.split(":").map(Number).shift();
-                      // const showTime = time.split(" ");
-                      // const showTime2 = showTime[1].split("-");
-                      // const showMinutes = showTime2[1];
-                      const showTime = time.split(":").map(Number).shift();
-                      const showMinutes = +time.split(":")[1].split(" ").shift();
-                      
-                      return (
-                        // <>heelo</>
-                        <div
-                          onClick={() =>
-                            handleClick(movieInformation.title, time)
-                          }
-                          style={
-                            amOrPm === "AM" ||
-                            (showTime === currentTime
-                              ? showMinutes > new Date().getMinutes()
-                                ? true
-                                : false
-                              : showTime > currentTime && showTime !== 12) ||
-                            new Date() > new Date().getDate()
-                              ? { pointerEvents: "all" }
-                              : {
-                                  pointerEvents: "none",
-                                  color: "rgb(192,192,192)",
-                                }
-                          }
-                          key={index + 1}
-                          className={styles.button}
-                        >
-                          {time}
-                          <div className={styles.price__container}>
-                            <div>
-                              <p>Rs. 150</p>
-                              <span>NORMAL</span> <br />
-                              <span style={{ color: "#4abd5d" }}>
-                                Available
-                              </span>
-                            </div>
-                            <div>
-                              <p>Rs. 200</p>
-                              <span>CLASSIC</span> <br />
-                              <span style={{ color: "#4abd5d" }}>
-                                Available
-                              </span>
-                            </div>
-                            <div>
-                              <p>Rs. 300</p>
-                              <span>VIP</span> <br />
-                              <span style={{ color: "#4abd5d" }}>
-                                Available
-                              </span>
+                    {/* {dateInfo?.map((time, index) => { */}
+                    {/* console.log(time); */}
+                    {/* return ( */}
+                    <div>
+                      {theater.data.time.map((time, index) => {
+                        // const showTime = time.time.split(":").map(Number).shift();
+                        // const showTime = time.split(" ");
+                        // const showTime2 = showTime[1].split("-");
+                        // const showMinutes = showTime2[1];
+                        const showTime = time.split(":").map(Number).shift();
+                        const showMinutes = +time
+                          .split(":")[1]
+                          .split(" ")
+                          .shift();
+
+                        return (
+                          // <>heelo</>
+                          <div
+                            onClick={() =>
+                              handleClick(
+                                theater.theaterName,
+                                time,
+                                theater.screenName,
+                                theater.data.theaterId
+                              )
+                            }
+                            style={
+                              amOrPm === "AM" ||
+                              (showTime === currentTime
+                                ? showMinutes > new Date().getMinutes()
+                                  ? true
+                                  : false
+                                : showTime > currentTime && showTime !== 12) ||
+                              new Date() > new Date().getDate()
+                                ? { pointerEvents: "all" }
+                                : {
+                                    pointerEvents: "none",
+                                    color: "rgb(192,192,192)",
+                                  }
+                            }
+                            key={index + 1}
+                            className={styles.button}
+                          >
+                            {time}
+                            <div className={styles.price__container}>
+                              <div>
+                                <p>Rs. 150</p>
+                                <span>NORMAL</span> <br />
+                                <span style={{ color: "#4abd5d" }}>
+                                  Available
+                                </span>
+                              </div>
+                              <div>
+                                <p>Rs. 200</p>
+                                <span>CLASSIC</span> <br />
+                                <span style={{ color: "#4abd5d" }}>
+                                  Available
+                                </span>
+                              </div>
+                              <div>
+                                <p>Rs. 300</p>
+                                <span>VIP</span> <br />
+                                <span style={{ color: "#4abd5d" }}>
+                                  Available
+                                </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
+                    {/* ); */}
+                    {/* })} */}
                   </div>
-                  {/* ); */}
-                  {/* })} */}
                 </div>
               </div>
             </div>
-          </div>
-            )
-          
+          );
         })}
       </div>
     </div>
-//   );
-
-  )
+    //   );
+  );
 }
+
 
 export default ShowTimePage;

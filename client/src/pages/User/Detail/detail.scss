@@ -155,8 +155,8 @@
     border-radius: 6px;
     padding-left: 2rem;
     padding-right: 2rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     background-color: rgba(255, 0, 0, 0.934);
     cursor: pointer;
     width:max-content;
@@ -219,6 +219,8 @@
     position: relative;
     width: 100%;
     margin-top: 100px;
+
+    height: 375px;
 }
 
 .poster{
@@ -272,7 +274,7 @@
     -webkit-box-align: center;
     align-items: center;
     display: flex;
-    background: rgba(34, 34, 34, 0.8);
+    background: rgba(251, 248, 248, 0.8);
     box-shadow: rgb(0 0 0 / 16%) 0px 1px 8px;
     border-radius: 24px;
     padding: 4px 8px;
@@ -281,9 +283,11 @@
     position: relative;
     cursor: pointer;
     // width: 100%;
+    left: -4px;
 }
 .lines{
     border-image: linear-gradient(to right,#ff0c0c, rgba(78, 159, 12, 0)) 30;
 border-bottom: 1px;
 border-style: solid;
 }
+

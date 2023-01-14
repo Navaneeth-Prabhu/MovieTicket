@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from "./payment.css";
+import styles from "./payment.module.css";
 
 function FirstSection({ handlePayment }) {
     return (
