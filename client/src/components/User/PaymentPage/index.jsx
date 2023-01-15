@@ -14,6 +14,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Link, useNavigate } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { postBookingDetails } from "../../../redux/actions/bookingAction";
@@ -39,6 +41,16 @@ const Counter = () => (
   </CountdownCircleTimer>
 );
 
+// const useStyles = makeStyles((theme) => ({
+//   appBar: {
+//     position: "relative",
+//     background: "#1F2533",
+//   },
+//   title: {
+//     marginLeft: theme.spacing(2),
+//     flex: 1,
+//   },
+// }));
 
 function PaymentsPage({ proceed }) {
   // const classes = useStyles();
@@ -53,16 +65,24 @@ function PaymentsPage({ proceed }) {
   const movieInfo = useSelector((state) => state.movieInfo);
   const user = useSelector((state) => state.userLogin);
   const selectDate = useSelector((state) => state.date);
+  const payment = useSelector((state) => state.payment);
+  console.log(payment)
+  const { loading, paymentSuccess } = payment;
+  console.log(paymentSuccess);
+  // const { data, qrcode, status } = paymentSuccess;
   const { date } = selectDate;
-  // const { userInfo } = user;
+  const { userInfo } = user;
   const { dateInfo, silver } = booking_details;
-  const { movie } = movieInfo.movieInformation;
+  const { movieInformation } = movieInfo;
+  console.log(movieInformation)
   const handleClose = () => {
     setState(false);
   };
 
-  const handlePayment = () => {
+  const handlePayment = (id) => {
     setState(true);
+    console.log(movieInformation);
+    console.log("hello im in payment");
     const dates = new Date();
     dates.setFullYear(date.year);
     dates.setMonth(date.month); // 0 represents January
@@ -77,10 +97,11 @@ function PaymentsPage({ proceed }) {
       ticketPrice: "120",
       seats: silver,
       total: booking_details.price,
-      movieId: movie._id,
-      // phone: userInfo.phone,
+      movieId: movieInformation._doc._id,
+      phone: userInfo.phone,
       showDate: dateOnly,
       bookedDate: new Date(),
+      paymentId: id,
     };
     dispatch(postBookingDetails(data)).then((res) => {
       if (res) {
@@ -95,6 +116,11 @@ function PaymentsPage({ proceed }) {
   const handleMove = () => {
     navigate("/");
   };
+
+  const PUBLIC_KEY =
+    "pk_test_51MOvFaSGVWufzxgC2MXjJ5LequiN1MHEAWJu7TA5KZmlHHKCJx2SHyX1UbTbwwdKBfoRktYKD6c4kvgD7gw7G9W900R0nIaHrk";
+
+  const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
   console.log(state);
   return (
@@ -117,7 +143,9 @@ function PaymentsPage({ proceed }) {
 
         <div className={styles.page}>
           <div className={styles.firstSection}>
-            <FirstSection handlePayment={handlePayment} />
+            <Elements stripe={stripeTestPromise}>
+              <FirstSection handlePayment={handlePayment} />
+            </Elements>
           </div>
           <div className={styles.secondSection}>
             <SecondSection />
@@ -161,24 +189,14 @@ function PaymentsPage({ proceed }) {
           ) : (
             <div
               style={{
-                display:"flex",
-                flexDirection:"column",
-                alignItems:"center",
-                justifyContent:"center",
                 textAlign: "center",
                 color: "white",
-                background: "#FF1203",
-                padding: "10px",
+                background: "#F84464",
+                padding: "100px 50px",
                 borderRadius: "5px",
               }}
             >
-              <div className="qr">
-              <img
-                className="h-full w-full"
-                src={require(`../../../images/My_Gallery (1).png`)}
-                alt=""
-              />
-              </div>
+              <img src={payment.paymentSuccess?.qrcode} alt="hello ser" />
               <h1>Congratulations!</h1>
               <div style={{ fontSize: "20px" }}>We have got your tickets</div>
             </div>

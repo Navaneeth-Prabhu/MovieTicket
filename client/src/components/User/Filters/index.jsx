@@ -1,7 +1,7 @@
 import { maxWidth } from "@mui/system";
 import React from "react";
 import Calendar from "../Calender";
-// import DropDowns from "../DropDowns";
+
 
 function Filter({ handleFilters, filters }) {
   return (

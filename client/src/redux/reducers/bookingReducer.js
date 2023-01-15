@@ -12,6 +12,9 @@ import {
   GET_SEATS_INFORMATION_REQUEST,
   GET_SEATS_INFORMATION_SUCCESS,
   GET_SEATS_INFORMATION_FAIL,
+  ADD_BOOKING_DETAILS,
+  ADD_BOOKING_DETAILS_SUCCESS,
+  ADD_BOOKING_DETAILS_FAIL,
   } from "../Constants/bookingConstants";
   
   export const dateInfoReducer = (state = { dateInfo:[]}, action) => {
@@ -61,6 +64,19 @@ import {
         return {loading:false, seat:action.payload};
       case GET_SEATS_INFORMATION_FAIL:
         return { error: action.payload };
+      default:
+        return state;
+    }
+  };
+
+  export const paymentSucess = (state = {}, action) => {
+    switch (action.type) {
+      case ADD_BOOKING_DETAILS:
+        return {loading:true, payment:action.payload };
+      case ADD_BOOKING_DETAILS_SUCCESS:
+        return {loading:false, paymentSucess:action.payload};
+      case ADD_BOOKING_DETAILS_FAIL:
+        return {loading:false, error: action.payload };
       default:
         return state;
     }

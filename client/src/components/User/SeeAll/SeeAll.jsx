@@ -31,7 +31,7 @@ React.useEffect(() => {
 const movieInfo = useSelector((state) => state.theaterMovies);
 const { Movie } = movieInfo;
 
-console.log("././././././././././",movieInfo);
+// console.log("././././././././././",movieInfo);
 // const city = useSelector(state => state.app.city)
 
 const dispatch = useDispatch();
@@ -44,15 +44,23 @@ React.useEffect(() => {
     const filterMovies = () => {
         if (filterLanguage.length > 0) {
             const updated = movieDet.filter(item => (item.Language).includes(filterLanguage[filterLanguage.length - 1]))
-            console.log("updated..................",updated)
+        
             // setMovieDet(updated)
-             setfilterMovie(updated)
+            setfilterMovie(updated)
         }
-        // if (filterGenre.length > 0) {
-        //     const updated = movieDet.filter(item => item.movie_genre?.find(gen => (gen.genre === filterGenre[filterGenre.length - 1]) ? gen.genre : genre).genre === filterGenre[filterGenre.length - 1])
-        //     setMovie(updated)
-        //     console.log(updated)
-        // }
+        if (filterGenre.length > 0) {
+            console.log(",,,,,",filterGenre)
+              const updated = movieDet.filter(item => {
+                if (item.Genre) {
+                  return filterGenre.some(fg => item.Genre.includes(fg));
+                }
+                return false;
+              });
+              
+            console.log("updated..................",updated)
+            setfilterMovie(updated)
+            console.log(updated)
+        }
         // if (filterFormate.length > 0) {
         //     const updated = movie.filter(item => item.screen_type?.find(formate => (formate.type === filterFormate[filterFormate.length - 1]) ? formate.type : formate.type).type === filterFormate[filterFormate.length - 1])
         //     setMovie(updated)
@@ -83,9 +91,9 @@ React.useEffect(() => {
 
     const handleFilter = (language, genre, formate) => {
         if (language !== "") {
-            console.log("language",filterLanguage)
+            // console.log("language",filterLanguage)
             const index = filterLanguage.indexOf(language)
-            console.log("index",index)
+            // console.log("index",index)
             if (index !== -1) {
                 filterLanguage.splice(index, 1);
                 console.log("...",filterLanguage)
@@ -95,7 +103,7 @@ React.useEffect(() => {
             }
         } else if (genre !== "") {
             const index = filterGenre.indexOf(genre)
-            if (index !== -2) {
+            if (index !== -1) {
                 filterGenre.splice(index, 1);
             } else {
                 setFilterGenre([...filterGenre, genre])
@@ -114,6 +122,7 @@ React.useEffect(() => {
 
     React.useEffect(() => {
         let lan = filterLanguage.includes('')
+        // let gen = filterGenre.includes('')
     })
 
     
@@ -144,23 +153,24 @@ React.useEffect(() => {
 
                 <div>
                     <div className={styles.header}>
-                            {/* <div onClick={() => SetGenre(!genre)}>
+                            <div onClick={() => SetGenre(!genre)}>
                                 {!genre && <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 10"><path fill="none" stroke="#666666" stroke-width="1.5" d="M335 3L342 9.5 335 16" transform="rotate(90 175.5 -158.5)"></path></svg>}
-                                {genre && <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 10"><path fill="none" stroke="#e67088" stroke-width="1.5" d="M335 3L342 9.5 335 16" transform="matrix(0 -1 -1 0 17 344)"></path></svg>}
-                                <span style={{ marginLeft: '10px', color: `${!genre ? 'black' : '#e67088'}` }}>Genre</span>
-                            </div> */}
-                        {/* <div onClick={() => handleClear("genre")}>Clear</div> */}
+                                {genre && <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 10"><path fill="none" stroke="#FF1203" stroke-width="1.5" d="M335 3L342 9.5 335 16" transform="matrix(0 -1 -1 0 17 344)"></path></svg>}
+                                <span style={{ marginLeft: '10px', color: `${!genre ? 'white' : '#FF1203'}` }}>Genre</span>
+                            </div>
+                        <div onClick={() => handleClear("genre")}>Clear</div>
                     </div>
-                    {/* <div className={styles.dialogue} style={genre ? { display: 'flex' } : { display: 'none' }}>
-                        <button style={filterGenre.includes('Action') ? {background:'#e67088', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Action", "")}>Action</button>
-                        <button style={filterGenre.includes('Drama') ? {background:'#e67088', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Drama", "")}>Drama</button>
-                        <button style={filterGenre.includes('Triller') ? {background:'#e67088', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Triller", "")}>Thriller</button>
-                        <button style={filterGenre.includes('Comedy') ? {background:'#e67088', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Comedy", "")}>Comedy</button>
-                        <button style={filterGenre.includes('Adventure') ? {background:'#e67088', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Adventure", "")}>Adventure</button>
-                        <button style={filterGenre.includes('Family') ? {background:'#e67088', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Family", "")}>Family</button>
-                        <button style={filterGenre.includes('Fantasy') ? {background:'#e67088', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Fantasy", "")}>Fantasy</button>
+                    <div className={styles.dialogue} style={genre ? { display: 'flex' } : { display: 'none' }}>
+                        <button style={filterGenre.includes('Action') ? {background:'#FF1203', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Action", "")}>Action</button>
+                        <button style={filterGenre.includes('Drama') ? {background:'#FF1203', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Drama", "")}>Drama</button>
+                        <button style={filterGenre.includes('Triller') ? {background:'#FF1203', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Triller", "")}>Thriller</button>
+                        <button style={filterGenre.includes('Comedy') ? {background:'#FF1203', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Comedy", "")}>Comedy</button>
+                        <button style={filterGenre.includes('Adventure') ? {background:'#FF1203', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Adventure", "")}>Adventure</button>
+                        <button style={filterGenre.includes('Family') ? {background:'#FF1203', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Family", "")}>Family</button>
+                        <button style={filterGenre.includes('Fantasy') ? {background:'#FF1203', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Fantasy", "")}>Fantasy</button>
+                        <button style={filterGenre.includes('Scifi') ? {background:'#FF1203', border:'none', color:'white'}:{}} onClick={() => handleFilter("", "Scifi", "")}>Scifi</button>
                         
-                    </div> */}
+                    </div>
                 </div>
 
                 <div>

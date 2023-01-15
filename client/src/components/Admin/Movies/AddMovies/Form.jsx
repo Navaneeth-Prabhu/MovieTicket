@@ -22,7 +22,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 // import './index.css'
-import UploadWidget from './UploadWidget';
+import UploadWidget from "./UploadWidget";
+import { FormControl } from "@mui/material";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -34,13 +35,20 @@ const ErrorText = ({ children, ...props }) => (
 );
 
 const top100Films = [
-  { Gener: "Action" },
-  { Gener: "Romance" },
-  { Gener: "Dramas" },
-  { Gener: "Thriller" },
-  { Gener: "Horror" },
-  { Gener: "Sci-fi" },
-  { Gener: "Fantasy" },
+ "Action" ,
+ "Romance" ,
+ "Dramas" ,
+ "Thriller" ,
+ "Horror" ,
+   "Sci-fi" ,
+  "Fantasy" ,
+];
+const Language = [
+ "English" ,
+ "Hindi" ,
+ "Tamil" ,
+ "Malayalam" ,
+ "Kannada" ,
 ];
 
 const validFileTypes = ["image/jpg", "image/jpeg", "image/png"];
@@ -50,7 +58,13 @@ export default function FormMovie() {
   const [url, updateUrl] = useState();
   const [error, updateError] = useState();
   const navigate = useNavigate();
+  const [gener, setgener] = useState([])
+  const [language, setlanguage] = useState([])
+// const [setFieldValue]
 
+
+
+console.log("fener",gener)
   const {
     register,
     handleSubmit,
@@ -59,10 +73,10 @@ export default function FormMovie() {
   } = useForm();
 
   function handleOnUpload(error, result, widget) {
-    if ( error ) {
+    if (error) {
       updateError(error);
       widget.close({
-        quiet: true
+        quiet: true,
       });
       return;
     }
@@ -71,29 +85,28 @@ export default function FormMovie() {
 
   const onSubmit = async (data) => {
     console.log("asdfasdfasdf", data);
+     data.Genre = gener
+     data.Language = language
     const formData = new FormData();
 
     // formData.append("image", data.file[0]);
     await axios
       .post("http://localhost:3001/admin/movieinfo", data)
       .then(async (response) => {
-
         let id = response.data._id;
-        const data = await axios.post('https://api.cloudinary.com/v1_1/navaNeeth/image/upload',formData.then((response)=>{
-          data = response.data['secure_url']
-        }))
-   
+        const data = await axios.post(
+          "https://api.cloudinary.com/v1_1/navaNeeth/image/upload",
+          formData.then((response) => {
+            data = response.data["secure_url"];
+          })
+        );
+
         navigate("/admin/movies");
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
-  // const generateError = (error) =>
-  //   toast.error(error, {
-  //     position: "bottom-right",
-  //   });
 
   return (
     <ThemeProvider>
@@ -174,7 +187,7 @@ export default function FormMovie() {
                   )}
                 </span>
               </Grid>
-              <Grid item xs={12} lg={6}>
+              {/* <Grid item xs={12} lg={6}>
                 <TextField
                   variant="filled"
                   label="Genre"
@@ -203,35 +216,8 @@ export default function FormMovie() {
                     <span>Should not have spaces</span>
                   )}
                 </span>
-              </Grid>
-              {/* <Grid item lg={6} xs={12}>
-                <Autocomplete
-                  multiple
-                  id="checkboxes-tags-demo"
-                  options={top100Films}
-                  disableCloseOnSelect
-                  getOptionLabel={(option) => option.Gener}
-                  renderOption={(props, option, { selected }) => (
-                    <li {...props}>
-                      <Checkbox
-                        icon={icon}
-                        checkedIcon={checkedIcon}
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                      />
-                      {option.Gener}
-                    </li>
-                  )}
-                  style={{ width: 500 }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Checkboxes"
-                      placeholder="Favorites"
-                    />
-                  )}
-                />
               </Grid> */}
+
               <Grid item xs={12} lg={6}>
                 <TextField
                   variant="filled"
@@ -294,33 +280,103 @@ export default function FormMovie() {
                 </span>
               </Grid>
               <Grid item xs={6} lg={6}>
-              <div className="container">
-        <h2>Unsigned with Upload Preset</h2>
-        <UploadWidget onUpload={handleOnUpload}>
-          {({ open }) => {
-            function handleOnClick(e) {
-              e.preventDefault();
-              open();
-            }
-            return (
-              <button onClick={handleOnClick}>
-                Upload an Image
-              </button>
-            )
-          }}
-        </UploadWidget>
+                <div className="container">
+                  <h2>Unsigned with Upload Preset</h2>
+                  <UploadWidget onUpload={handleOnUpload}>
+                    {({ open }) => {
+                      function handleOnClick(e) {
+                        e.preventDefault();
+                        open();
+                      }
+                      return (
+                        <button onClick={handleOnClick}>Upload an Image</button>
+                      );
+                    }}
+                  </UploadWidget>
 
-        {error && <p>{ error }</p>}
+                  {error && <p>{error}</p>}
 
-        {url && (
-          <>
-            <p><img src={ url } alt="Uploaded image" /></p>
-            <p>{ url }</p>
-          </>
-        )}
-      </div>
+                  {url && (
+                    <>
+                      <p>
+                        <img src={url} alt="Uploaded image" />
+                      </p>
+                      <p>{url}</p>
+                    </>
+                  )}
+                </div>
                 <span className="text-danger"></span>
                 {/* {error && <ErrorText>{error}</ErrorText>} */}
+              </Grid>
+              {/* <Grid item xs={6} lg={6}>
+                <Autocomplete
+                  multiple
+                  id="checkboxes-tags-demo"
+                  options={top100Films}
+                  disableCloseOnSelect
+                  getOptionLabel={(option) => option.Gener}
+                  // renderOption={(props, option, { selected }) => (
+                  //   <li {...props}>
+                  //     <Checkbox
+                  //       icon={icon}
+                  //       checkedIcon={checkedIcon}
+                  //       style={{ marginRight: 8 }}
+                  //       checked={selected}
+                  //     />
+                  //     {option.Gener}
+                  //   </li>
+                  // )}
+                  style={{ width: 500 }}
+                  onChange={(event, value) => setACValue(value)}
+                  // onChange={(e, value) => setFieldValue("Gener", value)}
+            value={value.Gener}
+            isOptionEqualToValue={(option, value ,{selected}) =>(<li {...props}>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                checked={selected}
+              />
+              {option.Gener}
+            </li> )}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Genre"
+                      placeholder="Favorites"
+                      {...register("Genre", {
+                        required: true,
+                        minLength: 4,
+                        maxLength: 20,
+                        pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
+                      })}
+                    />
+                  )}
+                />
+              </Grid> */}
+              <Grid item xs={6} lg={6}>
+                <FormControl>
+
+                <Autocomplete 
+                multiple
+                value={gener}
+                // onChange={handleGener}
+                onChange={(event,value)=>setgener(value)}
+                options={top100Films} 
+                renderInput ={(params)=> <TextField {...params} label ="Genre"/>}/>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6} lg={6}>
+                <FormControl>
+
+                <Autocomplete 
+                multiple
+                value={language}
+                // onChange={handleGener}
+                onChange={(event,value)=>setlanguage(value)}
+                options={Language} 
+                renderInput ={(params)=> <TextField {...params} label ="Language"/>}/>
+                </FormControl>
               </Grid>
             </Grid>
 
@@ -334,7 +390,6 @@ export default function FormMovie() {
               Submit
             </Button>
             <Grid container>
-             
               <Grid item></Grid>
             </Grid>
           </Box>
