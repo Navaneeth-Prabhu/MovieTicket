@@ -13,7 +13,11 @@ import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite
 import ReviewModel from '../../../components/User/Review/index'
 
 const { TextArea } = Input;
-
+// import {
+//   getMovieById,
+//   getMovieReviewById,
+//   movieInfoStoreToState,
+// } from "../../../redux/actions/movieAction";
 const Detail = () => {
 
   const navigate = useNavigate();
@@ -21,19 +25,37 @@ const Detail = () => {
   const [submit, setsubmit] = useState(false)
   const [open, setOpen] = React.useState(false);
 
+
+  
+  const user = useSelector((state) => state.userLogin);
+  console.log("userrrrrr",user)
   const movieInfo = useSelector((state) => state.movieInfo);
   const { movieInformation } = movieInfo;
+// const genre = movieInformation?.movie.Gener
 
   const dispatch = useDispatch();
   const handleOpen = () => {
-    setOpen(true);
+    if (user?.userInfo) {
+      setOpen(true);
+    } else {
+      alert("Please login to book your tickets");
+      // setAction(true)
+    }
   };
-
   useEffect(() => {
     console.log("id:", id);
     dispatch(moviedetails(id));
     // getMovie()
   }, []);
+  const selectedMovieToState = () => {  
+    if (user?.userInfo) {
+      dispatch(moviedetails(movieInformation.movie));
+      navigate(`/buytickets/${movieInformation.movie._id}/select_screen`)
+    } else {
+      alert("Please login to book your tickets");
+      // setAction(true)
+    }
+  };
 
   return (
     <>
@@ -67,9 +89,12 @@ const Detail = () => {
         <div className="det">
           <h1 className="title text-6xl ">{movieInformation?.movie.title}</h1>
 
-          <div className="genres">{/* {movieInformation?.Genre} */}</div>
+          <div className="genres"></div>
           <div className="genres">
-            <span className="genres__item">advanture</span>
+     
+          {/* {genre.map((item) => (
+            <span className="genres__item">{item}</span> 
+          ))} */}
             <span className="genres__item">advanture</span>
             <span className="genres__item">advanture</span>
             <span className="genres__item">advanture</span>
@@ -104,9 +129,7 @@ const Detail = () => {
           </div>
           <div
             className="button mt-10 flex"
-            onClick={() =>
-              navigate(`/buytickets/${movieInformation.movie._id}/select_screen`)
-            }
+            onClick={() => selectedMovieToState()}
           >
             <button>Book Tickets</button>
           </div>

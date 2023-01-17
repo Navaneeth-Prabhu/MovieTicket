@@ -1,54 +1,81 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../Models/UserModel");
-const { generateToken } = require("./generateToken");
+const OTP = require("../Models/otp");
+const { generateToken } = require("../utils/generatetoken");
+const otpGenerator = require("otp-generator");
+const { nodmail } = require("../utils/nodemailer");
 
-const handleErrors = (err) => {
-  let errors = { email: "", password: "" };
 
-  console.log(err);
+// const handleErrors = (err) => {
+//   let errors = { email: "", password: "" };
 
-  if (err.code === 11000) {
-    errors.email = "Phone number is already registered";
-    return errors;
-  }
+//   console.log(err);
 
-  if (err.message.includes("Users validation failed")) {
-    Object.values(err.errors).forEach(({ properties }) => {
-      errors[properties.path] = properties.message;
-    });
-  }
+//   if (err.code === 11000) {
+//     errors.email = "Phone number is already registered";
+//     return errors;
+//   }
 
-  return errors;
-};
+//   if (err.message.includes("Users validation failed")) {
+//     Object.values(err.errors).forEach(({ properties }) => {
+//       errors[properties.path] = properties.message;
+//     });
+//   }
 
-const signup = asyncHandler(async(req, res) => {
+//   return errors;
+// };
+
+const signup = asyncHandler(async (req, res) => {
   try {
-    const { phone } = req.body;
+    const { email } = req.body;
     console.log(req.body);
     const user = {
-      phone,
+      email,
     };
-    console.log(typeof phone)
-    const number = parseInt(phone)
-    console.log(typeof number)
-    const alreadyUser = await User.findOne({ phone: number });
-    console.log(alreadyUser)
+    // const number = parseInt(phone)
+    const otp = await otpGenerator.generate(6, {
+      upperCaseAlphabets: false,
+      specialChars: false,
+      lowerCaseAlphabets: false,
+    });
+    console.log(otp);
+    const alreadyUser = await User.findOne({ email: email });
     if (alreadyUser) {
-        console.log('hello im in already')
-        let token = await generateToken(alreadyUser._id)
-        res.cookie("userToken",token).json({
-            status:true,
-            phone:alreadyUser.phone
+      const userOtp = {
+        email: alreadyUser.email,
+        otp: otp,
+        date: Date.now(),
+      };
+      OTP(userOtp)
+        .save()
+        .then(async (response) => {
+          console.log(response);
+          const returnedOtp = await nodmail(alreadyUser.email, otp);
+          if (returnedOtp) {
+            // let token = await generateToken(alreadyUser._id);
+            // res.cookie("userToken", token).json({
+            //   status: true,
+            //   email: alreadyUser.email,
+            // });
+          }
         })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
       User(user)
         .save()
         .then(async (response) => {
-          console.log(response);
-          let token = await generateToken(response._id);
-          res.cookie("userToken", token).json({
-            status: true,
-          });
+          const userOtp = {
+            email: response.email,
+            otp: otp,
+            date: Date.now(),
+          };
+          const saveotp = await OTP(userOtp).save();
+          const returnedOtp = await nodmail(response.email, otp);
+          // console.log(response);
+          // let token = await generateToken(response._id);
+          // res.cookie("userToken", token).json(response.email);
         });
     }
   } catch (error) {
@@ -58,6 +85,22 @@ const signup = asyncHandler(async(req, res) => {
   }
 });
 
+const otp = asyncHandler(async (req, res) => {
+  try {
+    console.log(req.body);
+    const { otp, email } = req.body;
+    const findOtp = await OTP.findOne({ email: email.email, otp: Number(otp) });
+    if (findOtp) {
+      console.log(findOtp);
+      let token = await generateToken(findOtp.email);
+      res.cookie("userToken", token).json(findOtp.email);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = {
   signup,
+  otp,
 };

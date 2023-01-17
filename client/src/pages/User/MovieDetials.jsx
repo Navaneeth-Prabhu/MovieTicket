@@ -12,13 +12,9 @@ function MovieDetials() {
   return (
     <div>
 
-      <Navbar/>
+       <Navbar/>
        <Details/>
-      {/* <DetailsNav/> */}
-      {/* <ShowCard/> */}
-      {/* <Trailler></Trailler> */}
-      {/* <ShowCard/> */}
-      {/* <ShowCard/> */}
+
     </div>
   )
 }

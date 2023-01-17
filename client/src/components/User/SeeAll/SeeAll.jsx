@@ -5,10 +5,12 @@ import { getTheaterMovies } from "../../../redux/actions/movieAction"
 import Card from '../Card/index'
 import stylee from '../Card/Card_seeAll.module.css';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 
 
 const SeeAll = () => {
+    const navigate = useNavigate()
     const [language, SetLanguage] = React.useState(false);
     const [genre, SetGenre] = React.useState(false);
     const [formate, SetFormate] = React.useState(false);
@@ -40,15 +42,34 @@ React.useEffect(() => {
     setMovieDet(movieInfo.Movie)
 }, [movieInfo.Movie])
 
+console.log("setfiletermovie",filterMovie)
 
     const filterMovies = () => {
         if (filterLanguage.length > 0) {
+
+            // const updated = movieDet.filter(item => (item.Language).includes(filterLanguage[filterLanguage.length - 1])) 
+
+            // var updated = movieDet.filter((item) => filterLanguage.includes(item.Language));
+            // var updated = movieDet.filter((item) => item.Language.find(filterLanguage.map(val=>val)));
             const updated = movieDet.filter(item => (item.Language).includes(filterLanguage[filterLanguage.length - 1]))
-        
+            // const updated = movieDet.filter(item => {
+            //     if (item.Language) {
+            //       return filterLanguage.some(fg => item.Language.includes(fg));
+            //     }
+            //     return false;
+            //   });
+
+
+        console.log("updated",updated)
             // setMovieDet(updated)
             setfilterMovie(updated)
+          
         }
         if (filterGenre.length > 0) {
+
+
+            // const updated = movieDet.filter(item => (item.Genre).includes(filterGenre[filterGenre.length - 1]))
+
             console.log(",,,,,",filterGenre)
               const updated = movieDet.filter(item => {
                 if (item.Genre) {
@@ -88,19 +109,19 @@ React.useEffect(() => {
         }
         filterMovies()
     }
-
+    console.log("..................",filterLanguage)
     const handleFilter = (language, genre, formate) => {
         if (language !== "") {
-            // console.log("language",filterLanguage)
+            console.log("language",filterLanguage)
             const index = filterLanguage.indexOf(language)
-            // console.log("index",index)
+            console.log("index",index)
             if (index !== -1) {
                 filterLanguage.splice(index, 1);
                 console.log("...",filterLanguage)
             } else {
                 setFilterLanguage([...filterLanguage, language])
-                
             }
+    
         } else if (genre !== "") {
             const index = filterGenre.indexOf(genre)
             if (index !== -1) {
@@ -129,6 +150,7 @@ React.useEffect(() => {
     
     return (
         <div className={styles.container}>
+            
             <div className={styles.leftsideNav}>
                 <h2 style={{ background: 'none', fontSize: '25px', fontWeight: '700' }}>Filters</h2>
                 <div>
@@ -213,7 +235,10 @@ React.useEffect(() => {
                     </div> :
                         filterMovie?.map(item =>
                             // <Card {...item} />
-                            <div className={stylee.card}> 
+                            <div className={stylee.card}                 onClick={() => {
+                                // dispatch(movieInfo(movie));
+                                navigate(`/moviedetails/${item._id}`);
+                              }}> 
                            <img
                
                   src={require(`../../../../../server/public/movies/${item._id}.jpg`)}

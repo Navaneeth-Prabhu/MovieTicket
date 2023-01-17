@@ -28,7 +28,7 @@ const theme = createTheme({
     },
   });
 
-export default function SignUp() {
+export default function () {
     const navigate = useNavigate()
     const [values, setvalues] = useState({
         name:"",

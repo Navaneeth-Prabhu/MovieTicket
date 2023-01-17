@@ -9,10 +9,16 @@ import {
 } from "@mui/material";
 import { Box, Container, display, padding } from "@mui/system";
 import React from "react";
+import { useSelector } from "react-redux";
 import Navbar from "../Navbar";
 import "./profile.scss";
 
-function profile() {
+function Profile() {
+
+  const user = useSelector((state) => state.userLogin);
+  console.log("userrrrrr",user)
+
+
     const styles = theme => ({
         notchedOutline: {
           borderWidth: "1px",
@@ -100,17 +106,18 @@ function profile() {
           <List sx={{padding:'10px 30px 10px 30px' , display:'flex', justifyItems:'center'}}>  
             <Grid container spacing={2}>
                 <Grid item xs={4} md={4} sx={{display:'flex', alignItems:"center"}}>
-                    <ListItemText >Email Address</ListItemText>
+                    <ListItemText >Email Address</ListItemText> 
                 </Grid>
                 <Grid item xs={4} md={8}>
                 <TextField
                 sx={{borderColor:'white'}}
             //   color="error"
             //   label="Soft"
-            
+            // value={user.userInfo}
+            disabled
               variant="filled"
               fullWidth
-              ></TextField>
+              >{user.userInfo}</TextField>
              
                 </Grid>
             </Grid>
@@ -158,4 +165,4 @@ function profile() {
   );
 }
 
-export default profile;
+export default Profile;

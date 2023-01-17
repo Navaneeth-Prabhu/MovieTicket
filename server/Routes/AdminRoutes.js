@@ -32,7 +32,5 @@ router.get('/allTheater',getTheater)
 
 
 router.post("/movieinfo", addMovieInfo);
-router.post("/movieImage/upload/:id", upload.single("image"), addmovie);
-// router.get("/api/users/movieInfo",movieInfo)
 
 module.exports = router

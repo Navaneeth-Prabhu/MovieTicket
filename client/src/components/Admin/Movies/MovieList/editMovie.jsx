@@ -78,10 +78,10 @@ export default function FormMovie() {
       .post("http://localhost:3001/admin/movieinfo", data)
       .then(async (response) => {
 
-        let id = response.data._id;
-        const data = await axios.post('https://api.cloudinary.com/v1_1/navaNeeth/image/upload',formData.then((response)=>{
-          data = response.data['secure_url']
-        }))
+        // let id = response.data._id;
+        // const data = await axios.post('https://api.cloudinary.com/v1_1/navaNeeth/image/upload',formData.then((response)=>{
+        //   data = response.data['secure_url']
+        // }))
    
         navigate("/admin/movies");
       })

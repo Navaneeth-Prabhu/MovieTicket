@@ -51,7 +51,7 @@ export default function Slider() {
     <>
       <div className="section">
         <div className="flex w-full content-center">
-          <h2 className="text-2xl m-0 ml-4"> Streming now </h2>
+          <h2 className="text-2xl m-0 ml-4"> Book now </h2>
           <div className="titleline flex-1 w-full m-0 ml-2"></div>
           <div className="showmore" onClick={()=>{
             navigate('/SeeAll')
@@ -107,7 +107,8 @@ export default function Slider() {
               >
                 <img
                   // src={`https://aws-movieticket-bucket.s3.amazonaws.com/${movie._id}.jpg`}
-                  src={require(`../../../../../server/public/movies/${movie._id}.jpg`)}
+                  // src={require(`../../../../../server/public/movies/${movie._id}.jpg`)}
+                  src={movie?.PosterImg}
                   alt=""
                 />
 

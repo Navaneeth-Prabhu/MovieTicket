@@ -1,19 +1,15 @@
-import Avatar from "@mui/material/Avatar";
+
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {  ThemeProvider } from "@mui/material/styles";
 import React, { useState, useEffect } from "react";
 // import axios from "../../../axios/axios";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
-import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import { useForm } from "react-hook-form";
 import axios from "../../../../axios/axios";
@@ -21,12 +17,9 @@ import Checkbox from "@mui/material/Checkbox";
 import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-// import './index.css'
+
 import UploadWidget from "./UploadWidget";
 import { FormControl } from "@mui/material";
-
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const ErrorText = ({ children, ...props }) => (
   <Typography sx={{ color: "error.main" }} {...props}>
@@ -35,21 +28,15 @@ const ErrorText = ({ children, ...props }) => (
 );
 
 const top100Films = [
- "Action" ,
- "Romance" ,
- "Dramas" ,
- "Thriller" ,
- "Horror" ,
-   "Sci-fi" ,
-  "Fantasy" ,
+  "Action",
+  "Romance",
+  "Dramas",
+  "Thriller",
+  "Horror",
+  "Sci-fi",
+  "Fantasy",
 ];
-const Language = [
- "English" ,
- "Hindi" ,
- "Tamil" ,
- "Malayalam" ,
- "Kannada" ,
-];
+const Language = ["English", "Hindi", "Tamil", "Malayalam", "Kannada"];
 
 const validFileTypes = ["image/jpg", "image/jpeg", "image/png"];
 const URL = "/api/admin/movieImage/upload";
@@ -58,13 +45,11 @@ export default function FormMovie() {
   const [url, updateUrl] = useState();
   const [error, updateError] = useState();
   const navigate = useNavigate();
-  const [gener, setgener] = useState([])
-  const [language, setlanguage] = useState([])
-// const [setFieldValue]
+  const [gener, setgener] = useState([]);
+  const [language, setlanguage] = useState([]);
+  // const [setFieldValue]
 
-
-
-console.log("fener",gener)
+  console.log("fener", gener);
   const {
     register,
     handleSubmit,
@@ -80,27 +65,21 @@ console.log("fener",gener)
       });
       return;
     }
+    console.log("result................", result);
     updateUrl(result?.info?.secure_url);
   }
 
   const onSubmit = async (data) => {
     console.log("asdfasdfasdf", data);
-     data.Genre = gener
-     data.Language = language
+    data.Genre = gener;
+    data.Language = language;
+    data.PosterImg = url;
     const formData = new FormData();
 
-    // formData.append("image", data.file[0]);
     await axios
       .post("http://localhost:3001/admin/movieinfo", data)
       .then(async (response) => {
         let id = response.data._id;
-        const data = await axios.post(
-          "https://api.cloudinary.com/v1_1/navaNeeth/image/upload",
-          formData.then((response) => {
-            data = response.data["secure_url"];
-          })
-        );
-
         navigate("/admin/movies");
       })
       .catch((error) => {
@@ -122,6 +101,7 @@ console.log("fener",gener)
               rowSpacing={1}
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
+
               <Grid item lg={6} xs={12}>
                 <div>
                   <TextField
@@ -155,6 +135,7 @@ console.log("fener",gener)
                   </span>
                 </div>
               </Grid>
+
               <Grid item xs={12} lg={6}>
                 <TextField
                   variant="filled"
@@ -187,36 +168,6 @@ console.log("fener",gener)
                   )}
                 </span>
               </Grid>
-              {/* <Grid item xs={12} lg={6}>
-                <TextField
-                  variant="filled"
-                  label="Genre"
-                  color="secondary"
-                  focused
-                  fullWidth
-                  margin="normal"
-                  {...register("Genre", {
-                    required: true,
-                    minLength: 4,
-                    maxLength: 20,
-                    pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
-                  })}
-                />
-                <span className="text-danger">
-                  {errors.name?.type === "required" && (
-                    <span>name is required</span>
-                  )}
-                  {errors.name?.type === "minLength" && (
-                    <span>name must morethan or equal to 4 Character</span>
-                  )}
-                  {errors.name?.type === "maxLength" && (
-                    <span>name must less than 20 Character</span>
-                  )}
-                  {errors.name?.type === "pattern" && (
-                    <span>Should not have spaces</span>
-                  )}
-                </span>
-              </Grid> */}
 
               <Grid item xs={12} lg={6}>
                 <TextField
@@ -279,6 +230,7 @@ console.log("fener",gener)
                   )}
                 </span>
               </Grid>
+
               <Grid item xs={6} lg={6}>
                 <div className="container">
                   <h2>Unsigned with Upload Preset</h2>
@@ -308,76 +260,37 @@ console.log("fener",gener)
                 <span className="text-danger"></span>
                 {/* {error && <ErrorText>{error}</ErrorText>} */}
               </Grid>
-              {/* <Grid item xs={6} lg={6}>
-                <Autocomplete
-                  multiple
-                  id="checkboxes-tags-demo"
-                  options={top100Films}
-                  disableCloseOnSelect
-                  getOptionLabel={(option) => option.Gener}
-                  // renderOption={(props, option, { selected }) => (
-                  //   <li {...props}>
-                  //     <Checkbox
-                  //       icon={icon}
-                  //       checkedIcon={checkedIcon}
-                  //       style={{ marginRight: 8 }}
-                  //       checked={selected}
-                  //     />
-                  //     {option.Gener}
-                  //   </li>
-                  // )}
-                  style={{ width: 500 }}
-                  onChange={(event, value) => setACValue(value)}
-                  // onChange={(e, value) => setFieldValue("Gener", value)}
-            value={value.Gener}
-            isOptionEqualToValue={(option, value ,{selected}) =>(<li {...props}>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {option.Gener}
-            </li> )}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Genre"
-                      placeholder="Favorites"
-                      {...register("Genre", {
-                        required: true,
-                        minLength: 4,
-                        maxLength: 20,
-                        pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
-                      })}
-                    />
-                  )}
-                />
-              </Grid> */}
+
               <Grid item xs={6} lg={6}>
                 <FormControl>
-
-                <Autocomplete 
-                multiple
-                value={gener}
-                // onChange={handleGener}
-                onChange={(event,value)=>setgener(value)}
-                options={top100Films} 
-                renderInput ={(params)=> <TextField {...params} label ="Genre"/>}/>
+                  <Autocomplete
+                    multiple
+                    value={gener}
+                 
+                    onChange={(event, value) => setgener(value)}
+                    options={top100Films}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Genre" />
+                    )}
+                  />
                 </FormControl>
               </Grid>
+
               <Grid item xs={6} lg={6}>
                 <FormControl>
-
-                <Autocomplete 
-                multiple
-                value={language}
-                // onChange={handleGener}
-                onChange={(event,value)=>setlanguage(value)}
-                options={Language} 
-                renderInput ={(params)=> <TextField {...params} label ="Language"/>}/>
+                  <Autocomplete
+                    multiple
+                    value={language}
+                    // onChange={handleGener}
+                    onChange={(event, value) => setlanguage(value)}
+                    options={Language}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Language" />
+                    )}
+                  />
                 </FormControl>
               </Grid>
+
             </Grid>
 
             <Button

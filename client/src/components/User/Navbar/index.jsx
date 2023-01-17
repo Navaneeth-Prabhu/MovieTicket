@@ -33,12 +33,12 @@ const headerNav = [
   },
   {
     display: "Movies",
-    path: "/movie",
+    path: "/SeeAll",
   },
-  {
-    display: "TV Series",
-    path: "/tv",
-  },
+  // {
+  //   display: "TV Series",
+  //   path: "/tv",
+  // },
 ];
 const listItems = [
   {
@@ -63,10 +63,10 @@ const listItems = [
 ];
 
 
-function Navbar({ user }) {
-  const userLogin = useSelector((state) => state.userLogin);
-  // const { userInfo } = userLogin;
-  console.log("userinfoooo",userLogin);
+function Navbar() {
+  const user = useSelector((state) => state.userLogin);
+  console.log("navbar",user)
+  // console.log("userinfoooo",userLogin);
 
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
@@ -82,9 +82,15 @@ function Navbar({ user }) {
   //     borderRadius: '20px 20px 0 0',
   //   },
   // });
+  // const logout = () => {
+  //   window.open("http://localhost:3001/auth/logout", "_self");
+  // };
+
   const logout = () => {
-    window.open("http://localhost:3001/auth/logout", "_self");
+    // window.open("http://localhost:3008/auth/logout", "_self");
+    localStorage.clear();
   };
+
 
   const toggleDrawer = () => (event) => {
     if (
@@ -180,10 +186,10 @@ function Navbar({ user }) {
             </li>
           ))}
 
-          {user ? (
+          {user ?.userInfo? (
             <li className="nav-item">
 
-          <div onClick={toggleDrawer()}>{user.name}</div>
+          <div onClick={toggleDrawer()}>Hello Gust</div>
           <SwipeableDrawer
           open={open} anchor="right" onClose={toggleDrawer()} onOpen={toggleDrawer()}
           sx={{borderRadius:'20px 20px 0 0'}}

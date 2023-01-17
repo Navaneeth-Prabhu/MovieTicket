@@ -9,7 +9,7 @@ const movieSchema = new mongoose.Schema(
       type: String,
     },
     Genre:{
-        type:String,  
+        type:Array,  
     },
     director:{
         type:String,  
@@ -29,6 +29,9 @@ const movieSchema = new mongoose.Schema(
     },
     Language:{
       type:Array,
+    },
+    PosterImg:{
+      type:String,
     }
   },
   {

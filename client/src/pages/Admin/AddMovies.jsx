@@ -4,7 +4,6 @@ import Topbar from "../../components/Admin/Global/Topbar";
 import "./dashboard.css";
 import SideBar from "../../components/Admin/Global/Sidebar";
 import { ProSidebarProvider } from "react-pro-sidebar";
-import AddMoviess from "../../components/Admin/Movies/AddMovies";
 import AddMovie from "../../components/Admin/Movies/AddMovies/Form";
 
 
@@ -20,7 +19,6 @@ function AddMovies() {
             <SideBar />
             <main className="content">
               <Topbar></Topbar>
-              {/* <AddMoviess/> */}
               <AddMovie/>
             </main>
           </div>
