@@ -41,22 +41,12 @@ const Counter = () => (
   </CountdownCircleTimer>
 );
 
-// const useStyles = makeStyles((theme) => ({
-//   appBar: {
-//     position: "relative",
-//     background: "#1F2533",
-//   },
-//   title: {
-//     marginLeft: theme.spacing(2),
-//     flex: 1,
-//   },
-// }));
+
 
 function PaymentsPage({ proceed }) {
-  // const classes = useStyles();
+
   const [state, setState] = React.useState(false);
-  // const city = useSelector((state) => state.app.city);
-  // const booking_details = useSelector((state) => state.booking_details);
+
   const dispatch = useDispatch();
 
   const [counter, setCounter] = React.useState(true);
@@ -66,23 +56,21 @@ function PaymentsPage({ proceed }) {
   const user = useSelector((state) => state.userLogin);
   const selectDate = useSelector((state) => state.date);
   const payment = useSelector((state) => state.payment);
-  console.log(payment)
-  const { loading, paymentSuccess } = payment;
-  console.log(paymentSuccess);
+  console.log("qrrrr",payment?.paymentSucess?.qrcode);
+  const { loading, paymentSucess } = payment;
+  console.log(paymentSucess);
   // const { data, qrcode, status } = paymentSuccess;
   const { date } = selectDate;
   const { userInfo } = user;
   const { dateInfo, silver } = booking_details;
   const { movieInformation } = movieInfo;
-  console.log(movieInformation)
   const handleClose = () => {
     setState(false);
   };
 
   const handlePayment = (id) => {
     setState(true);
-    console.log(movieInformation);
-    console.log("hello im in payment");
+    // console.log("userinforrrr",userInfo);
     const dates = new Date();
     dates.setFullYear(date.year);
     dates.setMonth(date.month); // 0 represents January
@@ -98,7 +86,7 @@ function PaymentsPage({ proceed }) {
       seats: silver,
       total: booking_details.price,
       movieId: movieInformation.movie._id,
-      // phone: userInfo.phone,
+      userId: userInfo,
       showDate: dateOnly,
       bookedDate: new Date(),
       paymentId: id,
@@ -122,7 +110,7 @@ function PaymentsPage({ proceed }) {
 
   const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
-  console.log(state);
+
   return (
     <div>
       <Dialog
@@ -179,11 +167,11 @@ function PaymentsPage({ proceed }) {
           </DialogTitle>
         )}
         <DialogContent dividers>
-          {/* <img style={{width:'100%'}} src="https://cdn.dribbble.com/users/108183/screenshots/8286157/media/4b152d30e3d9ae5c87e019e448582495.gif" alt=""/> */}
+          {/* <img style={{width:'100%'}} src=""/> */}
           {counter ? (
             <img
               style={{ width: "70%", margin: "0 15%" }}
-              src="https://cdn.dribbble.com/users/801336/screenshots/10037782/media/d7f28f902699655bba0b75e34dd9eb44.gif"
+              src=""
               alt=""
             />
           ) : (
@@ -196,7 +184,7 @@ function PaymentsPage({ proceed }) {
                 borderRadius: "5px",
               }}
             >
-              <img src={payment.paymentSuccess?.qrcode} alt="hello ser" />
+              <img src={payment?.paymentSucess?.qrcode} alt="hello ser" />
               <h1>Congratulations!</h1>
               <div style={{ fontSize: "20px" }}>We have got your tickets</div>
             </div>

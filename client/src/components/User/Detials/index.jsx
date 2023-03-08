@@ -5,38 +5,25 @@ import "./index.css";
 function Index() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const data = JSON.parse(queryParams.get('data'));
-  // console.log("asfdasdfasdfasDF",data);
+  const data = JSON.parse(queryParams.get("data"));
+
   return (
     <>
-      {/* <div className="movieBanner">
-        <div className="overlay">
-          <div className="gradient">
-            <img src={require("../../../images/Rectangle 2.jpg")} alt="" />
-          </div>
-        </div>
-      </div>
-        <div className="moviePoster" >
-          <img src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")} alt="" />
-          <p>asdfasdfhoweh foasndfk ansdf oahs fansldfjhiwhfe nasdlf </p>
-        </div>
-        <h1>{data.title}</h1> */}
-              <section class="movie-detail">
+      <section class="movie-detail">
         <div class="container">
-
           <figure class="movie-detail-banner">
-
-          <img src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")} alt="" />
+            <img
+              src={require("../../../images/Everything_Everywhere_All_at_Once.jpg")}
+              alt=""
+            />
             {/* <img src="./assets/images/movie-4.png" alt="Free guy movie poster"> */}
 
             <button class="play-btn">
               <ion-icon name="play-circle-outline"></ion-icon>
             </button>
-
           </figure>
 
           <div class="movie-detail-content">
-
             <p class="detail-subtitle">New Episodes</p>
 
             <h1 class="h1 detail-title">
@@ -44,7 +31,6 @@ function Index() {
             </h1>
 
             <div class="meta-wrapper">
-
               <div class="badge-wrapper">
                 <div class="badge badge-fill">PG 13</div>
 
@@ -62,7 +48,6 @@ function Index() {
               </div>
 
               <div class="date-time">
-
                 <div>
                   <ion-icon name="calendar-outline"></ion-icon>
 
@@ -74,19 +59,16 @@ function Index() {
 
                   <time datetime="PT115M">115 min</time>
                 </div>
-
               </div>
-
             </div>
 
             <p class="storyline">
-              A bank teller called Guy realizes he is a background character in an open world video game called Free
-              City that will
-              soon go offline.
+              A bank teller called Guy realizes he is a background character in
+              an open world video game called Free City that will soon go
+              offline.
             </p>
 
             <div class="details-actions">
-
               <button class="share">
                 <ion-icon name="share-social"></ion-icon>
 
@@ -104,7 +86,6 @@ function Index() {
 
                 <span>Watch Now</span>
               </button>
-
             </div>
 
             <a href="./assets/images/movie-4.png" download class="download-btn">
@@ -112,12 +93,9 @@ function Index() {
 
               <ion-icon name="download-outline"></ion-icon>
             </a>
-
           </div>
-
         </div>
       </section>
-
     </>
   );
 }

@@ -23,7 +23,7 @@ function SummaryPage({ foodModalOpen, handleCloseFoodModal }) {
 //   const foodArray = useSelector((state) => state.food.foodArray);
 const booking_details = useSelector(state=>state.dateInformationSelected)  
 const movieInformation = useSelector(state => state.movie)
-console.log("summery pag................e" ,movieInformation)
+// console.log("summery pag................e" ,movieInformation)
 const {movie,loading} = movieInformation
   const dispatch = useDispatch();
 //   React.useEffect(() => {
@@ -38,15 +38,6 @@ const {movie,loading} = movieInformation
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleChange = (e) => {};
 
   let totalAmount = booking_details.price + 28 + totalFood;
 

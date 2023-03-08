@@ -27,9 +27,13 @@ const [value, setvalue] = useState('')
 //   const sessionDetails = JSON.parse(sessionCookie);
   const handleSubmit = event => {
    const movieId = movieInformation?.movie._id
+  //  const userId = localStorage.getItem("userInfo")
+   const user = localStorage.getItem("userInfo")
+   let userEmail = JSON.parse(user)
+
     event.preventDefault();
-    // console.log("mvoeeeeeeeeeeee",movieInfo)
-    axios.post('http://localhost:3001/reviews', { message, rating ,movieId})
+
+    axios.post('http://localhost:3001/reviews', { message, rating ,movieId,userEmail})
     handleClose()
     setMessage(null)
     setRating(0)

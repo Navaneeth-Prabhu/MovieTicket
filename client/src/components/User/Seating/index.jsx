@@ -18,7 +18,7 @@ function Seating({
   handleCloseSeatingButton,
 }) {
   const movieInformation = useSelector(state => state.movieInfo)
-  console.log("seating.............",movieInformation.movieInformation)
+
   const {movie} = movieInformation.movieInformation
   const [seatActive, setSeatActive] = React.useState(seatingActive);
   const [active, setActive] = React.useState(false);
@@ -30,17 +30,18 @@ function Seating({
   const seats = useSelector((state) => state.seats);
   const { loading, seat } = seats;
 
-  //seating array
-  console.log(rowsData);
-  for (const obj of rowsData) {
-    const matchingObject = seat.find(o => o.id === obj.id);
-    if (matchingObject) {
-      obj.seat = matchingObject.seat;
-      obj.isReserved = matchingObject.isReserved;
-    }
+
+  if(seat.length >= 1){
+
+    for (const obj of rowsData) {
+      const matchingObject = seat.find(o => o.id === obj.id);
+      if (matchingObject) {
+        obj.seat = matchingObject.seat;
+        obj.isReserved = matchingObject.isReserved;
+      }
   }
-  console.log("SEatttttttts",seats);
-  console.log(rowsData)
+  }
+
   
   const { dateInfo } = date;
 
@@ -59,7 +60,7 @@ function Seating({
     "December",
   ];
 
-  // console.log(seatingActive);
+
 
   const handleClick = (value) => {
     setRowData(

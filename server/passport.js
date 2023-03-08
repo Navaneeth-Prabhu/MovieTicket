@@ -22,19 +22,16 @@ passport.use(
         const email = profile.emails[0].value;
         const name = profile.name.givenName;
         const lastName = profile.name.familyName;
-        // console.log(profile)
-        // const profilePhoto = profile.photos[0].value;
-        // const source = "google";
   
   
         const currentUser = await User.findOne({ email })
-        // console.log("user",currentUser)
+   
         if (!currentUser) {
-          console.log("in current user")
+   
           const user = new User({
             googleId, email, name
           })
-          // console.log("ewuser",user)
+   
           user.save()
           // return done(null, newUser);
         }
@@ -47,7 +44,7 @@ passport.use(
       );
 
 passport.serializeUser((user, done) => {
-  // console.log("userrrr",user)
+ 
   done(null, user.id);
 });
 

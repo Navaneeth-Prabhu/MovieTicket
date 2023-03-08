@@ -25,34 +25,37 @@ function Index() {
 
     <>
       <>
-        <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
+        <Swiper
+          centeredSlides={true}
+          slidesPerView={1.5}
+          spaceBetween={5}
+          loop={true}
+          navigation={true}
+           modules={[Navigation]}
+          className="mySwiper"
+        >
           <SwiperSlide>
             <div className="containerr">
-              <div className="gradient">
+              <div className="">
                 {/* <div className="fade"> */}
-                  <div className="topGradient">
+                <div className="topGradient">
                   {/* <div className="gradientwhole"> */}
-                    <img
-                      className=""
-                      style={{ width: "100%", height: "100%" }}
-                      src={require("../../../images/l34820221122130003.webp")}
-                      alt="First slide"
-                    />
-                  </div>
+                  <img
+                    className=""
+                    style={{ width: "100%", height: "100%" }}
+                    src={require("../../../images/l34820221122130003.webp")}
+                    alt="First slide"
+                  />
                 </div>
               </div>
-
-              
-          
+            </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="containerr">
-              <div className="gradient">
- 
-                  <div className="topGradient">
+              <div className="">
+                <div className="topGradient">
                   {/* <div className="gradientwhole"> */}
                   <div className="left">
-
                     <img
                       className="left"
                       style={{ width: "100%", height: "100%" }}
@@ -60,15 +63,43 @@ function Index() {
                       alt="First slide"
                     />
                   </div>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="containerr">
+              <div className="">
+                {/* <div className="fade"> */}
+                <div className="topGradient">
+                  {/* <div className="gradientwhole"> */}
+                  <img
+                    className=""
+                    style={{ width: "100%", height: "100%" }}
+                    src={require("../../../images/l34820221122130003.webp")}
+                    alt="First slide"
+                  />
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="containerr">
+              <div className="">
+                <div className="topGradient">
+                  {/* <div className="gradientwhole"> */}
+                  <div className="left">
+                    <img
+                      className="left"
+                      style={{ width: "100%", height: "100%" }}
+                      src={require("../../../images/5c1cff971789a-wallpaper-preview.jpg")}
+                      alt="First slide"
+                    />
                   </div>
                 </div>
               </div>
-
-              
-          
+            </div>
           </SwiperSlide>
-          <SwiperSlide>Slide 2</SwiperSlide>
-          <SwiperSlide>Slide 3</SwiperSlide>
         </Swiper>
       </>
     </>

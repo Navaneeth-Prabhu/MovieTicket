@@ -105,17 +105,13 @@ useEffect(() => {
 }, [block]);
 
 const reject = (id) => {
-    console.log(id);
     axios.get(`http://localhost:3001/admin/rejectTheater/${id}`).then(({ data }) => {
-      console.log(data);
        setBlock(!block);
     });
   };
 
   const approve = (id) => {
-    console.log(id);
     axios.get(`http://localhost:3001/admin/approveTheater/${id}`).then(({ data }) => {
-      console.log(data);
       setBlock(!block);
     });
   };

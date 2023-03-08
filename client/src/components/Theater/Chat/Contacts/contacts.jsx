@@ -7,7 +7,6 @@ function Contacts({contacts,currentUser,changeChat}) {
 
     useEffect(() => {
       if(currentUser){
-        // console.log("asdfasdf",currentUser);
         setCurrentUserName(currentUser.name)
       }
 

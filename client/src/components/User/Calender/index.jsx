@@ -75,13 +75,11 @@ function Calendar() {
     <div  style={{ width: 250 }}>
     <Carousel
       className={styles.arrow}
-      // centerMode={true}
-      // customRightArrow={<CustomRightArrow />}
+
       responsive={responsive}
       removeArrowOnDeviceType={["mobile"]}
     >
       {dates?.map((item, index) => (
-        // console.log("item",item.month),
         <div
           className={styles.dateItem}
           onClick={() => {
@@ -90,7 +88,7 @@ function Calendar() {
               handleSelectDate(
                 dates[index].date,
                 dates[index].day,
-                // dates[index].month,
+    
                 movie._id
               )
             );

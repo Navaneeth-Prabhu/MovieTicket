@@ -28,6 +28,8 @@ import MenuItem from "@mui/material/MenuItem";
 
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
+import jwt_decode from "jwt-decode";
+import { useCookies } from "react-cookie";
 
 // import './index.css'
 
@@ -52,7 +54,7 @@ const style = {
 };
 
 export default function AddShow() {
-  
+  const cookies = useCookies([])
 const navigate = useNavigate()
   const [open, setOpen] = React.useState(false);
 
@@ -68,7 +70,6 @@ const navigate = useNavigate()
   const handleChangeDate = (newValue) => {
     setValue(newValue);
   };
-console.log(screen);
 
   const handleChange = (event) => {
     setname(event.target.value);
@@ -91,24 +92,25 @@ console.log(screen);
 
   
 
-  useEffect(() => {
+  useEffect(async() => {
+    const token = cookies.jwt;
+    const decoded =  jwt_decode(token);
+    const id =(decoded.id)
+    console.log(id,"helloo")
     axios.get("http://localhost:3001/theater/getMovies").then(({data})=>{
-      console.log("fffffffffffff",data);
       setmovie(data)
     })
     axios.get("http://localhost:3001/theater/getScreen").then(({data})=>{
-      console.log("screennn",data);
       setscreen(data)
+    })
+    await axios.get(`http://localhost:3001/theater/getShowMovie/${id}`).then(({data})=>{
+      console.log(data)
     })
 
   },[])
   
 
   const onSubmit = async (data) => {
-    console.log("fffaaa",name);
-    console.log("fffaaa",price);
-    console.log("fffaaa",status);
-    console.log("data",data);
     data.name = name
     data.price = price
     data.status = status
@@ -133,9 +135,7 @@ console.log(screen);
               rowSpacing={1}
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
-               
-                 
-                    
+       
               <Grid item xs={12} lg={6}>
                 <FormControl variant="filled" color="secondary" fullWidth>
 
@@ -194,14 +194,6 @@ console.log(screen);
               </Grid>
               <Grid item lg={6} xs={12}>
                 
-                {/* <DesktopDatePicker
-          label="Date desktop"
-          inputFormat="MM/DD/YYYY"
-          value={value}
-          onChange={handleChangeDate}
-          renderInput={(params) => <TextField {...params} />}
-        />
-                 */}
               </Grid>
               <Grid item lg={6} xs={12}>
                 <div>

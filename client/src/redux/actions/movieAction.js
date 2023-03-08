@@ -14,7 +14,7 @@ import {
     try {
       dispatch({ type: GET_MOVIE_REQUEST });
       let { data } = await axios.get("http://localhost:3001/movieInfo");
-      // console.log(data);
+    
       dispatch({ type: GET_MOVIE_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
@@ -30,10 +30,10 @@ import {
 
  export const moviedetails = (id) => async (dispatch) => {
     try {
-      // dispatch({type: GET_MOVIE_INFO_MOVIEPAGE_SUCCESS, payload: data});
-      console.log('iddddddddd',id)
+   
+
       let { data } = await axios.get(`http://localhost:3001/moviedetails/${id}`);
-      console.log(data)
+   
       dispatch({type: GET_MOVIE_INFO_MOVIEPAGE_SUCCESS, payload: data});
       // console.log(data);
       
@@ -52,7 +52,7 @@ import {
     try {
       // dispatch({type:GET_THEATER_MOVIE_REQUEST})
       let { data } = await axios.get('http://localhost:3001/GetTheaterMovies');
-      // console.log("..........................",data)
+  
       dispatch({type:GET_THEATER_MOVIE_SUCCESS,payload:data})
     } catch (error) {
       dispatch({
@@ -64,3 +64,10 @@ import {
       })
     }
   }
+  // export const getTheater = ()=>async(dispatch)=>{
+  //   try {
+      
+  //   } catch (error) {
+      
+  //   }
+  // }

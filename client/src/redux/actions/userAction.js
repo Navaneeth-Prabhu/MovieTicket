@@ -29,13 +29,14 @@ import {
   };
 
   export const otpValidate = (datas) => async (dispatch) => {
-    console.log(datas);
+
     try {
       dispatch({ type: USER_OTP_REQUEST });
       let { data } = await axios.post("http://localhost:3001/otp/", datas);
       console.log(data);
       dispatch({ type: USER_OTP_SUCCESS, payload: data });
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      localStorage.setItem('userInfo', JSON.stringify(data));
+      // localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (error) {
       dispatch({
         type: USER_OTP_FAIL,

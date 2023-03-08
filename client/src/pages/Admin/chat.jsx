@@ -47,10 +47,9 @@ function Chat() {
     async function fetchData(){
       const token = cookies.adminjwt;
       const decoded = await jwt_decode(token);
-      console.log("jwt",decoded.id)
+  
       const id =(decoded.id)
-      // console.log("state",currentUser);
-      // const data = await axios.get(`http://localhost:3001/theater/allTheater/${id}`);
+
       const data = await axios.get(`http://localhost:3001/admin/allTheater`);
       // console.log(data);
       setContacts(data.data)
@@ -60,17 +59,7 @@ function Chat() {
   
 
 
-  // useEffect(async () => {
-  //   // if (currentUser) {
-  //   // if (currentUser.isAvatarImageSet) {
-  //   const data = await axios.get("http://localhost:3001/theater/allTheater");
-  //   console.log("in use effect");
-  //   setContacts(data.data);
-  //   // } else {
-  //   // navigate("/setAvatar");
-  //   // }
-  //   // }
-  // }, [currentUser]);
+
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
   };

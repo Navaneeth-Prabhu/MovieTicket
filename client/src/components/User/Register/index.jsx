@@ -36,8 +36,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 function Modals() {
-  // const userLogin = useSelector((state) => state.userLogin);
-  // console.log("userloginnnnn",userLogin)
+
   const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
   const [state, setState] = React.useState(false);
@@ -74,21 +73,7 @@ function Modals() {
       position: "top-right",
     });
 
-  // const onSubmit = async (data) => {
-  //   console.log(data);
-  //   dispatch(registration(data))
-  //   // axios.post("http://localhost:3001/signup", data).then((response) => {
-  //   //   console.log(response.data);
-  //   //   if (response.data.status) {
-  //   //     handleClose();
-        
-  //   //     navigate("/");
-  //   //   } else {
-  //   //     generateError(errors);
-  //   //   }
-  //   // });
-    
-  // };
+
 
   const onSubmit = async (data) => {
     setEmail(data);
@@ -105,9 +90,6 @@ function Modals() {
   };
 
   console.log(errors);
-  const helo = () => {
-    console.log("hello");
-  };
 
   const handleclosex = () => {
     handleClose();

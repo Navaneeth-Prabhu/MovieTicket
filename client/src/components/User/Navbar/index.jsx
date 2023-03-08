@@ -2,20 +2,19 @@ import React, { useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
-import LocalActivitySharpIcon from '@mui/icons-material/LocalActivitySharp';
-import ContactSupportSharpIcon from '@mui/icons-material/ContactSupportSharp';
-import SettingsSharpIcon from '@mui/icons-material/SettingsSharp';
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import LocalActivitySharpIcon from "@mui/icons-material/LocalActivitySharp";
+import ContactSupportSharpIcon from "@mui/icons-material/ContactSupportSharp";
+import SettingsSharpIcon from "@mui/icons-material/SettingsSharp";
 import { Box } from "@mui/system";
-
 
 import Modal from "../Register/index";
 // import { makeStyles } from '@material-ui/styles';
@@ -24,7 +23,6 @@ import "./nav.scss";
 import { useSelector } from "react-redux";
 
 // import logo from '../../assets/tmovie.png';
-
 
 const headerNav = [
   {
@@ -44,12 +42,12 @@ const listItems = [
   {
     listIcon: <AccountCircleRoundedIcon />,
     listText: "Profile",
-    path:"/profile"
+    path: "/profile",
   },
   {
     listIcon: <LocalActivitySharpIcon />,
     listText: "Your Orders",
-    path:"/orderhistory"
+    path: "/orderhistory",
   },
   {
     listIcon: <ContactSupportSharpIcon />,
@@ -57,46 +55,31 @@ const listItems = [
   },
   {
     listIcon: <SettingsSharpIcon />,
-    listText: "Account & Settings"
-    
-  }
+    listText: "Account & Settings",
+  },
 ];
-
 
 function Navbar() {
   const user = useSelector((state) => state.userLogin);
-  console.log("navbar",user)
-  // console.log("userinfoooo",userLogin);
 
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const [openModal, setOpenModal] = useState(false);
-  
+
   const { pathname } = useLocation();
   const headerRef = useRef(null);
   const [open, setOpen] = useState(false);
-  // const classes = useStyles();
-
-  // const useStyles = makeStyles({
-  //   drawerPaper: {
-  //     borderRadius: '20px 20px 0 0',
-  //   },
-  // });
-  // const logout = () => {
-  //   window.open("http://localhost:3001/auth/logout", "_self");
-  // };
 
   const logout = () => {
     // window.open("http://localhost:3008/auth/logout", "_self");
     localStorage.clear();
   };
 
-
   const toggleDrawer = () => (event) => {
     if (
       event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
     ) {
       return;
     }
@@ -104,54 +87,53 @@ function Navbar() {
   };
   // let anchor = left
   const list = () => (
-
     <Box
-      sx={{ width: 350 ,
-        height:"100%",
-      display:'flex',
-      flexDirection:'column'}}
-      // role="presentation"
-      // onClick={toggleDrawer()}
-      // onKeyDown={toggleDrawer()}
-      
+      sx={{
+        width: 350,
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
     >
       <List>asdfasdf</List>
 
       <Box
-      sx={{ width: 350 ,
-        height:"100%",
-      display:'flex',
-      flexDirection:'column',
-      justifyContent:'space-between'}}
-      role="presentation"
-      onClick={toggleDrawer()}
-      onKeyDown={toggleDrawer()}>
-
-      
-
-      <List>
-        {listItems.map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <Divider />
-            <Link to={text.path}>
-            <ListItemButton>
-              <ListItemIcon sx={{color:'white'}}>
-                {text.listIcon}
-              </ListItemIcon>
-              <ListItemText primary={text.listText} />
-            </ListItemButton>
+        sx={{
+          width: 350,
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+        role="presentation"
+        onClick={toggleDrawer()}
+        onKeyDown={toggleDrawer()}
+      >
+        <List>
+          {listItems.map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <Divider />
+              <Link to={text.path}>
+                <ListItemButton>
+                  <ListItemIcon sx={{ color: "white" }}>
+                    {text.listIcon}
+                  </ListItemIcon>
+                  <ListItemText primary={text.listText} />
+                </ListItemButton>
               </Link>
-            
-          </ListItem>
-        ))}
-      </List>
-        <Button onClick={logout} variant="outlined" sx={{bottom:1,margin:1,border:1.5,color:'white'}}>LogOut</Button>
-
+            </ListItem>
+          ))}
+        </List>
+        <Button
+          onClick={logout}
+          variant="outlined"
+          sx={{ bottom: 1, margin: 1, border: 1.5, color: "white" }}
+        >
+          LogOut
+        </Button>
       </Box>
     </Box>
   );
-
-
 
   const active = headerNav.findIndex((e) => e.path === pathname);
 
@@ -186,16 +168,18 @@ function Navbar() {
             </li>
           ))}
 
-          {user ?.userInfo? (
+          {user?.userInfo ? (
             <li className="nav-item">
-
-          <div onClick={toggleDrawer()}>Hello Gust</div>
-          <SwipeableDrawer
-          open={open} anchor="right" onClose={toggleDrawer()} onOpen={toggleDrawer()}
-          sx={{borderRadius:'20px 20px 0 0'}}
-          >
-            {list()}
-          </SwipeableDrawer>
+              <div onClick={toggleDrawer()}>Hello Gust</div>
+              <SwipeableDrawer
+                open={open}
+                anchor="right"
+                onClose={toggleDrawer()}
+                onOpen={toggleDrawer()}
+                sx={{ borderRadius: "20px 20px 0 0" }}
+              >
+                {list()}
+              </SwipeableDrawer>
             </li>
           ) : (
             <li className="nav-item">

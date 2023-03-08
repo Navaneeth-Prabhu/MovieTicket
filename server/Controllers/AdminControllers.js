@@ -45,7 +45,7 @@ module.exports.Adminlogin = async(req,res,next)=> {
   try {
       const {email,password}=req.body;
       const user = await Admin.login(email,password);
-      console.log("aaaaaaaaaaa",user);
+
       if(!user.Block){
 
           const token = createToken(user._id);
@@ -62,7 +62,7 @@ module.exports.Adminlogin = async(req,res,next)=> {
           res.json({errors:"blocked",created:false})
       }
   } catch (err) {
-      // console.log(err.message);
+
       const errors = handleErrors(err)
       console.log("errrr",errors);
       res.json({errors,created:false})
@@ -95,9 +95,9 @@ module.exports.getStaff = async (req, res, next) => {
 module.exports.blockStaff = async (req, res) => {
   try {
     let id = req.params.id;
-    console.log("helo");
+  
     // const {id} = req.body
-    console.log("asdfasdf",id);
+ 
     const user = await Admin.findByIdAndUpdate(
       { _id: ObjectId(id) },
       { $set: { Block: true } }
@@ -135,7 +135,7 @@ module.exports.TheaterList = async(req,res)=>{
 module.exports.approve = async (req, res) => {
   try {
     let id = req.params.id;
-    console.log("asdfasdf",id);
+  
     const user = await Theater.findByIdAndUpdate(
       { _id: ObjectId(id) },
       { $set: { isApproved: true } }
@@ -150,7 +150,7 @@ module.exports.approve = async (req, res) => {
 module.exports.reject = async (req, res) => {
   try {
     let id = req.params.id;
-    console.log("unblock");
+
     // const {id} = req.body
     const user = await Theater.findByIdAndUpdate(
       { _id: ObjectId(id) },
@@ -163,11 +163,3 @@ module.exports.reject = async (req, res) => {
   }
 };
 
-// module.exports.movieInfo = async(req,res)=>{
-//   try {
-//     const movie = await Movie.find({})
-//     res.json(movie)
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }

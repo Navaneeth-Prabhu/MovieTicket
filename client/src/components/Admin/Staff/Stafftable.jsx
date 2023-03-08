@@ -106,17 +106,13 @@ useEffect(() => {
 }, [block]);
 
 const blockStaff = (id) => {
-    console.log(id);
     axios.get(`http://localhost:3001/admin/block/${id}`).then(({ data }) => {
-      console.log(data);
        setBlock(!block);
     });
   };
 
   const unblockStaff = (id) => {
-    console.log(id);
     axios.get(`http://localhost:3001/admin/unblock/${id}`).then(({ data }) => {
-      console.log(data);
       setBlock(!block);
     });
   };

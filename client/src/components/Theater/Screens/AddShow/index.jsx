@@ -30,6 +30,7 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 function AddShows() {
+  const [Show, setShow] = useState([]);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const [cookies] = useCookies([]);
@@ -39,7 +40,6 @@ function AddShows() {
   const [screen, setscreen] = useState([]);
   const [sname, setsname] = useState();
   const [time, setTime] = useState();
-  // console.log(screen);
   const [values, setValues] = useState(
     [1, 2, 3].map((number) =>
       new DateObject().set({
@@ -50,7 +50,7 @@ function AddShows() {
       })
     )
   );
-  // console.log(values);
+
   const [startDate, setStartDate] = React.useState(dayjs(new Date()));
   const [endDate, setEndDate] = React.useState(dayjs(new Date()));
 
@@ -80,42 +80,73 @@ function AddShows() {
   };
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/theater/getMovies")
-      .then(({ data }) => {
-        setData(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    async function getShowMovie() {
+      const token = cookies.jwt;
+      const decoded = jwt_decode(token);
+      const id = decoded.id;
+      axios
+        .get("http://localhost:3001/theater/getMovies")
+        .then(({ data }) => {
+          setData(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
-    axios
-      .get(`http://localhost:3001/theater/getScreen/${id}`)
-      .then(({ data }) => {
-        setscreen(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      axios
+        .get(`http://localhost:3001/theater/getScreen/${id}`)
+        .then(({ data }) => {
+          setscreen(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      axios
+        .get(`http://localhost:3001/theater/getShowMovie/${id}`)
+        .then(({ data }) => {
+          setShow(data);
+          // console.log(data)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      // await axios.get(`http://localhost:3001/theater/getShowMovie/${id}`).then(({data})=>{
+      //   console.log(data)
+      // })
+    }
+    getShowMovie();
   }, []);
 
+  //  const deleteShow = async(screenIndex, showIndex)=> {
+  //   try {
+  //     // data.theaterId = id
+     
+  //     console.log("sadfadsfasdfasdf",showIndex, screenIndex);
+  //     const response = await axios.post(
+  //       `http://localhost:3001/theater/showDelete`,{showIndex:showIndex,screenName:screenIndex,theaterId:id}
+        
+  //     );
+  //     // console.log(response.data);
+      
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
+  console.log("show", Show);
   const onSubmit = async (data) => {
-    // const token = cookies.jwt;
-    // const decoded = await jwt_decode(token);
-    // setCurrentUser(decoded.id);
-    console.log("data", data);
     data.theaterId = id;
     data.movieName = name;
     data.price = price;
     data.status = status;
     data.screen = sname;
-   let time2 =  time.split(',')
+    let time2 = time.split(",");
     data.time = time2;
 
     data.id = id;
@@ -131,6 +162,34 @@ function AddShows() {
     <ThemeProvider>
       <Container component="main" maxWidth="xm" color="secondary">
         {/* <CssBaseline /> */}
+        <h2>Currunt Shows</h2>
+        <div className="w-full flex flex-wrap my-6">
+          {Show?.map((shows, screenIndex) => (
+            <div className="flex">
+              {shows?.showInfo?.map((item, index) => (
+                <div className="flex flex-col items-center w-[11rem] h-80">
+                  <p className="text-white">{item?.screen}</p>
+                  <p className="text-white">{item?.movieName.title}</p>
+                  <div className="flex space-x-2">
+                    {item?.time?.map((time) => (
+                      <p className="text-white">{time}</p>
+                    ))}
+                  </div>
+                  <div className="h-52 w-36">
+                    <img
+                      className="h-full w-full"
+                      src={item?.movieName.PosterImg}
+                      alt=""
+                    />
+                  </div>
+                  {/* <button onClick={()=>deleteShow(screenIndex, index)}>
+                    delete
+                  </button> */}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
         <Typography component="h1" variant="h5">
           Add Shows
         </Typography>
@@ -170,7 +229,7 @@ function AddShows() {
                     <Stack spacing={3}>
                       <DesktopDatePicker
                         minDate={today}
-                        label="Date desktop"
+                        label="Date Start"
                         inputFormat="MM/DD/YYYY"
                         value={startDate}
                         onChange={handleStrateDate}
@@ -186,7 +245,7 @@ function AddShows() {
                     <Stack spacing={3}>
                       <DesktopDatePicker
                         minDate={today}
-                        label="Date desktop"
+                        label="Date Ends"
                         inputFormat="MM/DD/YYYY"
                         value={endDate}
                         onChange={handleEndDate}

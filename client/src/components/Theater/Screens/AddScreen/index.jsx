@@ -53,10 +53,8 @@ export default function FormMovie() {
     formState: { errors },
   } = useForm();
 
-  console.log("asdfadfasdfasdf", errors);
 
   const onSubmit = async (data) => {
-    console.log("helooooo", data);
 
     await axios.post("http://localhost:3001/theater/addScreen",data)
   navigate("/theater")

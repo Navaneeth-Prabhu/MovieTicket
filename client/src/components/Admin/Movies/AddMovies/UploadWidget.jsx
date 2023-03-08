@@ -24,6 +24,7 @@ const UploadWidget = ({ children, onUpload }) => {
     const options = {
         cloudName:'dlqjouxmp',
         uploadPreset:'igh89oap',
+        // cropping: true, //add a cropping step
     }
 
     return cloudinary.current?.createUploadWidget(options,

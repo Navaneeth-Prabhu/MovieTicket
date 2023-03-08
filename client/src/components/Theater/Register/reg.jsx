@@ -55,7 +55,6 @@ export default function () {
                   if (email) generateError(email);
                   else if (password) generateError(password);
                 } else {
-                  console.log();
                   navigate("/theater/login");
                 }
               }

@@ -37,13 +37,17 @@ const reservationSchema = new Schema({
     ref: 'Cinema',
     required: true,
   },
-  phone: {
+  userId: {
     type: String,
     // required: true,
   },
   checkin: {
     type: Boolean,
     default: false,
+  },
+  qrcode: {
+    type: String,
+   
   },
 });
 

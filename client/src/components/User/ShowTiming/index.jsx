@@ -15,12 +15,12 @@ function ShowTimePage({ filters }) {
   const [gotTime,setGotTime] =useState('')
   const movieInformation = useSelector(state => state.movieInfo)
   const {movie} = movieInformation.movieInformation
-  console.log("mmmmmmoooooooooo",movie)
+  // console.log("mmmmmmoooooooooo",movie)
   // const {movie,loading} = movieInformation
   const date_data = useSelector((state) => state.dateData);
 
   const { dateInfo } = date_data;
-  console.log('dateinfo',dateInfo);
+  // console.log('dateinfo',dateInfo);
 
   const dispatch = useDispatch();
   const data = useSelector((state) => state.booking_details);
@@ -46,8 +46,6 @@ function ShowTimePage({ filters }) {
     return strTime;
   }
 
-  // useEffect(() => {}, []);
-
   const time = formatAMPM(new Date());
   const amOrPm = time[time.length - 2] + time[time.length - 1];
   const currentTime = time.split(":").map(Number).shift();
@@ -69,7 +67,7 @@ function ShowTimePage({ filters }) {
     const isoString = dates.toISOString();
     const dateOnly = isoString.substring(0, 10);
 
-    console.log("dateOnly",dateOnly ,gotTime,movie._id);
+    // console.log("dateOnly",dateOnly ,gotTime,movie._id);
     setConfirmLoading(true);
     dispatch(
       getSeatInformation(
@@ -92,7 +90,7 @@ function ShowTimePage({ filters }) {
   };
 
   const handleClick = (name, time, screen, theaterId) => {
-    console.log("helooooooooooooooooooooooooooooooo",name, time);
+    // console.log("helooooooooooooooooooooooooooooooo",name, time);
     setGotTime(time)
     dispatch(handleSelectNameTime(name, time, screen, theaterId));
     showModal();

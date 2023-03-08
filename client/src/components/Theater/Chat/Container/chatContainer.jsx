@@ -26,32 +26,12 @@ export default function ChatContainer({ currentChat, socket, currentUser }) {
           to: currentChat._id,
         }
       );
-      // console.log("data", response.data);
       setmessages(response.data);
     }
     getmessage();
   }, [currentChat]);
 
 
-  // const fdsa = async (msg) => {
-  //   const data = await JSON.parse(
-  //     localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //   );
-  //   socket.current.emit("send-msg", {
-  //     to: currentChat._id,
-  //     from: data._id,
-  //     msg,
-  //   });
-  //   await axios.post(sendMessageRoute, {
-  //     from: data._id,
-  //     to: currentChat._id,
-  //     message: msg,
-  //   });
-
-  //   const msgs = [...messages];
-  //   msgs.push({ fromSelf: true, message: msg });
-  //   setMessages(msgs);
-  // };
 
   const handleSendMsg = async (msg) => {
     await axios.post("http://localhost:3001/message/addmsg", {

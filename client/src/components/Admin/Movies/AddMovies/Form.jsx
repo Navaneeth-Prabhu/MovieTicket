@@ -47,9 +47,6 @@ export default function FormMovie() {
   const navigate = useNavigate();
   const [gener, setgener] = useState([]);
   const [language, setlanguage] = useState([]);
-  // const [setFieldValue]
-
-  console.log("fener", gener);
   const {
     register,
     handleSubmit,
@@ -65,12 +62,10 @@ export default function FormMovie() {
       });
       return;
     }
-    console.log("result................", result);
     updateUrl(result?.info?.secure_url);
   }
 
   const onSubmit = async (data) => {
-    console.log("asdfasdfasdf", data);
     data.Genre = gener;
     data.Language = language;
     data.PosterImg = url;
@@ -83,7 +78,6 @@ export default function FormMovie() {
         navigate("/admin/movies");
       })
       .catch((error) => {
-        console.log(error);
       });
   };
 
@@ -115,7 +109,7 @@ export default function FormMovie() {
                     {...register("title", {
                       required: true,
                       minLength: 4,
-                      maxLength: 20,
+                      maxLength: 40,
                       pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
                     })}
                   />
@@ -149,7 +143,7 @@ export default function FormMovie() {
                   {...register("description", {
                     required: true,
                     minLength: 4,
-                    maxLength: 100,
+                    maxLength: 200,
                     pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
                   })}
                 />

@@ -7,8 +7,6 @@ function SecondSection() {
     const booking_details = useSelector(state=>state.dateInformationSelected)  
 const movieInfo = useSelector((state) => state.movieInfo);
   const { movieInformation } = movieInfo;
-//   console.log(dateInfo);
-
     const handleChange = (e) => {
 
     }

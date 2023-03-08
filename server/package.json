@@ -31,6 +31,7 @@
     "otp-generator": "^4.0.0",
     "passport": "^0.5.3",
     "passport-google-oauth20": "^2.0.0",
+    "qrcode": "^1.5.1",
     "socket.io": "^4.5.4",
     "start": "^5.1.0",
     "stripe": "^11.6.0",

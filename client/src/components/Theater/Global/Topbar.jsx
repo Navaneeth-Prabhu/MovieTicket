@@ -43,7 +43,7 @@ function Topbar() {
             }
       }
     }
-    verifyUser();
+   
   }, [cookies,navigate,removeCookie])
   
 

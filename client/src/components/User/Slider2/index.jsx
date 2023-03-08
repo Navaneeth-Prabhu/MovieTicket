@@ -24,11 +24,6 @@ export default function Slider() {
 
   const dispatch = useDispatch();
 
-  function handleClick(modetial) {
-    // setmovieDet(modetial)
-    // navigate(`/moviedetails?data=${encodeURIComponent(JSON.stringify(modetial))}`);
-  }
-
   useEffect(() => {
     axios
       .get("http://localhost:3001/GetTheaterMovies")
@@ -106,8 +101,6 @@ export default function Slider() {
                 }}
               >
                 <img
-                  // src={`https://aws-movieticket-bucket.s3.amazonaws.com/${movie._id}.jpg`}
-                  // src={require(`../../../../../server/public/movies/${movie._id}.jpg`)}
                   src={movie?.PosterImg}
                   alt=""
                 />

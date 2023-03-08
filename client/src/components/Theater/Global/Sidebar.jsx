@@ -218,7 +218,6 @@ const Sidebar = () => {
     { title: "Dashboard", src: "Chart_fill" ,path:"/theater" ,icon:<DashboardIcon/>},
     { title: "AddMovies", src: "AddMovie", gap: true ,path:"/theater/addMovies" ,icon:<MovieRoundedIcon/>},
     { title: "Screen ", src: "Screen", path:"/theater/screen", icon:<AirplayIcon/>},
-    // { title: "Search", src: "Search" },
     { title: "Inbox", src: "Chat" ,    path: "/theater/chat", icon:<ChatIcon/>},
     { title: "Analytics", src: "Chart" },
     { title: "Files ", src: "Folder", gap: true },
@@ -241,18 +240,18 @@ const Sidebar = () => {
         <ArrowBackIosIcon  onClick={() => setOpen(!open)} className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
              ${!open && "rotate-180"}`}/>
         <div className="flex gap-x-4 items-center">
-          <img
+          {/* <img
             src="./src/assets/logo.png"
             className={`cursor-pointer duration-500 ${
               open && "rotate-[360deg]"
             }`}
-          />
+          /> */}
           <h1
             className={`text-white origin-left font-medium text-xl duration-200 ${
               !open && "scale-0"
             }`}
           >
-            Designer
+            Theater
           </h1>
         </div>
         <ul className="pt-6">
@@ -274,9 +273,9 @@ const Sidebar = () => {
           ))}
         </ul>
       </div>
-      <div className="h-screen flex-1 p-7">
+      {/* <div className="h-screen flex-1 p-7">
         <h1 className="text-2xl font-semibold ">Home Page</h1>
-      </div>
+      </div> */}
     </div>
   );
 };

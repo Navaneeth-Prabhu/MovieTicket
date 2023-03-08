@@ -3,7 +3,7 @@ require('dotenv').config()
 
 const nodmail = async (email, otp) => {
   return new Promise((resolve, reject) => {
-    console.log("im in nodemailer");
+
     try {
       let transporter = nodemailer.createTransport({
         service: "mail",
@@ -30,7 +30,7 @@ const nodmail = async (email, otp) => {
           if (error) {
             reject(error)
           } else {
-            console.log("messages sent successfully");
+       
             resolve("message sent successfully")
           }
         }

@@ -52,7 +52,7 @@ theaterSchema.pre('save',async function (next){
 })
 theaterSchema.statics.login = async function(email,password){
     const theater = await this.findOne({email});
-    // console.log(theater);
+
     if(theater){
         const auth = await bcrypt.compare(password, theater.password);
         if(auth){

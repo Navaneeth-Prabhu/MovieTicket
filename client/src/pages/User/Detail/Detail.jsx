@@ -9,8 +9,8 @@ import { MovieContext } from "../../../context/movieContext";
 import { moviedetails } from "../../../redux/actions/movieAction";
 import "./detail.scss";
 import { Input, Modal } from "antd";
-import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
-import ReviewModel from '../../../components/User/Review/index'
+import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
+import ReviewModel from "../../../components/User/Review/index";
 
 const { TextArea } = Input;
 // import {
@@ -19,19 +19,16 @@ const { TextArea } = Input;
 //   movieInfoStoreToState,
 // } from "../../../redux/actions/movieAction";
 const Detail = () => {
-
   const navigate = useNavigate();
   const { id } = useParams();
-  const [submit, setsubmit] = useState(false)
+  const [submit, setsubmit] = useState(false);
   const [open, setOpen] = React.useState(false);
 
-
-  
   const user = useSelector((state) => state.userLogin);
-  console.log("userrrrrr",user)
+
   const movieInfo = useSelector((state) => state.movieInfo);
   const { movieInformation } = movieInfo;
-// const genre = movieInformation?.movie.Gener
+  // const genre = movieInformation?.movie.Gener
 
   const dispatch = useDispatch();
   const handleOpen = () => {
@@ -43,17 +40,14 @@ const Detail = () => {
     }
   };
   useEffect(() => {
-    console.log("id:", id);
     dispatch(moviedetails(id));
-    // getMovie()
   }, []);
-  const selectedMovieToState = () => {  
+  const selectedMovieToState = () => {
     if (user?.userInfo) {
       dispatch(moviedetails(movieInformation.movie));
-      navigate(`/buytickets/${movieInformation.movie._id}/select_screen`)
+      navigate(`/buytickets/${movieInformation.movie._id}/select_screen`);
     } else {
       alert("Please login to book your tickets");
-      // setAction(true)
     }
   };
 
@@ -61,28 +55,25 @@ const Detail = () => {
     <>
       <Navbar />
 
-      <div className="main"  style={{
-               
-              backgroundImage: `linear-gradient(90deg, rgb(29, 30, 34) 24.97%, rgb(29, 30, 34) 38.3%, rgba(29, 30, 34, 0.04) 97.47%, rgb(18, 18, 18) 100%),url(${`../../../../../server/public/movies/${movieInformation?.movie._id}.jpg`})`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              
-            }}>
+      <div
+        className="main"
+        style={{
+          backgroundImage: `linear-gradient(90deg, rgb(29, 30, 34) 24.97%, rgb(29, 30, 34) 38.3%, rgba(29, 30, 34, 0.04) 97.47%, rgb(18, 18, 18) 100%),url(${`../../../../../server/public/movies/${movieInformation?.movie._id}.jpg`})`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <div className="smthing">
           <div className="poster" onClick={() => navigate("/movie/trailler")}>
             <img
               // src={`https://aws-movieticket-bucket.s3.amazonaws.com/${movie._id}.jpg`}
-              src={
-                movieInformation
-                  ? require(`../../../../../server/public/movies/${movieInformation.movie._id}.jpg`)
-                  : ""
-              }
+              src={movieInformation?.movie.PosterImg}
               alt=""
             />
           </div>
           <div className="trailer">
-            <PlayCircleFilledWhiteIcon/>
+            <PlayCircleFilledWhiteIcon />
             <span>Trailer</span>
           </div>
         </div>
@@ -91,32 +82,30 @@ const Detail = () => {
 
           <div className="genres"></div>
           <div className="genres">
-     
-          {/* {genre.map((item) => (
+            {/* {genre.map((item) => (
             <span className="genres__item">{item}</span> 
           ))} */}
-            <span className="genres__item">advanture</span>
-            <span className="genres__item">advanture</span>
-            <span className="genres__item">advanture</span>
+            <span className="genres__item">Thriller</span>
+            <span className="genres__item">Drama</span>
+            {/* <span className="genres__item">advanture</span> */}
           </div>
           <div className="m-0">
             <div className=" py-3 flex gap-4	my-3">
-              
-              {
-                movieInformation?.movie.Review?(<span className=" flex justify-center items-center"><FavoriteRoundedIcon sx={{ color: "red" }} /><h3 className="m-0 text-2xl">{movieInformation?.Percentage}%</h3> <p className="m-0 px-3 text-base">{movieInformation?.ReviewCount} rated</p>  </span>):(<p>no review yet</p>)
-
-              }
+              {movieInformation?.movie.Review ? (
+                <span className=" flex justify-center items-center">
+                  <FavoriteRoundedIcon sx={{ color: "red" }} />
+                  <h3 className="m-0 text-2xl">
+                    {movieInformation?.Percentage}%
+                  </h3>{" "}
+                  <p className="m-0 px-3 text-base">
+                    {movieInformation?.ReviewCount} rated
+                  </p>{" "}
+                </span>
+              ) : (
+                <p>no review yet</p>
+              )}
             </div>
           </div>
-          {/* <div className=' rate flex justify-between bg-gray-800 py-2 rounded-xl max-w-max'>
-              <div className='review px-1 rounded flex flex-col justify-center'>
-                <h3 className='text-lg m-0 font-medium'>Add your rating & review</h3>
-                <p className="m-0 font-normal text-base text-gray-300">Your rating matters</p>
-              </div>
-              <button className='bg-white text-black rounded px-2 py-2  mx-10 '>
-                Rate now
-              </button>
-            </div> */}
           <div className="cast">
             <div
               sx={{
@@ -128,10 +117,10 @@ const Detail = () => {
             </div>
           </div>
           <div
-            className="button mt-10 flex"
+            className="  mt-10 text-lg flex bg-[#ff0000] font-bold rounded-md px-8 py-4 max-w-fit cursor-pointer hover:bg-[#e00404] active:bg-[#ba0202]"
             onClick={() => selectedMovieToState()}
           >
-            <button>Book Tickets</button>
+            <button className="">Book Tickets</button>
           </div>
         </div>
       </div>
@@ -140,13 +129,7 @@ const Detail = () => {
         {/* <div className="lines mb-4"></div> */}
         <div className="details text-white mt-5">
           <h2 className="text-2xl font-bold">About the Movie</h2>
-          <p>
-            hallooo{movieInformation?.movie.description} Lorem ipsum dolor sit amet
-            consectetur, adipisicing elit. Quod quae accusantium labore officia
-            odit dignissimos, quaerat consequuntur at nesciunt quas sed.
-            Asperiores, dolor suscipit? Iure facere laudantium consequatur
-            officia perspiciatis!
-          </p>
+          <p>hallooo{movieInformation?.movie.description}</p>
         </div>
         <div className="lines mb-4"></div>
         <div className="details text-white">
@@ -168,12 +151,13 @@ const Detail = () => {
             >
               Rate now
             </button>
-            <ReviewModel open={open} setOpen={setOpen} setsubmit={setsubmit}/>
+            <ReviewModel open={open} setOpen={setOpen} setsubmit={setsubmit} />
           </div>
-     {
-      movieInformation?
-          <ShowReview movieInfo={movieInformation} submit={submit}/>:""
-     }
+          {movieInformation ? (
+            <ShowReview movieInfo={movieInformation} submit={submit} />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </>

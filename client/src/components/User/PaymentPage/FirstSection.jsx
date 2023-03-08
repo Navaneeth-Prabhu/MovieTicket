@@ -27,7 +27,7 @@ function FirstSection({ handlePayment }) {
   };
   return (
     <div>
-      <div className={styles.contact}>
+      {/* <div className={styles.contact}>
         <div>
           <span>Share your contact details</span>
         </div>
@@ -38,8 +38,8 @@ function FirstSection({ handlePayment }) {
             continue
           </button>
         </div>
-      </div>
-      <div className={styles.contact}>
+      </div> */}
+      <div className={styles.contact} style={{borderRadius:"50px"}}>
         <div>More Payment options</div>
         <div className={styles.StoredCard}>
           <div className={styles.sidebar}>

@@ -23,11 +23,11 @@ import axios from "axios";
 export const handleSelectDate = (date, day, id) => async (dispatch) => {
   try {
     dispatch({ type: GET_DATE_DETAILS_REQUEST });
-    console.log(date, day ,id) ;
+
     const {data} = await axios.get(
       `http://localhost:3001/theater/getScreenInfo/${date}/${day}/${id}`
     );
-    console.log("date", data);
+
     dispatch({ type: GET_DATE_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -91,10 +91,10 @@ export const handleAddTotalPrice = (totalAmount) => (dispatch) => {
 export const postBookingDetails = (datas) => async (dispatch) => {
   try {
     dispatch({ type: ADD_BOOKING_DETAILS });
-    console.log(datas);
+
     const { data } = await axios.post("http://localhost:3001/reservation", datas);
-    console.log(data);
-    dispatch({ type: ADD_BOOKING_DETAILS_SUCCESS });
+
+    dispatch({type:ADD_BOOKING_DETAILS_SUCCESS,payload:data})
   } catch (error) {
     dispatch({
       type: ADD_BOOKING_DETAILS_FAIL,
@@ -107,7 +107,7 @@ export const postBookingDetails = (datas) => async (dispatch) => {
 };
 
 export const getSeatInformation =(date, movieId, theaterId, time) => async (dispatch) => {
-    console.log("asdfasdfasdfdsaadsffsd",date, movieId, theaterId, time);
+
     const items = {
       date,
       movieId,
@@ -133,7 +133,7 @@ export const getSeatInformation =(date, movieId, theaterId, time) => async (disp
   };
 
 export const selectDate = (date, day, month, year) => async (dispatch) => {
-  console.log(date, day);
+
   try {
     dispatch({
       type: ADD_DATE_AND_DAY_TO_STATE,

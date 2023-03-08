@@ -18,7 +18,6 @@ export default function ChatContainer({ currentChat, socket, currentUser }) {
 
   useEffect(() => {
     async function getmessage() {
-      // console.log(currentUser);
       const response = await axios.post(
         "http://localhost:3001/message/getmsg",
         {
@@ -26,7 +25,6 @@ export default function ChatContainer({ currentChat, socket, currentUser }) {
           to: currentChat._id,
         }
       );
-      // console.log("data", response.data);
       setmessages(response.data);
     }
     getmessage();

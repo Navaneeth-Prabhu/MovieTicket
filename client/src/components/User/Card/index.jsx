@@ -3,11 +3,7 @@ import React from 'react'
 import styles from './Card_seeAll.module.css';
 
 const Card = ({item}) => {
-    console.log("/./././/././/./.",item);
-            // const history = useHistory();
-            // const handleChange = () => {
-            //     history.push(`/movies/${_id}`)
-            // }
+
     return (
         <div className={styles.card}> 
             {/* <img src={banner_image_url} alt={movie_name} /> */}

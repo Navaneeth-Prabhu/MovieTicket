@@ -8,7 +8,6 @@ const multer = require("multer");
 const storage = multer.diskStorage({
     destination: "./public/movies/",
     filename: (req, file, cb) => {
-      console.log(req.params.id)
       req.imageName = `${req.params.id}.jpg`;
       cb(null, req.imageName);
     },

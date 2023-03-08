@@ -70,7 +70,6 @@ export default function FormMovie() {
   }
 
   const onSubmit = async (data) => {
-    console.log("asdfasdfasdf", data);
     const formData = new FormData();
 
     // formData.append("image", data.file[0]);
