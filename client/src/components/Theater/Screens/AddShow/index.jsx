@@ -123,21 +123,6 @@ function AddShows() {
     getShowMovie();
   }, []);
 
-  //  const deleteShow = async(screenIndex, showIndex)=> {
-  //   try {
-  //     // data.theaterId = id
-     
-  //     console.log("sadfadsfasdfasdf",showIndex, screenIndex);
-  //     const response = await axios.post(
-  //       `http://localhost:3001/theater/showDelete`,{showIndex:showIndex,screenName:screenIndex,theaterId:id}
-        
-  //     );
-  //     // console.log(response.data);
-      
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
 
   console.log("show", Show);
   const onSubmit = async (data) => {
@@ -169,7 +154,7 @@ function AddShows() {
               {shows?.showInfo?.map((item, index) => (
                 <div className="flex flex-col items-center w-[11rem] h-80">
                   <p className="text-white">{item?.screen}</p>
-                  <p className="text-white">{item?.movieName.title}</p>
+                  <p className="text-white">{item?.movieName?.title}</p>
                   <div className="flex space-x-2">
                     {item?.time?.map((time) => (
                       <p className="text-white">{time}</p>
@@ -178,7 +163,7 @@ function AddShows() {
                   <div className="h-52 w-36">
                     <img
                       className="h-full w-full"
-                      src={item?.movieName.PosterImg}
+                      src={item?.movieName?.PosterImg}
                       alt=""
                     />
                   </div>

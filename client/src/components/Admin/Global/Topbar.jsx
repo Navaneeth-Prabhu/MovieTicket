@@ -26,21 +26,21 @@ function Topbar() {
       if(!cookies.adminjwt){
           navigate("/admin/login")
       }else{
-          const { data } = await axios.post(
-              "http://localhost:3001/admin",
-              {},
-              {
-                withCredentials: true,
-              }
-            );
-            if (!data.status) {
-              removeCookie("adminjwt");
-              navigate("/admin/login");
-            } else {
-              toast(`welcome.... ${data.user} `, {
-                theme: "dark",
-              });
-            }
+          // const { data } = await axios.post(
+          //     "http://localhost:3001/admin",
+          //     {},
+          //     {
+          //       withCredentials: true,
+          //     }
+          //   );
+          //   if (!data.status) {
+          //     removeCookie("adminjwt");
+          //     navigate("/admin/login");
+          //   } else {
+          //     toast(`welcome.... ${data.user} `, {
+          //       theme: "dark",
+          //     });
+          //   }
       }
     }
     verifyUser();

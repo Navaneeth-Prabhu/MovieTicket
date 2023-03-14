@@ -57,7 +57,7 @@ export default function FormMovie() {
   const onSubmit = async (data) => {
 
     await axios.post("http://localhost:3001/theater/addScreen",data)
-  navigate("/theater")
+  navigate("/theater/")
   };
 
   return (
@@ -111,7 +111,7 @@ export default function FormMovie() {
                   </span>
                 </div>
               </Grid>
-              <Grid item lg={4} xs={4}>
+              {/* <Grid item lg={4} xs={4}>
                 <div>
                   <TextField
                     className="focus"
@@ -177,29 +177,10 @@ export default function FormMovie() {
                     )}
                   </span>
                 </div>
-              </Grid>
-
-
-              {/* <Grid item xs={4} lg={4}>
-                <FormControl variant="filled" color="secondary" fullWidth>
-                  <InputLabel id="demo-simple-select-filled-label">
-                   2d or 3d
-                  </InputLabel>
-                  <Select
-                    labelId="2D or 3D"
-                    id="demo-simple-select-filled"
-                    value={name}
-                    onChange={handleChange}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={"IMAX"}>IMAX</MenuItem>
-                    <MenuItem value={"Dolby"}>Dolby</MenuItem>
-                  </Select>
-                </FormControl>
               </Grid> */}
 
+
+            
             </Grid>
 
             <Button

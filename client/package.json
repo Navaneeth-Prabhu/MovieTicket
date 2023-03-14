@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@hookform/resolvers": "^2.9.11",
     "@mui/icons-material": "^5.10.16",
     "@mui/material": "^5.10.17",
     "@mui/styled-engine-sc": "^5.10.16",
@@ -40,8 +41,10 @@
     "socket.io-client": "^4.5.4",
     "styled-components": "^5.3.6",
     "swiper": "^8.4.5",
+    "timeago.js": "^4.0.0-beta.3",
     "uuid": "^9.0.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

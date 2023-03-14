@@ -50,7 +50,6 @@ export default function FormMovie() {
   const {
     register,
     handleSubmit,
-    // params,
     formState: { errors },
   } = useForm();
 

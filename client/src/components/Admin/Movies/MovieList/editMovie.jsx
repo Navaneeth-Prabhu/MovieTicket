@@ -54,7 +54,6 @@ export default function FormMovie() {
   const {
     register,
     handleSubmit,
-    // params,
     formState: { errors },
   } = useForm();
 
@@ -76,11 +75,6 @@ export default function FormMovie() {
     await axios
       .post("http://localhost:3001/admin/movieinfo", data)
       .then(async (response) => {
-
-        // let id = response.data._id;
-        // const data = await axios.post('https://api.cloudinary.com/v1_1/navaNeeth/image/upload',formData.then((response)=>{
-        //   data = response.data['secure_url']
-        // }))
    
         navigate("/admin/movies");
       })
@@ -99,7 +93,7 @@ export default function FormMovie() {
       <Container component="main" maxWidth="xm" color="secondary">
         {/* <CssBaseline /> */}
         <Typography component="h1" variant="h5">
-          AddMovie
+          EditMovies
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box noValidate>
@@ -203,34 +197,7 @@ export default function FormMovie() {
                   )}
                 </span>
               </Grid>
-              {/* <Grid item lg={6} xs={12}>
-                <Autocomplete
-                  multiple
-                  id="checkboxes-tags-demo"
-                  options={top100Films}
-                  disableCloseOnSelect
-                  getOptionLabel={(option) => option.Gener}
-                  renderOption={(props, option, { selected }) => (
-                    <li {...props}>
-                      <Checkbox
-                        icon={icon}
-                        checkedIcon={checkedIcon}
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                      />
-                      {option.Gener}
-                    </li>
-                  )}
-                  style={{ width: 500 }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Checkboxes"
-                      placeholder="Favorites"
-                    />
-                  )}
-                />
-              </Grid> */}
+            
               <Grid item xs={12} lg={6}>
                 <TextField
                   variant="filled"

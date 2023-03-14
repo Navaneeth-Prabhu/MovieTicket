@@ -109,7 +109,7 @@ function Navbar() {
         onClick={toggleDrawer()}
         onKeyDown={toggleDrawer()}
       >
-        <List>
+        <List >
           {listItems.map((text, index) => (
             <ListItem key={text} disablePadding>
               <Divider />
@@ -156,12 +156,12 @@ function Navbar() {
 
   return (
     <div ref={headerRef} className="header">
-      <div className="header__wrap container">
+      <div className="header__wrap container m-auto">
         <div className="logo">
           {/* <img src={logo} alt="" /> */}
           <Link to="/">Movie+</Link>
         </div>
-        <ul className="header__nav">
+        <ul className="header__nav mb-0">
           {headerNav.map((e, i) => (
             <li key={i} className={`${i === active ? "active" : ""}`}>
               <Link to={e.path}>{e.display}</Link>

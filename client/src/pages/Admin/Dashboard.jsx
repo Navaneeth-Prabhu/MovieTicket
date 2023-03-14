@@ -5,6 +5,7 @@ import Topbar from "../../components/Admin/Global/Topbar";
 import "./dashboard.css";
 import SideBar from "../../components/Admin/Global/Sidebar";
 import { ProSidebarProvider } from "react-pro-sidebar";
+import DashBoard from "../../components/Admin/DashBoard/DashBoard";
 
 function Dashboard() {
   const [theme, colorMode] = useMode();
@@ -17,6 +18,7 @@ function Dashboard() {
             <SideBar />
             <main className="content">
               <Topbar></Topbar>
+              <DashBoard/>
             </main>
           </div>
         </ProSidebarProvider>

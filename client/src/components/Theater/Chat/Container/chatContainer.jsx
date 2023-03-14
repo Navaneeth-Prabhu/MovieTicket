@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
+import { format } from "timeago.js";
 // import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
 
 export default function ChatContainer({ currentChat, socket, currentUser }) {
@@ -91,8 +92,9 @@ export default function ChatContainer({ currentChat, socket, currentUser }) {
             <div
               className={`message ${message.fromSelf ? "sended" : "recieved"}`}
             >
-              <div className="contentt ">
-                <p>{message.message}</p>
+              <div className="contentt relative">
+                <p className="m-0">{message.message}</p>
+                <div className="text-[10px] static right-1 bottom-1">{format(message.send)}</div>
               </div>
             </div>
             </div>
@@ -155,7 +157,7 @@ const Container = styled.div`
         overflow-wrap: break-word;
         padding: 1rem;
         font-size: 1.1rem;
-        border-radius: 1rem;
+        border-radius: .4rem;
         color: #d1d1d1;
         @media screen and (min-width: 720px) and (max-width: 1080px) {
           max-width: 70%;
@@ -163,6 +165,7 @@ const Container = styled.div`
       }
     }
     .sended {
+    
       justify-content: flex-end;
       .contentt {
         background-color: #4f04ff21;

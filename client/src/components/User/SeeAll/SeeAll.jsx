@@ -41,15 +41,15 @@ const SeeAll = () => {
   const filterMovies = () => {
     if (filterLanguage.length > 0) {
 
-      // const updated = movieDet.filter((item) =>
-      //   item.Language.includes(filterLanguage[filterLanguage.length - 1])
-      // );
-      const updated = movieDet.filter(item => {
-          if (item.Language) {
-            return filterLanguage.some(fg => item.Language.includes(fg));
-          }
-          return false;
-        });
+      const updated = movieDet.filter((item) =>
+        item.Language.includes(filterLanguage[filterLanguage.length - 1])
+      );
+      // const updated = movieDet.filter(item => {
+      //     if (item.Language) {
+      //       return filterLanguage.some(fg => item.Language.includes(fg));
+      //     }
+      //     return false;
+      //   });
 
 
       // setMovieDet(updated)
@@ -634,7 +634,16 @@ const SeeAll = () => {
                   //   src={require(`../../../../../server/public/movies/${item._id}.jpg`)}
                   alt=""
                 />
-                <div className={stylee.title}>{item.title}</div>
+                <div className="w-full my-5">
+                <p className='font-medium mb-1'>{item.title}</p>
+                {
+                  item?.Language?.map((lang)=>(
+
+                    <p className='text-xs '>{lang}</p>
+                  ))
+                }
+
+                </div>
                 {/* <div className={styles.genre}>{movie_genre?.map((genre, index)=>index === movie_genre.length-1?genre.genre:genre.genre + "/")}</div> */}
               </div>
             ))

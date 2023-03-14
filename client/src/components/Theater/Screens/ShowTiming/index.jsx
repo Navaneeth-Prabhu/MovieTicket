@@ -3,17 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { BsHeartFill, BsCircleFill } from "react-icons/bs";
 import { VscDeviceMobile } from "react-icons/vsc";
 import { IoFastFoodOutline } from "react-icons/io5";
-import styles from "../../../components/Theater/Screens/Cinemas.module.css";
-import { getSeatInformation,handleAddingSeatingData, handleSelectNameTime } from "../../../redux/actions/bookingAction";
+import styles from "../../../Theater/Screens/Cinemas.module.css";
+import { getSeatInformation,handleAddingSeatingData, handleSelectNameTime } from "../../../../redux/actions/bookingAction";
 // import 'antd/dist/antd.css';
 import { Modal, Button } from "antd";
-import Seating from "../../../components/User/Seating/index";
+import Seating from "../../../Theater/Screens/Seating/index";
 // import Seating from "../Seating";
-import SummaryPage from "../../../components/User/SummaryPage";
+import SummaryPage from "../../../Theater/Screens/SummaryPage";
 
 function ShowTimePage({ filters }) {
   const [gotTime,setGotTime] =useState('')
   const movieInformation = useSelector(state => state.movieInfo)
+  console.log("movieinfo",movieInformation)
   const {movie} = movieInformation.movieInformation
   const date_data = useSelector((state) => state.dateData);
 

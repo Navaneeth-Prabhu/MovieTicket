@@ -22,6 +22,8 @@ import axios from "axios";
 
 export const handleSelectDate = (date, day, id) => async (dispatch) => {
   try {
+    
+ 
     dispatch({ type: GET_DATE_DETAILS_REQUEST });
 
     const {data} = await axios.get(
@@ -135,9 +137,10 @@ export const getSeatInformation =(date, movieId, theaterId, time) => async (disp
 export const selectDate = (date, day, month, year) => async (dispatch) => {
 
   try {
+    
     dispatch({
       type: ADD_DATE_AND_DAY_TO_STATE,
-      payload: { date, day, month, year },
+      payload: { date, day, month, year },  
     });
   } catch (error) {
     dispatch({

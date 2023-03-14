@@ -13,11 +13,7 @@ import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite
 import ReviewModel from "../../../components/User/Review/index";
 
 const { TextArea } = Input;
-// import {
-//   getMovieById,
-//   getMovieReviewById,
-//   movieInfoStoreToState,
-// } from "../../../redux/actions/movieAction";
+
 const Detail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -44,7 +40,7 @@ const Detail = () => {
   }, []);
   const selectedMovieToState = () => {
     if (user?.userInfo) {
-      dispatch(moviedetails(movieInformation.movie));
+      // dispatch(moviedetails(movieInformation.movie));
       navigate(`/buytickets/${movieInformation.movie._id}/select_screen`);
     } else {
       alert("Please login to book your tickets");
@@ -67,7 +63,6 @@ const Detail = () => {
         <div className="smthing">
           <div className="poster" onClick={() => navigate("/movie/trailler")}>
             <img
-              // src={`https://aws-movieticket-bucket.s3.amazonaws.com/${movie._id}.jpg`}
               src={movieInformation?.movie.PosterImg}
               alt=""
             />
@@ -82,11 +77,9 @@ const Detail = () => {
 
           <div className="genres"></div>
           <div className="genres">
-            {/* {genre.map((item) => (
-            <span className="genres__item">{item}</span> 
-          ))} */}
-            <span className="genres__item">Thriller</span>
-            <span className="genres__item">Drama</span>
+            {movieInformation?.movie?.Genre?.map((item) => (
+            <span className="genres__item text-base">{item}</span> 
+          ))}
             {/* <span className="genres__item">advanture</span> */}
           </div>
           <div className="m-0">
@@ -113,7 +106,13 @@ const Detail = () => {
                 color: "success.main",
               }}
             >
-              <h1 className="mt-4">3d /2d</h1> <h2>english</h2>
+              <h1 className="mt-4">3d /2d</h1> 
+              {
+                movieInformation?.movie?.Language?.map((lang)=>(
+
+                  <h2>.{lang}</h2>
+                ))
+              }
             </div>
           </div>
           <div

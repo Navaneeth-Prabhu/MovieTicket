@@ -66,7 +66,7 @@ function SideBar() {
         },
       }}
     >
-      <Menu iconShape="square">
+      <Menu iconShape="square" style={{width:"250px"}}>
         {/* LOGO AND MENU ICON */}
         <MenuItem
           onClick={() => setIsCollapsed(!isCollapsed)}
@@ -74,6 +74,7 @@ function SideBar() {
           style={{
             margin: "10px 0 20px 0",
             color: colors.grey[100],
+            
           }}
         >
           {!isCollapsed && (

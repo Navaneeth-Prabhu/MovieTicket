@@ -194,7 +194,6 @@ const reject = (id) => {
                       </Button>
                     ) : (
                       <Button
-            
                         onClick={() => reject(data._id)}
                         variant="outlined"
                         color="error"

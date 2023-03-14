@@ -107,8 +107,24 @@ export default function Slider() {
 
                 <div className="cardContent">
                   <p className="title">{movie.title}</p>
-                  <p className="description m-0">{movie.Genre}</p>
-                  <p className="description">asdfasdf</p>
+                  <div className="flex">
+
+                  {
+                    movie?.Language?.map((lang=>(
+                      <p className="description mb-1">.{lang}</p>
+
+                    )))
+                  }
+                  </div>
+                  <div className="flex">
+
+                  {
+                    movie?.Genre?.map((gen)=>(
+                      <p className="description m-0">.{gen}</p>
+                    ))
+                  }
+                  </div>
+                  
                 </div>
               </div>
             </SwiperSlide>

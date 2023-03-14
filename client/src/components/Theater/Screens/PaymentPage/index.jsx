@@ -18,7 +18,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import { postBookingDetails } from "../../../redux/actions/bookingAction";
+import { postBookingDetails } from "../../../../redux/actions/bookingAction";
+import { useCookies } from "react-cookie";
 // import { getBookingDetails, postBookingDetails } from '../Redux/booking/action';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -44,6 +45,12 @@ const Counter = () => (
 
 
 function PaymentsPage({ proceed }) {
+  const cookies = useCookies([])
+
+  const token = cookies.jwt;
+  // const decoded =  jwt_decode(token);
+  // const id =(decoded.id)
+  // console.log(id,"helloo")
 
   const [state, setState] = React.useState(false);
 
@@ -58,7 +65,7 @@ function PaymentsPage({ proceed }) {
   const payment = useSelector((state) => state.payment);
   console.log("qrrrr",payment?.paymentSucess?.qrcode);
   const { loading, paymentSucess } = payment;
-  // console.log(paymentSucess);
+  console.log(paymentSucess);
   // const { data, qrcode, status } = paymentSuccess;
   const { date } = selectDate;
   const { userInfo } = user;
@@ -102,7 +109,7 @@ function PaymentsPage({ proceed }) {
     }, 2000);
   };
   const handleMove = () => {
-    navigate("/");
+    navigate('/theater/Reservation')
   };
 
   const PUBLIC_KEY =

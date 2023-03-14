@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 // const Application = require("../models/ApplicationModels")
 // const Admin = require("../models/AdminModels");
 const { response } = require("express");
+const User = require("../Models/UserModel");
 // const { default: Movie } = require("../../client/src/pages/Admin/Movies");
 const { ObjectId } = require("mongoose").Types;
 
@@ -127,6 +128,14 @@ module.exports.TheaterList = async(req,res)=>{
   try{
     const theater = await Theater.find({})
     res.json(theater)
+  }catch(err){
+    console.log(err)
+  }
+}
+module.exports.UserList = async(req,res)=>{
+  try{
+    const users = await User.find({})
+    res.json(users)
   }catch(err){
     console.log(err)
   }

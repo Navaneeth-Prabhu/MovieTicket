@@ -30,6 +30,22 @@ const reservation = asyncHandler(async (req, res) => {
     console.log("paymenterror",error);
   }
 });
+const theaterreservation = asyncHandler(async (req, res) => {
+ 
+  try {
+   
+    const data = await Reservation(req.body).save();
+    // const qrcode = await generateQR(
+    //   "http//:localhost:3000/reservation/" + data._id
+    // );
+    // console.log('payment successfull',qrcode)
+    // await Reservation.findByIdAndUpdate(data._id,{$set:{qrcode:qrcode}})
+    res.json({ status: "payment successfull", data });
+  } catch (error) {
+
+    console.log("paymenterror",error);
+  }
+});
 
 const getSeatsInformation = asyncHandler(async (req, res) => {
   try {
@@ -86,8 +102,9 @@ const getSeatsInformation = asyncHandler(async (req, res) => {
 const getUserHistory = asyncHandler(async(req,res)=>{
   try {
     let id = req.params.id    
+    console.log("asdfasdfasdF",id)
     Reservation.find({userId:id})
-    .populate('movieId')
+    .populate('movieId').sort({bookedDate:-1})
     .exec((err, reservations) => {
       if (err) {
         console.log(err);
@@ -104,5 +121,6 @@ const getUserHistory = asyncHandler(async(req,res)=>{
 module.exports = {
   reservation,
   getSeatsInformation,
-  getUserHistory
+  getUserHistory,
+  theaterreservation
 };

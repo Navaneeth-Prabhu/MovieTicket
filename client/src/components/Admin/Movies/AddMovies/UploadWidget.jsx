@@ -16,10 +16,7 @@ const UploadWidget = ({ children, onUpload }) => {
    */
 
   function createWidget() {
-    // Providing only a Cloud Name along with an Upload Preset allows you to use the
-    // widget without requiring an API Key or Secret. This however allows for
-    // "unsigned" uploads which may allow for more usage than intended. Read more
-    // about unsigned uploads at: https://cloudinary.com/documentation/upload_images#unsigned_upload
+
 
     const options = {
         cloudName:'dlqjouxmp',

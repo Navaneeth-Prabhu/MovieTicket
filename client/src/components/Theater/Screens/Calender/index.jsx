@@ -7,7 +7,7 @@ import "react-multi-carousel/lib/styles.css";
 // import { handleSelectDate,selectDate } from "../../../redux/actions/bookingAction";
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { useParams } from "react-router-dom";
-import { handleSelectDate, selectDate } from "../../../redux/actions/bookingAction";
+import { handleSelectDate, selectDate } from "../../../../redux/actions/bookingAction";
 
 function Calendar() {
   let currentDate = new Date().getDate();
@@ -18,8 +18,13 @@ function Calendar() {
   const dispatch = useDispatch();
   const movieInfo = useSelector((state) => state.movieInfo);
   const { movie } = movieInfo.movieInformation;
+  console.log("mmmo  ooovvvvieee",movie)
+  // const parts = url.split('/');
+  // const id = parts[parts.length - 2];
   
-
+  // console.log(id);
+  
+  
   let dates = [];
   let weekdays = [
     "Sunday",

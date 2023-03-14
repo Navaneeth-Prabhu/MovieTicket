@@ -29,6 +29,8 @@ import TheaterScreen from './pages/Theater/Screen'
 // import AddTheaterscreen from './pages/Theater/addScreen'
 import AddMoviesscreen from './pages/Theater/addMovies'
 import Chat from './pages/Theater/chat'
+import Reservation from "./pages/Theater/Reservation";
+import ShowTimeTheater from './pages/Theater/ShowTime'
 
 // import Movie from "./context/movieContext";
 
@@ -61,6 +63,8 @@ function Routess() {
         {/* <Route exact path ="/theater/addScreen" element = {<AddTheaterscreen/>} /> */}
         <Route exact path ="/theater/addMovies" element = {<AddMoviesscreen/>} />
         <Route exact path ="/theater/chat" element = {<Chat/>} />
+        <Route exact path ="/theater/Reservation" element = {<Reservation/>} />
+        <Route exact path="/theater/buytickets/:id/select_screen" element={<ShowTimeTheater />} /> 
         
 
 
@@ -71,6 +75,7 @@ function Routess() {
         <Route exact path="/admin/theater" element={<Theater />} />  
         <Route exact path="/admin/movies" element={<Moviee />} />
         <Route exact path="/admin/movies/addMovies" element={<AddMovies />} />  
+        {/* <Route exact path="/admin/movies/editMovies" element={<EditMovies />} />   */}
         <Route exact path ="/admin/chat" element = {<AdminChat/>} />
       
 
