@@ -7,19 +7,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import {  ThemeProvider } from "@mui/material/styles";
 import React, { useState, useEffect } from "react";
-// import axios from "../../../axios/axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
 import { useForm } from "react-hook-form";
 import axios from "../../../../axios/axios";
-import Checkbox from "@mui/material/Checkbox";
 import Autocomplete from "@mui/material/Autocomplete";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-
 import UploadWidget from "./UploadWidget";
-import { FormControl } from "@mui/material";
+
 
 const ErrorText = ({ children, ...props }) => (
   <Typography sx={{ color: "error.main" }} {...props}>
@@ -71,7 +65,7 @@ export default function FormMovie() {
     const formData = new FormData();
 
     await axios
-      .post("http://localhost:3001/admin/movieinfo", data)
+      .post("/admin/movieinfo", data)
       .then(async (response) => {
         let id = response.data._id;
         navigate("/admin/movies");
@@ -102,7 +96,7 @@ export default function FormMovie() {
                     variant="filled"
                     label="Name"
                     color="secondary"
-                    focused
+           
                     fullWidth
                     margin="normal"
                     {...register("title", {
@@ -134,7 +128,7 @@ export default function FormMovie() {
                   variant="filled"
                   label="Discription"
                   color="secondary"
-                  focused
+       
                   fullWidth
                   type={"text"}
                   multiline
@@ -167,7 +161,7 @@ export default function FormMovie() {
                   variant="filled"
                   label="Director"
                   color="secondary"
-                  focused
+                
                   fullWidth
                   margin="normal"
                   {...register("director", {
@@ -193,12 +187,12 @@ export default function FormMovie() {
                 </span>
               </Grid>
 
-              <Grid item xs={12} lg={12}>
+              <Grid item xs={6} lg={6}>
                 <TextField
                   variant="filled"
                   label="Youtube Link"
                   color="secondary"
-                  focused
+                  // focused
                   fullWidth
                   margin="normal"
                   {...register("youtubeLink", {
@@ -222,6 +216,36 @@ export default function FormMovie() {
                     <span>Should not have spaces</span>
                   )}
                 </span>
+              </Grid>
+              <Grid item xs={6} lg={6}>
+              
+                  <Autocomplete
+                    multiple
+                    value={gener}
+                   
+                    onChange={(event, value) => setgener(value)}
+                    options={top100Films}
+                    renderInput={(params) => (
+                      <TextField  color="secondary" variant="filled" {...params} label="Genre" />
+                    )}
+                  />
+          
+              </Grid>
+
+              <Grid item xs={6} lg={6}>
+          
+                  <Autocomplete
+                    multiple
+                    value={language}
+                    
+                    // onChange={handleGener}
+                    onChange={(event, value) => setlanguage(value)}
+                    options={Language}
+                    renderInput={(params) => (
+                      <TextField  color="secondary" variant="filled" {...params} label="Language" />
+                    )}
+                  />
+           
               </Grid>
 
               <Grid item xs={6} lg={6}>
@@ -254,35 +278,6 @@ export default function FormMovie() {
                 {/* {error && <ErrorText>{error}</ErrorText>} */}
               </Grid>
 
-              <Grid item xs={6} lg={6}>
-                <FormControl>
-                  <Autocomplete
-                    multiple
-                    value={gener}
-                 
-                    onChange={(event, value) => setgener(value)}
-                    options={top100Films}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Genre" />
-                    )}
-                  />
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={6} lg={6}>
-                <FormControl>
-                  <Autocomplete
-                    multiple
-                    value={language}
-                    // onChange={handleGener}
-                    onChange={(event, value) => setlanguage(value)}
-                    options={Language}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Language" />
-                    )}
-                  />
-                </FormControl>
-              </Grid>
 
             </Grid>
 

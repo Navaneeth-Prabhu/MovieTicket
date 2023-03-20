@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import "./model.css";
-import Modal from '@mui/material/Modal';
+import Modal from "@mui/material/Modal";
 // import { Button } from "../../User/Buttons/Button";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "../../../axios/axios";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import { Experimental_CssVarsProvider } from "@mui/material";
-import { useDispatch,useSelector } from "react-redux";
-import { otpValidate, registration } from "../../../redux/actions/userAction";  
+import { useDispatch, useSelector } from "react-redux";
+import { otpValidate, registration } from "../../../redux/actions/userAction";
 import {
   Dialog,
   DialogActions,
@@ -36,8 +36,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 function Modals() {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [count, setCount] = useState(10);
+  const [showResend, setShowResend] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [state, setState] = React.useState(false);
   const [otp, setOtp] = React.useState(false);
@@ -64,21 +65,36 @@ function Modals() {
     formState: { errors },
   } = useForm();
 
-  // const google = () => {
-  //   window.open("http://localhost:3001/auth/google", "_self");
-  // };
+  useEffect(() => {
+    if (count === 0) {
+      setShowResend(true);
+    } else {
+      const timer = setTimeout(() => setCount(count - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [count]);
 
-  const generateError = (error) =>
-    toast.error(error, {
-      position: "top-right",
-    });
+  const handleButtonClick = () => {
+    // code for handling submit button click goes here
+    setCount(10);
+  };
 
-
-
+  const handleResendClick = () => {
+    setCount(10);
+    setShowResend(false);
+  };
   const onSubmit = async (data) => {
     setEmail(data);
+    console.log("email", data);
     setState(true);
+    handleButtonClick();
     dispatch(registration(data));
+  };
+
+  const resent = async (data) => {
+    console.log("dataaaaa", data);
+    dispatch(registration(data));
+    handleResendClick();
   };
 
   const otpSubmit = () => {
@@ -106,20 +122,20 @@ function Modals() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <div className="crossx">
-            <i className="fa-solid fa-xmark fa-xl" onClick={handleclosex} />
+        <Box className="" sx={style}>
+          <div className="absolute top-7 right-5 ">
+            <i className="fa-solid fa-xmark fa-xl " onClick={handleclosex} />
           </div>
           <div className="form">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <h1>Sign up</h1>
+              <h1 className="font-semibold text-lg">Sign up</h1>
               <div className="ui divider"></div>
-              <div className="ui form">
-                <div className="field">
+              <div className="ui form flex-col space-y-4 items-center justify-center">
+                <div className="field flex items-center space-x-2">
                   <label>Email</label>
                   <input
                     type="email"
-                    className="form-control"
+                    className="form-control w-full"
                     placeholder="Email"
                     {...register("email", {
                       required: true,
@@ -127,24 +143,25 @@ function Modals() {
                         /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
                     })}
                   />
-                  <span className="text-danger">
-                    {errors.email?.type === "required" && (
-                      <span>Email is required</span>
-                    )}
-                    {errors.email?.type === "pattern" && (
-                      <span>Email must be properly fomatted</span>
-                    )}
-                  </span>
                 </div>
-                <button className="fluid ui button red" type="submit">
-                  Submit
-                </button>
+                <span className="text-danger">
+                  {errors.email?.type === "required" && (
+                    <span>Email is required</span>
+                  )}
+                  {errors.email?.type === "pattern" && (
+                    <span>Email must be properly fomatted</span>
+                  )}
+                </span>
+                <div className=" w-full justify-center items-center flex">
+                  <button
+                    className="bg-[#ff0c0c] px-6 text-white py-2 rounded-md"
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
             </form>
-            {/* <hr></hr>
-            <div className="fluid ui button blue" onClick={google}>
-              Google
-            </div> */}
           </div>
         </Box>
       </Modal>
@@ -183,6 +200,24 @@ function Modals() {
           >
             OK
           </Button>
+          {/* <button
+            className="bg-[#ff0c0c] px-6 text-white py-2 rounded-md"
+            onClick={() => resent(email)}
+          >
+            resent
+          </button> */}
+          {showResend ? (
+            <button
+              className="bg-[#ff0c0c] px-6 text-white py-2 rounded-md"
+              onClick={() => resent(email)}
+            >
+              resent
+            </button>
+          ) : (
+            <p>{count} seconds left to resend</p>
+          )}
+
+          <div>{/* <button onClick={handleReset}>Reset</button> */}</div>
         </DialogActions>
       </Dialog>
 
@@ -190,6 +225,5 @@ function Modals() {
     </div>
   );
 }
-
 
 export default Modals;

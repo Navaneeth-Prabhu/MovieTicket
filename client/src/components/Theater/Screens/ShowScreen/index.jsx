@@ -7,23 +7,22 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
 import Movies from "../../../Admin/Movies/MovieList";
+import axios from "../../../../axios/axios";
 
 export default function ImgMediaCard() {
   const [cookies] = useCookies([]);
   const [Screen, setScreen] = useState([]);
   const navigate = useNavigate();
-  const token = cookies.jwt;
+  const token = cookies.theaterjwt;
   const decoded = jwt_decode(token);
   const id = decoded.id;
   useEffect(() => {
     async function movieShow(){
 
-      // console.log(id,"iddddddddd")
-      await axios.get(`http://localhost:3001/getTheaterShow/${id}`)
+      await axios.get(`/getTheaterShow/${id}`)
         .then(({ data }) => {
           console.log(data)
           setScreen(data);

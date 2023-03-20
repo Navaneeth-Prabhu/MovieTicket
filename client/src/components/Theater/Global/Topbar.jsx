@@ -23,18 +23,18 @@ function Topbar() {
   const[cookies,setCookies,removeCookie]=useCookies([]);
   useEffect(() => {
     const verifyUser = async() =>{
-      if(!cookies.jwt){
+      if(!cookies.theaterjwt){
           navigate("/theater/login")
       }else{
           const { data } = await axios.post(
-              "http://localhost:3001/theater",
+              "/theater",
               {},
               {
                 withCredentials: true,
               }
             );
             if (!data.status) {
-              removeCookie("jwt");
+              removeCookie("theaterjwt");
               navigate("/theater/login");
             } else {
               toast(`welcome.... ${data.user} `, {
@@ -48,7 +48,7 @@ function Topbar() {
   
 
   const logOut =()=>{
-      removeCookie("jwt")
+      removeCookie("theaterjwt")
       navigate('/theater/login')
   }
 
@@ -60,7 +60,7 @@ function Topbar() {
         backgroundColor={colors.primary[400]}
         borderRadius="3px"
       >
-        <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
+        {/* <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" /> */}
         <IconButton type="button" sx={{ p: 1 }}>
           <SearchIcon />
         </IconButton>

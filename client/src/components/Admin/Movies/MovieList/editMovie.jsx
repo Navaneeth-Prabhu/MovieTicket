@@ -11,17 +11,13 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useState, useEffect } from "react";
 // import axios from "../../../axios/axios";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
 import { useForm } from "react-hook-form";
 import axios from "../../../../axios/axios";
-import Checkbox from "@mui/material/Checkbox";
-import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-// import './index.css'
 import UploadWidget from './UploadWidget';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -73,7 +69,7 @@ export default function FormMovie() {
 
     // formData.append("image", data.file[0]);
     await axios
-      .post("http://localhost:3001/admin/movieinfo", data)
+      .post("/admin/movieinfo", data)
       .then(async (response) => {
    
         navigate("/admin/movies");

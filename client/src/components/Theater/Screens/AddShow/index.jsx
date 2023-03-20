@@ -15,7 +15,6 @@ import InputLabel from "@mui/material/InputLabel";
 import { useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
@@ -28,12 +27,13 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import axios from "../../../../axios/axios";
 
 function AddShows() {
+ 
   const [Show, setShow] = useState([]);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
-  const [cookies] = useCookies([]);
   const [name, setname] = useState();
   const [price, setprice] = useState();
   const [status, setstatus] = useState();
@@ -53,6 +53,7 @@ function AddShows() {
 
   const [startDate, setStartDate] = React.useState(dayjs(new Date()));
   const [endDate, setEndDate] = React.useState(dayjs(new Date()));
+  const[cookies,setCookies,removeCookie]=useCookies([]);
 
   const handleStrateDate = (newValue) => {
     setStartDate(newValue);
@@ -60,9 +61,9 @@ function AddShows() {
   const handleEndDate = (newValue) => {
     setEndDate(newValue);
   };
-  const token = cookies.jwt;
-  const decoded = jwt_decode(token);
-  const id = decoded.id;
+    const token = cookies.theaterjwt;
+    const decoded = jwt_decode(token);
+    const id = decoded.id;
   const handleChange = (event) => {
     setname(event.target.value);
   };
@@ -86,28 +87,30 @@ function AddShows() {
 
   useEffect(() => {
     async function getShowMovie() {
-      const token = cookies.jwt;
+      const token = cookies.theaterjwt;
       const decoded = jwt_decode(token);
       const id = decoded.id;
       axios
-        .get("http://localhost:3001/theater/getMovies")
+        .get("/theater/getMovies")
         .then(({ data }) => {
           setData(data);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error,"........asdfasdf..........")
+          removeCookie("theaterjwt")
         });
 
       axios
-        .get(`http://localhost:3001/theater/getScreen/${id}`)
+        .get(`/theater/getScreen/${id}`)
         .then(({ data }) => {
           setscreen(data);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error,".......................");
+          removeCookie("theaterjwt")
         });
       axios
-        .get(`http://localhost:3001/theater/getShowMovie/${id}`)
+        .get(`/theater/getShowMovie/${id}`)
         .then(({ data }) => {
           setShow(data);
           // console.log(data)
@@ -115,16 +118,12 @@ function AddShows() {
         .catch((error) => {
           console.log(error);
         });
-
-      // await axios.get(`http://localhost:3001/theater/getShowMovie/${id}`).then(({data})=>{
-      //   console.log(data)
-      // })
     }
     getShowMovie();
   }, []);
 
 
-  console.log("show", Show);
+  console.log("show", Show.reverse());
   const onSubmit = async (data) => {
     data.theaterId = id;
     data.movieName = name;
@@ -137,7 +136,7 @@ function AddShows() {
     data.id = id;
     data.startDate = startDate;
     data.endDate = endDate;
-    await axios.post("http://localhost:3001/theater/addShow", data);
+    await axios.post("/theater/addShow", data);
     navigate("/theater/");
   };
 
@@ -149,8 +148,8 @@ function AddShows() {
         {/* <CssBaseline /> */}
         <h2>Currunt Shows</h2>
         <div className="w-full flex flex-wrap my-6">
-          {Show?.map((shows, screenIndex) => (
-            <div className="flex">
+          {Show?.reverse().map((shows, screenIndex) => (
+            <div key={screenIndex} className="flex">
               {shows?.showInfo?.map((item, index) => (
                 <div className="flex flex-col items-center w-[11rem] h-80">
                   <p className="text-white">{item?.screen}</p>
@@ -275,25 +274,7 @@ function AddShows() {
                 </FormControl>
               </Grid>
               <Grid item xs={12} lg={6}>
-                {/* <FormControl variant="filled" color="secondary" fullWidth>
-                  <InputLabel id="demo-simple-select-filled-label">
-                    Screen
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-filled-label"
-                    id="demo-simple-select-filled"
-                    value={name}
-                    onChange={handleScreen}
-                  >
-                    {screen.map(
-                    (time) => (
-                      <MenuItem key={`time-${time}`} value={time}>
-                        {time.ScreenName}
-                      </MenuItem>
-                    )
-                  )}
-                  </Select>
-                </FormControl> */}
+         
                 <Grid item xs={12} lg={6}>
                   <FormControl variant="filled" color="secondary" fullWidth>
                     <InputLabel id="demo-simple-select-filled-label">

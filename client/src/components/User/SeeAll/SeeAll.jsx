@@ -140,7 +140,7 @@ const SeeAll = () => {
   });
 
   return (
-    <div className={styles.container}>
+    <div className='bg-[#181818] p-[7%] flex flex-col lg:flex-row text-white mt-50 lg:mt-0'>
       <div className={styles.leftsideNav}>
         <h2 style={{ background: "none", fontSize: "25px", fontWeight: "700" }}>
           Filters
@@ -622,26 +622,31 @@ const SeeAll = () => {
           ) : (
             filterMovie?.map((item) => (
               // <Card {...item} />
-              <div
-                className={stylee.card}
+              < div
+  //             width: 225px;
+	// height: 350px;
+                className='w-[225px] m-2  overflow-hidden'
                 onClick={() => {
                   // dispatch(movieInfo(movie));
                   navigate(`/moviedetails/${item._id}`);
                 }}
               >
-                <img
+                <img className="w-full h-[350px] rounded-lg"
                   src={item?.PosterImg}
                   //   src={require(`../../../../../server/public/movies/${item._id}.jpg`)}
                   alt=""
                 />
                 <div className="w-full my-5">
                 <p className='font-medium mb-1'>{item.title}</p>
+                <div className="flex">
+
                 {
                   item?.Language?.map((lang)=>(
 
-                    <p className='text-xs '>{lang}</p>
+                    <p className='text-xs flex'>.{lang}</p>
                   ))
                 }
+                </div>
 
                 </div>
                 {/* <div className={styles.genre}>{movie_genre?.map((genre, index)=>index === movie_genre.length-1?genre.genre:genre.genre + "/")}</div> */}

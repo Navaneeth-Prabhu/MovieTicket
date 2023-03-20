@@ -43,7 +43,6 @@ const getMovie = asyncHandler(async (req, res) => {
       ReviewCount = movie.Review.length;
       ReviewSum = 0;
       for (let index = 0; index < ReviewCount; index++) {
-        console.log(movie.Review[index].rating);
         ReviewSum = ReviewSum + movie.Review[index].rating;
       }
       Percentage = Math.round((ReviewSum / (5 * ReviewCount)) * 100);
@@ -78,6 +77,7 @@ const addReview = asyncHandler(async (req, res) => {
             userName: userId.name,
             rating: rating,
             message: message,
+            date:new Date()
           },
         },
       }
@@ -88,8 +88,10 @@ const getReview = asyncHandler(async (req, res) => {
   try {
     let id = req.params.id;
 
-    const data = await Movie.findOne({ _id: id });
-    res.status(200).json(data.Review);
+    const data = await Movie.findOne({ _id: id })
+    
+    // console.log(data?.Review?.reverse())
+    res.status(200).json(data?.Review?.reverse());
   } catch (error) {}
 });
 const GetTheaterMovies = asyncHandler(async (req, res) => {
@@ -114,7 +116,7 @@ const GetTheaterMovies = asyncHandler(async (req, res) => {
 
 const deleteMovie = asyncHandler(async (req, res) => {
   try {
-    console.log("..........asdfasdf.");
+   
     let id = req.params.id;
     const data = await Movie.deleteOne({ _id: id });
     return res.status(200).json(data);
@@ -127,30 +129,7 @@ const reservationDetails = asyncHandler(async (req, res) => {
   } catch (error) {}
 });
 const topReserved = asyncHandler(async (req, res) => {
-  // Reservation.aggregate([
-  //   { $group: { _id: '$movieId', count: { $sum: 1 } } },
 
-  //   { $sort: { count: -1 } },
-  //   { $limit: 5 },
-  // ]).exec((err, topMovies) => {
-  //   if (err) {
-  //     console.error(err);
-  //     return;
-  //   }
-  
-  //   // Get the details for the top 5 reserved movies
-  //   const topMovieIds = topMovies.map((movie) => movie._id);
-  
-  //   Movie.find({ _id: { $in: topMovieIds } }, (err, movies) => {
-  //     if (err) {
-  //       console.error(err);
-  //       return;
-  //     }
-  //    console.log(movies)
-  //     // Do something with the movie details
-     
-  //   });
-  // });
   Reservation.aggregate([
     { $group: { _id: '$movieId', count: { $sum: 1 } } },
     { $sort: { count: -1 } },
@@ -177,12 +156,7 @@ const topReserved = asyncHandler(async (req, res) => {
       count: movie.count,
     }));
     return res.json(moviesArray);
-    // Log the details of the top 5 reserved movies
-    // console.log('Top 5 reserved movies:',topMovies);
-    // topMovies.map((movie) => {
-    //   // console.log(`${movie.movieDetails[0]?.title} (${movie.movieDetails[0]?.director}, ${movie.movieDetails[0]?.year}): ${movie.count} reservations`);
-    //   console.log(movie.movieDetails[0]?.PosterImg)
-    // });
+ 
   })
 
 });

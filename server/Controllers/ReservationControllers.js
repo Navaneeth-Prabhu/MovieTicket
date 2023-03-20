@@ -6,6 +6,7 @@ require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const generateQR = require("../../server/utils/generateQr");
 
+
 const reservation = asyncHandler(async (req, res) => {
  
   try {
@@ -35,17 +36,39 @@ const theaterreservation = asyncHandler(async (req, res) => {
   try {
    
     const data = await Reservation(req.body).save();
-    // const qrcode = await generateQR(
-    //   "http//:localhost:3000/reservation/" + data._id
-    // );
-    // console.log('payment successfull',qrcode)
-    // await Reservation.findByIdAndUpdate(data._id,{$set:{qrcode:qrcode}})
     res.json({ status: "payment successfull", data });
   } catch (error) {
 
     console.log("paymenterror",error);
   }
 });
+
+const reservationDetails = asyncHandler(async(req,res)=>{
+  let id = req.params.id
+  try {
+    const reservations = await Reservation.find({ cinemaId:id });
+    res.status(200).json(reservations);
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error getting total reservations by cinema ID');
+  }
+})
+
+const reseravtionHistory = asyncHandler(async(req,res)=>{
+  let cinemaId = req.params.id
+  let movieId = req.params.movieId
+  console.log(movieId,cinemaId)
+    try {
+      const reservations = await Reservation.find({cinemaId,movieId}).sort({showDate:-1});
+      res.status(200).json(reservations);
+      
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to retrieve reservations.');
+    }
+ 
+})
+
 
 const getSeatsInformation = asyncHandler(async (req, res) => {
   try {
@@ -102,14 +125,13 @@ const getSeatsInformation = asyncHandler(async (req, res) => {
 const getUserHistory = asyncHandler(async(req,res)=>{
   try {
     let id = req.params.id    
-    console.log("asdfasdfasdF",id)
     Reservation.find({userId:id})
     .populate('movieId').sort({bookedDate:-1})
     .exec((err, reservations) => {
       if (err) {
         console.log(err);
       } else {
-        console.log("rin history",reservations);
+        
         res.status(200).json(reservations)
       }
     });
@@ -122,5 +144,8 @@ module.exports = {
   reservation,
   getSeatsInformation,
   getUserHistory,
-  theaterreservation
+  theaterreservation,
+  reservationDetails,
+  reseravtionHistory
+  
 };

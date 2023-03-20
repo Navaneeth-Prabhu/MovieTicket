@@ -13,8 +13,9 @@ import SummaryPage from "../../../components/User/SummaryPage";
 
 function ShowTimePage({ filters }) {
   const [gotTime,setGotTime] =useState('')
-  const movieInformation = useSelector(state => state.movieInfo)
-  const {movie} = movieInformation.movieInformation
+  const movieInfo = useSelector(state => state?.movieInfo)
+  console.log("showtime",movieInfo)
+  // const {movie} = movieInfo.movieInformation
   const date_data = useSelector((state) => state.dateData);
 
   const { dateInfo } = date_data;
@@ -65,7 +66,7 @@ function ShowTimePage({ filters }) {
     dispatch(
       getSeatInformation(
         dateOnly,
-        movie._id,
+        movieInfo?.movieInformation?.movie?._id,
         dateInfo[0].data.theaterId,
         gotTime
       )

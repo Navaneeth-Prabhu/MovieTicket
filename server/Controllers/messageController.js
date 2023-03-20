@@ -65,3 +65,19 @@ module.exports.getTheater = async (req, res, next) => {
     next(ex);
   }
 };
+
+module.exports.getLatestMessage =async(req,res)=> {
+ 
+  let userId = req.params.id
+  console.log("helloooooo",userId)
+  try {
+      const message = await MessageModel.findOne({ sender: userId })
+      .sort({ createdAt: -1 })
+      .select('createdAt')
+      .lean();
+    return res.json(message);
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to fetch latest message');
+  }
+}

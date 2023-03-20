@@ -2,17 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "../../../axios/axios";
-
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import CssBaseline from "@mui/material/CssBaseline";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect } from "react";
 
 export default function AddStaff() {
@@ -35,7 +28,7 @@ export default function AddStaff() {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:3001/admin/addstaff",
+        "/admin/addstaff",
         {
           ...values,
         },

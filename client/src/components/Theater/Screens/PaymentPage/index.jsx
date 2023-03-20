@@ -47,7 +47,7 @@ const Counter = () => (
 function PaymentsPage({ proceed }) {
   const cookies = useCookies([])
 
-  const token = cookies.jwt;
+  const token = cookies.theaterjwt;
   // const decoded =  jwt_decode(token);
   // const id =(decoded.id)
   // console.log(id,"helloo")

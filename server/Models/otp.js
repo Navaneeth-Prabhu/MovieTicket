@@ -13,7 +13,7 @@ const Schema = new mongoose.Schema(
     expireAt: {
       type: Date,
       default: Date.now,
-      index: { expires: 60 },
+      index: { expires: 10 },
     },
   },
   { timestamps:true }

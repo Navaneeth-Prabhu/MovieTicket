@@ -21,11 +21,15 @@ function Home() {
    <Navbar user={user}/>
 
    <Banner/>
+<div className='flex-col w-full items-center justify-center'>
 
-  
+  <div className='max-w-[1240px] m-auto'>
+
    <Slide/>
    <Slide/>
    <Slide/>
+  </div>
+</div>
 
 {/* </Movie> */}
 

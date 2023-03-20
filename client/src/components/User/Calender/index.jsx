@@ -16,8 +16,9 @@ function Calendar() {
   let currentYear = new Date().getFullYear();
   let [selectedDate, setSelectedDate] = useState(0);
   const dispatch = useDispatch();
-  const movieInfo = useSelector((state) => state.movieInfo);
-  const { movie } = movieInfo.movieInformation;
+  const movieInfo = useSelector((state) => state?.movieInfo);
+  // const { movie } = movieInfo?.movieInformation;
+  console.log(".......",movieInfo?.movieInformation?.movie)
   
 
   let dates = [];
@@ -92,7 +93,7 @@ function Calendar() {
                 dates[index].date,
                 dates[index].day,
     
-                movie._id
+                movieInfo?.movieInformation?.movie?._id
               )
             );
             dispatch(selectDate(dates[index].date, dates[index].day, dates[index].month, dates[index].year));

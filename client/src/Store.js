@@ -2,7 +2,7 @@ import { combineReducers, createStore, applyMiddleware } from "redux";
 import { userLoginReducer ,userLoginOtpReducer} from "./redux/reducers/userReducer";
 import { getMoviesReducer, movieInfo,movieInfoById ,theaterMovies } from "./redux/reducers/movieReducer";
 import thunk from "redux-thunk";
-import { dateInfoReducer, dateInformation ,seatInfomation,selectDateInfo ,paymentSucess} from "./redux/reducers/bookingReducer";
+import { dateInfoReducer, dateInformation ,seatInfomation,selectDateInfo ,paymentSucess, reservationList} from "./redux/reducers/bookingReducer";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
@@ -15,7 +15,8 @@ const reducer = combineReducers({
   seats:seatInfomation,
   movie:movieInfoById,
   theaterMovies,
-  payment:paymentSucess
+  payment:paymentSucess,
+  reserveList:reservationList
 
 });
 
@@ -25,6 +26,7 @@ const userInfoFromStorage = localStorage.getItem("userInfo")
 
   const initialState = {
   userLogin: { userInfo: userInfoFromStorage },
+  movieInfo:{}
 };
 
 const middleware = [thunk];

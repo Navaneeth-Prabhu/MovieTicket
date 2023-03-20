@@ -1,32 +1,19 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useNavigate } from "react-router-dom";
-// import { useHistory } from 'react-router-dom';
-import axios from "axios";
-
-// Import Swiper styles
+import axios from "../../../axios/axios";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
 import "./slider.css";
-
-// import required modules
 import { Navigation } from "swiper";
-import { MovieContext } from "../../../context/movieContext";
-import { useDispatch, useSelector } from "react-redux";
-import { movieInfo } from "../../../redux/actions/movieAction";
 
 export default function Slider() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-
-  const dispatch = useDispatch();
-
   useEffect(() => {
     axios
-      .get("http://localhost:3001/GetTheaterMovies")
+      .get("/GetTheaterMovies")
       .then(({ data }) => {
         setData(data);
       })
@@ -91,12 +78,11 @@ export default function Slider() {
         >
           {" "}
           {data.map((movie) => (
-            <SwiperSlide>
+            <SwiperSlide className="p-4">
               {/* <div className="card" onClick={() => {setMovieDetails(movie)  */}
               <div
                 className="card"
                 onClick={() => {
-                  // dispatch(movieInfo(movie));
                   navigate(`/moviedetails/${movie._id}`);
                 }}
               >

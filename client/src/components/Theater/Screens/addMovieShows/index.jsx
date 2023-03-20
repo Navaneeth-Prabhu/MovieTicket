@@ -1,70 +1,39 @@
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useState, useEffect } from "react";
-// import axios from "../../../axios/axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
-import dayjs from 'dayjs';
-import Stack from '@mui/material/Stack';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import dayjs from "dayjs";
 import InputLabel from "@mui/material/InputLabel";
-
 import { useForm } from "react-hook-form";
-import axios from "../../../../axios/axios";
 import MenuItem from "@mui/material/MenuItem";
-
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
+import axios from "../../../../axios/axios";
 
 // import './index.css'
 
-const ErrorText = ({ children, ...props }) => (
-  <Typography sx={{ color: "error.main" }} {...props}>
-    {children}
-  </Typography>
-);
-
-const validFileTypes = ["image/jpg", "image/jpeg", "image/png"];
-const URL = "/api/admin/movieImage/upload";
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 export default function AddShow() {
-  const cookies = useCookies([])
-const navigate = useNavigate()
+  const cookies = useCookies([]);
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
 
   // const [price,setprice] = useState('')
-  const [movie, setmovie] = useState([])
-  const [name,setname] = useState()
-  const [price,setprice] = useState()
-  const [status,setstatus] = useState()
-  const [screen,setscreen] = useState([])
-  const [sname,setsname] = useState()
+  const [movie, setmovie] = useState([]);
+  const [name, setname] = useState();
+  const [price, setprice] = useState();
+  const [status, setstatus] = useState();
+  const [screen, setscreen] = useState([]);
+  const [sname, setsname] = useState();
   const [value, setValue] = useState(dayjs(new Date()));
 
   const handleChangeDate = (newValue) => {
@@ -90,35 +59,41 @@ const navigate = useNavigate()
     formState: { errors },
   } = useForm();
 
-  
-
-  useEffect(async() => {
-    const token = cookies.jwt;
-    const decoded =  jwt_decode(token);
-    const id =(decoded.id)
-    console.log(id,"helloo")
-    axios.get("http://localhost:3001/theater/getMovies").then(({data})=>{
-      setmovie(data)
-    })
-    axios.get("http://localhost:3001/theater/getScreen").then(({data})=>{
-      setscreen(data)
-    })
-    await axios.get(`http://localhost:3001/theater/getShowMovie/${id}`).then(({data})=>{
-      console.log(data)
-    })
-
-  },[])
-  
+  const token = cookies.theaterjwt;
+  // console.log(token, "helloo,,,,,,,,,,,,,,,");
+  useEffect(async () => {
+    const decoded = jwt_decode(token);
+    const id = decoded.id;
+    // axios.get("/theater/getMovies").then(({ data }) => {
+    //   setmovie(data);
+    //   });
+    //   axios.get("/theater/getScreen").then(({ data }) => {
+    //     setscreen(data);
+    //   });
+    try {
+      await axios
+        .get(`/theater/getShowMovie/${id}`)
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log("......", error);
+      // console.log('......',error.response);
+    }
+  }, []);
 
   const onSubmit = async (data) => {
-    data.name = name
-    data.price = price
-    data.status = status
-    data.screen = sname
+    data.name = name;
+    data.price = price;
+    data.status = status;
+    data.screen = sname;
 
-    await axios.post("http://localhost:3001/theater/addShow", data)
+    await axios.post("/theater/addShow", data);
 
-    navigate("/theater/")
+    navigate("/theater/");
   };
 
   return (
@@ -135,27 +110,23 @@ const navigate = useNavigate()
               rowSpacing={1}
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
-       
               <Grid item xs={12} lg={6}>
                 <FormControl variant="filled" color="secondary" fullWidth>
-
                   <InputLabel id="demo-simple-select-filled-label">
                     Movie Name
                   </InputLabel>
                   <Select
                     labelId="demo-simple-select-filled-label"
                     id="demo-simple-select-filled"
-                   value={name}
+                    value={name}
                     onChange={handleChange}
-                    >
+                  >
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
                     {movie.map((mname) => (
-                    <MenuItem value ={mname.title}>{mname.title}</MenuItem>
-                      ))}
-                  
-                   
+                      <MenuItem value={mname.title}>{mname.title}</MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>
@@ -192,9 +163,7 @@ const navigate = useNavigate()
                   </span>
                 </div>
               </Grid>
-              <Grid item lg={6} xs={12}>
-                
-              </Grid>
+              <Grid item lg={6} xs={12}></Grid>
               <Grid item lg={6} xs={12}>
                 <div>
                   <TextField
@@ -236,7 +205,7 @@ const navigate = useNavigate()
                   <Select
                     labelId="Status"
                     id="demo-simple-select-filled"
-                   value={status}
+                    value={status}
                     onChange={handleStatus}
                   >
                     <MenuItem value="">
@@ -251,23 +220,23 @@ const navigate = useNavigate()
               <Grid item xs={12} lg={6}>
                 <FormControl variant="filled" color="secondary" fullWidth>
                   <InputLabel id="demo-simple-select-filled-label">
-                   Screen
+                    Screen
                   </InputLabel>
                   <Select
                     labelId="Screen"
                     id="demo-simple-select-filled"
-                   value={sname}
+                    value={sname}
                     onChange={handleScreen}
                   >
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                  
-                    {screen.map((data)=>(
 
-                    <MenuItem value={data.screenName}>{data.screenName}</MenuItem>
-                    ))} 
-
+                    {screen.map((data) => (
+                      <MenuItem value={data.screenName}>
+                        {data.screenName}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>

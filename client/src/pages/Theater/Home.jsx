@@ -6,6 +6,7 @@ import "./dashboard.css";
 import SideBar from "../../components/Theater/Global/Sidebar";
 import { ProSidebarProvider } from "react-pro-sidebar";
 import Home from "../../components/Theater/Home"
+import DashBoard from "../../components/Theater/DashBoard/DashBoard";
 
 function Dashboard() {
   const [theme, colorMode] = useMode();
@@ -18,6 +19,8 @@ function Dashboard() {
             <SideBar />
             <main className="content">
               <Topbar></Topbar>
+              <DashBoard/>
+
             </main>
           </div>
         </ProSidebarProvider>

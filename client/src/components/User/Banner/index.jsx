@@ -24,7 +24,8 @@ function Index() {
     // </div>
 
     <>
-      <>
+     <div className="max-h-[500px] bg-yellow-400">
+
         <Swiper
           centeredSlides={true}
           slidesPerView={1.5}
@@ -32,7 +33,7 @@ function Index() {
           loop={true}
           navigation={true}
            modules={[Navigation]}
-          className="mySwiper"
+          className="w-full h-ful bg-black max-h-[400px]"
         >
           <SwiperSlide>
             <div className="containerr">
@@ -101,8 +102,9 @@ function Index() {
             </div>
           </SwiperSlide>
         </Swiper>
+     </div>
       </>
-    </>
+
   );
 }
 

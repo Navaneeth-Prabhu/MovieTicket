@@ -16,6 +16,7 @@ const Sidebar = () => {
     { title: "Screen ", src: "Screen", path:"/theater/screen", icon:<AirplayIcon/>},
     { title: "Inbox", src: "Chat" ,    path: "/theater/chat", icon:<ChatIcon/>},
     { title: "Reservation", src: "Reservation" ,    path: "/theater/Reservation", icon:<ChatIcon/>},
+    { title: "AllReservation", src: "Reservation" ,    path: "/theater/AllReservation", icon:<ChatIcon/>},
     { title: "Analytics", src: "Chart" },
     { title: "Files ", src: "Folder", gap: true },
     { title: "Setting", src: "Setting" },

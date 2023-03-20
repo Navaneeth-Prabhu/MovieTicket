@@ -21,17 +21,20 @@ const UploadWidget = ({ children, onUpload }) => {
     const options = {
         cloudName:'dlqjouxmp',
         uploadPreset:'igh89oap',
+        allowedFormats: ['jpg', 'png'],
         // cropping: true, //add a cropping step
     }
 
     return cloudinary.current?.createUploadWidget(options,
       function (error, result) {
-        // The callback is a bit more chatty than failed or success so
-        // only trigger when one of those are the case. You can additionally
-        // create a separate handler such as onEvent and trigger it on
-        // ever occurance
-        if ( error || result.event === 'success' ) {
+        if (error) {
+          // Handle error by showing message to user and closing the widget
+          alert('Error uploading file: please try to upload png/jpg files' );
+          widget?.current?.close();
+        } else if (result.event === 'success') {
+          // Handle success by passing result to parent component and closing the widget
           onUpload(error, result, widget?.current);
+          widget?.current?.close();
         }
       }
     );

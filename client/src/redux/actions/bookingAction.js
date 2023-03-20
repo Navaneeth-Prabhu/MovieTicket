@@ -17,8 +17,11 @@ import {
   GET_SEATS_INFORMATION_FAIL,
   ADD_DATE_AND_DAY_TO_STATE,
   ADD_DATE_AND_DAY_TO_STATE_FAIL,
+  GET_RESERVATIONLIST_REQUEST,
+  GET_RESERVATIONLIST_SUCCESS,
+  GET_RESERVATIONLIST_FAIL,
 } from "../Constants/bookingConstants";
-import axios from "axios";
+import axios from "../../axios/axios";
 
 export const handleSelectDate = (date, day, id) => async (dispatch) => {
   try {
@@ -27,7 +30,7 @@ export const handleSelectDate = (date, day, id) => async (dispatch) => {
     dispatch({ type: GET_DATE_DETAILS_REQUEST });
 
     const {data} = await axios.get(
-      `http://localhost:3001/theater/getScreenInfo/${date}/${day}/${id}`
+      `/theater/getScreenInfo/${date}/${day}/${id}`
     );
 
     dispatch({ type: GET_DATE_DETAILS_SUCCESS, payload: data });
@@ -94,7 +97,7 @@ export const postBookingDetails = (datas) => async (dispatch) => {
   try {
     dispatch({ type: ADD_BOOKING_DETAILS });
 
-    const { data } = await axios.post("http://localhost:3001/reservation", datas);
+    const { data } = await axios.post("/reservation", datas);
 
     dispatch({type:ADD_BOOKING_DETAILS_SUCCESS,payload:data})
   } catch (error) {
@@ -119,7 +122,7 @@ export const getSeatInformation =(date, movieId, theaterId, time) => async (disp
     try {
       dispatch({ type: GET_SEATS_INFORMATION_REQUEST });
       const { data } = await axios.post(
-        "http://localhost:3001/reservation/getSeatInfo",
+        "/reservation/getSeatInfo",
         items
       );
       dispatch({ type: GET_SEATS_INFORMATION_SUCCESS, payload: data });
@@ -145,6 +148,26 @@ export const selectDate = (date, day, month, year) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ADD_DATE_AND_DAY_TO_STATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getReservationHistory =(movieId, theaterId) => async (dispatch) => {
+
+ 
+  try {
+    dispatch({ type: GET_RESERVATIONLIST_REQUEST });
+    const { data } = await axios.get(
+      `/theater/${theaterId}/getAllReservations/${movieId}`
+    );
+    dispatch({ type: GET_RESERVATIONLIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_RESERVATIONLIST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

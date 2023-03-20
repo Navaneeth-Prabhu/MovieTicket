@@ -22,9 +22,7 @@ function Calendar() {
   // const parts = url.split('/');
   // const id = parts[parts.length - 2];
   
-  // console.log(id);
-  
-  
+
   let dates = [];
   let weekdays = [
     "Sunday",
@@ -48,14 +46,7 @@ function Calendar() {
     currentDate++;
     currentDay++;
   }
-  // const CustomRightArrow = ({ onClick, ...rest }) => {
-  //   const {
-  //     onMove,
-  //     carouselState: { currentSlide, deviceType }
-  //   } = rest;
-  //   // onMove means if dragging or swiping in progress.
-  //   return <ArrowRightIcon onClick={() => onClick()} />;
-  // };
+
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },

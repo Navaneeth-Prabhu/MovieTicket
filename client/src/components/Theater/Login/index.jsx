@@ -27,7 +27,7 @@ export default function SignIn() {
   const [cookies] = useCookies([]);
   const navigate = useNavigate();
   useEffect(() => {
-    if (cookies.jwt) {
+    if (cookies.theaterjwt) {
       navigate("/theater");
     }
   },[cookies,navigate] );

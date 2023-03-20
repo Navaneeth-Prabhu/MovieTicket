@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import ChatInput from "../ChatInput/chatInput";
-// import Logout from "./Logout";
 import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
+import axios from "../../../../axios/axios";
 import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
 import { format } from "timeago.js";
-// import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
+
 
 export default function ChatContainer({ currentChat, socket, currentUser }) {
   // const [messages, setMessages] = useState([]);
@@ -21,7 +20,7 @@ export default function ChatContainer({ currentChat, socket, currentUser }) {
     async function getmessage() {
       // console.log(currentUser);
       const response = await axios.post(
-        "http://localhost:3001/message/getmsg",
+        "/message/getmsg",
         {
           from: currentUser,
           to: currentChat._id,
@@ -35,7 +34,7 @@ export default function ChatContainer({ currentChat, socket, currentUser }) {
 
 
   const handleSendMsg = async (msg) => {
-    await axios.post("http://localhost:3001/message/addmsg", {
+    await axios.post("/message/addmsg", {
       from: currentUser,
       to: currentChat._id,
       message: msg,

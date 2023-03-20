@@ -31,7 +31,11 @@ import AddMoviesscreen from './pages/Theater/addMovies'
 import Chat from './pages/Theater/chat'
 import Reservation from "./pages/Theater/Reservation";
 import ShowTimeTheater from './pages/Theater/ShowTime'
-
+import DashBoard from "./components/Theater/DashBoard/DashBoard";
+import Home from "./pages/User/Home";
+import AllReservation from "./pages/Theater/AllReservations";
+import HistoryList from './pages/Theater/ReservationList'
+import PageNotFound from "./pages/PageNotFound";
 // import Movie from "./context/movieContext";
 
 
@@ -60,11 +64,12 @@ function Routess() {
         <Route exact path ="/theater/login" element = {<TheaterLogin/>} />
         <Route exact path ="/theater/reg" element = {<TheaterReg/>} />
         <Route exact path ="/theater/screen" element = {<TheaterScreen/>} />
-        {/* <Route exact path ="/theater/addScreen" element = {<AddTheaterscreen/>} /> */}
         <Route exact path ="/theater/addMovies" element = {<AddMoviesscreen/>} />
         <Route exact path ="/theater/chat" element = {<Chat/>} />
-        <Route exact path ="/theater/Reservation" element = {<Reservation/>} />
         <Route exact path="/theater/buytickets/:id/select_screen" element={<ShowTimeTheater />} /> 
+        <Route exact path ="/theater/Reservation" element = {<Reservation/>} />
+        <Route exact path ="/theater/AllReservation" element = {<AllReservation/>} />
+        <Route exact path="/theater/:id/reservations" element={<HistoryList/>} /> 
         
 
 
@@ -78,8 +83,8 @@ function Routess() {
         {/* <Route exact path="/admin/movies/editMovies" element={<EditMovies />} />   */}
         <Route exact path ="/admin/chat" element = {<AdminChat/>} />
       
-
-       
+{/* //404 error page// */}
+        <Route path='*' element={<PageNotFound />}/>
       </Routes>
    
     // </BrowserRouter> 

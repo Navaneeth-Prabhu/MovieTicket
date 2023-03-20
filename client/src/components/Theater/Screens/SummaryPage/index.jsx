@@ -11,19 +11,13 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ClearIcon from '@mui/icons-material/Clear';
 import styles from "../styles/summery.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import PaymentsPage from "../PaymentPage/index";
-import { handleAddTotalPrice, postBookingDetails, selectDate } from "../../../../redux/actions/bookingAction";
-import { Cookies } from "react-cookie";
-import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../../../axios/axios";
 // import Food from '../Components/SummeryPage/Food';
 
 function SummaryPage({ foodModalOpen, handleCloseFoodModal }) {
   const navigate = useNavigate();
   const [totalFood, setTotalFood] = React.useState(0);
-  const [open, setOpen] = React.useState(false);
-  const [proceed, setProceed] = React.useState(false);
   const selectDate = useSelector((state) => state.date);
   const { date } = selectDate;
 
@@ -32,13 +26,11 @@ const movieInformation = useSelector(state => state.movie)
 const { dateInfo, silver } = booking_details;
 const movieInfo = useSelector((state) => state.movieInfo);
 const { movie } = movieInfo.movieInformation;
-// const {movie,loading} = movieInformation
-console.log("summery pag................e" ,movie._id)
+// console.log("summery pag................e" ,movie._id)
 const [state, setState] = React.useState(false);
   const dispatch = useDispatch();
   const  handlePayment = async() => {
-    // setState(true);
-    // console.log("userinforrrr",userInfo);
+
     const dates = new Date();
     dates.setFullYear(date.year);
     dates.setMonth(date.month); // 0 represents January
@@ -60,7 +52,7 @@ const [state, setState] = React.useState(false);
       paymentId: "theater",
     };
 
-    await axios.post("http://localhost:3001/theater/reservation", data).then((res) => {
+    await axios.post("/theater/reservation", data).then((res) => {
         if (res) {
           console.log("POSTED");
           navigate("/theater/Reservation")
@@ -84,13 +76,8 @@ const [state, setState] = React.useState(false);
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-
   let totalAmount = booking_details.price + 28 + totalFood;
 
-  const handleProceed = () => {
-    dispatch(handleAddTotalPrice(totalAmount));
-    setProceed(true);
-  };
   return (
     <div className="">
       <Dialog
@@ -142,32 +129,7 @@ const [state, setState] = React.useState(false);
               <div>{booking_details.price + 28}</div>
             </div>
 
-            {/* {foodArray.length > 0 && (
-              <div style={{ fontSize: "12px" }} className={styles.categories}>
-                <div>Food and beverages</div>
-                <div> Rs. {totalFood}</div>
-              </div>
-            )} */}
-
-            {/* <div className={styles.charity}>
-              <div>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <input type="checkbox" onChange={handleChange} />
-                  <img
-                    src=""
-                    alt=""
-                  />
-                </div>
-                <div>Rs 1</div>
-              </div>
-              <div style={{ fontSize: "12px", padding: "10px 20px" }}>
-                <div>
-                  Re. 1 will be added to your transaction as a donation.
-                </div>
-                <div>Re.1/1 Ticket</div>
-              </div>
-            </div> */}
-
+        
             <div
               style={{ fontSize: "12px", margin: "0 30px", fontWeight: "600" }}
             >
@@ -178,7 +140,7 @@ const [state, setState] = React.useState(false);
               <div>Amount Payable</div>
               <div>Rs {totalAmount}</div>
             </div>
-            {/* <h3 className={styles.ticketType}>Select Ticket Type</h3> */}
+        
             <div onClick={handlePayment} className={styles.proceedBtn}>
               <div>Total : Rs {totalAmount}</div>
               <div> Proceed</div>

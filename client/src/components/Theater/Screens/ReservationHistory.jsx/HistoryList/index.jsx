@@ -1,6 +1,5 @@
 import React,{useEffect,useState} from "react"
-import axios from "../../../axios/axios";
-// import axios from "axios";
+import axios from "axios";
 // import * as React from "react";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
@@ -25,8 +24,10 @@ import Button from '@mui/material/Button';
 import CssBaseline from "@mui/material/CssBaseline";
 // import Box from '@mui/material/Box';
 import Container from "@mui/material/Container";
+import { useSelector } from "react-redux";
 
 function TablePaginationActions(props) {
+
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
 
@@ -96,26 +97,12 @@ TablePaginationActions.propTypes = {
 };
 
 
-export default function CustomPaginationActionsTable() {
+export default function TheaterList() {
+  const {reserveList} = useSelector((state) => state.reserveList);
+  console.log(reserveList)
     const [state, setState] = useState([]);
-const [block, setBlock] = useState(false);
-useEffect(() => {
-  axios.get("/admin/staff").then((response) => {
-    setState(response.data);
-  });
-}, [block]);
+   const [block, setBlock] = useState(false);
 
-const blockStaff = (id) => {
-    axios.get(`/admin/block/${id}`).then(({ data }) => {
-       setBlock(!block);
-    });
-  };
-
-  const unblockStaff = (id) => {
-    axios.get(`/admin/unblock/${id}`).then(({ data }) => {
-      setBlock(!block);
-    });
-  };
 
 
   const [page, setPage] = React.useState(0);
@@ -123,7 +110,7 @@ const blockStaff = (id) => {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - state.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - reserveList.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -135,12 +122,18 @@ const blockStaff = (id) => {
   };
 
   return (
-
+    <CssBaseline>
+      <Container>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 100 }} aria-label="custom pagination table">
+          <Table sx={{ minWidth: 300 }} aria-label="custom pagination table">
           <TableHead>
           <TableRow>
             <TableCell>index</TableCell>
+            <TableCell align="left">Name</TableCell>
+            <TableCell align="left">Theater</TableCell>
+            <TableCell align="left">Address</TableCell>
+            <TableCell align="left">City</TableCell>
+            <TableCell align="left">State</TableCell>
             <TableCell align="left">Email</TableCell>
             <TableCell align="left">Status</TableCell>
             
@@ -149,39 +142,53 @@ const blockStaff = (id) => {
         </TableHead>
             <TableBody>
               {(rowsPerPage > 0
-                ? state.slice(
+                ? reserveList.slice(
                     page * rowsPerPage,
                     page * rowsPerPage + rowsPerPage
                   )
-                : state
+                : reserveList
               ).map((data,i) => (
                 <TableRow key={i+1}>
                   <TableCell component="th" scope="row">
-                    {data.name}
+                    {i+1}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {data.userId}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {data.showDate}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {data.startAt}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {data.seats.length}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {data.total}
                   </TableCell>
                   <TableCell  align="left">
                     {data.email}
                   </TableCell>
                   <TableCell  align="left">
-                  {data.Block === false ? (
+                  {/* {data.isApproved == false ? (
                       <Button
                 
-                        onClick={() => blockStaff(data._id)}
+                        onClick={() => approve(data._id)}
                         variant="contained"
                         color="success"
                       >
-                        UNBLOCK
+                        Approve
                       </Button>
                     ) : (
                       <Button
-            
-                        onClick={() => unblockStaff(data._id)}
+                        onClick={() => reject(data._id)}
                         variant="outlined"
                         color="error"
                       >
-                        BLOCK
+                        Reject
                       </Button>
-                    )}
+                    )} */}
                   </TableCell>
                 </TableRow>
               ))}
@@ -214,6 +221,7 @@ const blockStaff = (id) => {
             </TableFooter>
           </Table>
         </TableContainer>
-
+      </Container>
+    </CssBaseline>
   );
 }

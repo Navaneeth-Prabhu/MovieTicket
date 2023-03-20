@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./order.scss";
-import axios from "axios";
+import axios from "../../../axios/axios";
 
 function Order() {
   const [history, sethistory] = useState([]);
@@ -9,15 +9,15 @@ function Order() {
       const user = localStorage.getItem("userInfo");
       let userEmail = JSON.parse(user);
       const { data } = await axios.get(
-        `http://localhost:3001/history/${userEmail}`
+        `/history/${userEmail}`
       );
 
-      // console.log(data)
+      
       sethistory(data);
     }
     getHistroy();
   }, []);
-  console.log(history);
+
 
   return (
     <>
@@ -32,8 +32,8 @@ function Order() {
                 alt=""
               />
             </div>
-            <div className="details ml-5">
-              <div className="title">{item?.movieId?.title}</div>
+            <div className="details  px-10">
+              <div className="title ">{item?.movieId?.title}</div>
               {/* <p>EVM ,Cherthala</p> */}
               <div className="theaterDetail text-sm ">
                 <p className="mb-0">EVM , Cherthala , Alappuzha</p>
@@ -47,7 +47,7 @@ function Order() {
                 </p>
                 <p className="flex font-semibold">
                   <span>Seats : </span>
-                  {item?.seats.map((dataSeat) => (
+                  {item?.seats?.map((dataSeat) => (
                     <p>{dataSeat.seat},</p>
                   ))}
                 </p>

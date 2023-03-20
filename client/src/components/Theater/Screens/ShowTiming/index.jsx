@@ -13,8 +13,8 @@ import SummaryPage from "../../../Theater/Screens/SummaryPage";
 
 function ShowTimePage({ filters }) {
   const [gotTime,setGotTime] =useState('')
-  const movieInformation = useSelector(state => state.movieInfo)
-  console.log("movieinfo",movieInformation)
+  const movieInformation = useSelector((state) => state.movieInfo)
+  console.log("movieinfo in showTiming",movieInformation)
   const {movie} = movieInformation.movieInformation
   const date_data = useSelector((state) => state.dateData);
 
@@ -27,6 +27,8 @@ function ShowTimePage({ filters }) {
   const selectDate = useSelector((state) => state.date);
   const { date } = selectDate;
 
+
+  
   React.useEffect(() => {
     window.scrollTo(window.scrollX, 0);
   }, [seatingModalOpen]);

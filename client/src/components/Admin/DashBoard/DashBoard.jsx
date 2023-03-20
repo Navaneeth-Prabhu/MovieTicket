@@ -1,30 +1,58 @@
-import axios from "axios";
+import axios from "../../../axios/axios";
 import React, { useEffect, useState } from "react";
+import  { ApexChart } from '../Charts/SalesChart'
 
 function DashBoard() {
   const [movies, setmovies] = useState([]);
   const [TopBooked, setTopBooked] = useState([]);
   const [Users, setUsers] = useState([])
+  const [Theater, setTheater] = useState([])
   useEffect(() => {
     async function getReservation() {
       await axios
-        .get("http://localhost:3001/admin/reservationDetails")
+        .get("/admin/reservationDetails")
         .then(({ data }) => {
           setmovies(data);
         });
       await axios
-        .get("http://localhost:3001/admin/topReserved")
+        .get("/admin/topReserved")
         .then(({ data }) => {
           setTopBooked(data);
         });
       await axios
-        .get("http://localhost:3001/admin/userList")
+        .get("/admin/userList")
         .then(({ data }) => {
           setUsers(data);
         });
+        await axios.get("/admin/theaterList").then(({data}) => {
+        setTheater(data);
+  });
     }
     getReservation();
   }, []);
+  const reservationsPerDay = movies?.reduce((acc, cur) => {
+    const showDate = cur.showDate;
+    if (!acc[showDate]) {
+      acc[showDate] = 1;
+    } else {
+      acc[showDate]++;
+    }
+    return acc;
+  }, {});
+  
+  
+  const options = { month: 'short', day: 'numeric', year: 'numeric' };
+const reservationsData = Object.keys(reservationsPerDay).map((showDate) => {
+  const date = new Date(showDate);
+  const formattedDate = date.toLocaleDateString('en-US', options);
+  return { x: formattedDate, y: reservationsPerDay[showDate] };
+});
+
+  const xData = reservationsData?.map((reservation) => reservation.x);
+const yData = reservationsData?.map((reservation) => reservation.y);
+
+  
+
   const totalRevenue = movies.reduce(
     (acc, ticket) => acc + ticket.ticketPrice,
     0
@@ -42,7 +70,7 @@ function DashBoard() {
                 ${totalRevenue}
               </span>
               <h3 class="text-base font-light text-gray-400">
-                Sales this week
+                Total Sales
               </h3>
             </div>
             <div class="flex items-center justify-end flex-1 text-base font-medium  text-green-400">
@@ -61,32 +89,10 @@ function DashBoard() {
               </svg>
             </div>
           </div>
-          <div id="main-chart"></div>
-          {/* <!-- Card Footer --> */}
-          <div class="flex items-center justify-between pt-3 mt-4 border-t  sm:pt-6 border-gray-700">
-            <div class="flex-shrink-0">
-              <a
-                href="#"
-                class="inline-flex items-center p-2 text-xs font-medium uppercase rounded-lg text-primary-700 sm:text-sm text-primary-500 hover:bg-gray-700"
-              >
-                Sales Report
-                <svg
-                  class="w-4 h-4 ml-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 5l7 7-7 7"
-                  ></path>
-                </svg>
-              </a>
-            </div>
+          <div id="main-chart">
+            <ApexChart xData={xData} yData={yData}/>
           </div>
+         
         </div>
         {/* <!--Tabs widget --> */}
         <div class="p-4  border  rounded-lg shadow-sm border-gray-700 sm:p-6 bg-gray-800">
@@ -240,132 +246,16 @@ function DashBoard() {
             </div>
           </div>
 
-          <div class="flex items-center justify-between pt-3 mt-5 border-t border-gray-200 sm:pt-6 border-gray-700">
-            <div>
-              <button
-                class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 rounded-lg hover: text-gray-400 hover:text-white"
-                type="button"
-                data-dropdown-toggle="stats-dropdown"
-              >
-                Last 7 days{" "}
-                <svg
-                  class="w-4 h-4 ml-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-              </button>
-
-              <div
-                class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow bg-gray-700 divide-gray-600"
-                id="stats-dropdown"
-              >
-                <div class="px-4 py-3" role="none">
-                  <p
-                    class="text-sm font-medium  truncate text-white"
-                    role="none"
-                  >
-                    Sep 16, 2021 - Sep 22, 2021
-                  </p>
-                </div>
-                <ul class="py-1" role="none">
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-gray-400 hover:bg-gray-600 hover:text-white"
-                      role="menuitem"
-                    >
-                      Yesterday
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-gray-400 hover:bg-gray-600 hover:text-white"
-                      role="menuitem"
-                    >
-                      Today
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-gray-400 hover:bg-gray-600 hover:text-white"
-                      role="menuitem"
-                    >
-                      Last 7 days
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-gray-400 hover:bg-gray-600 hover:text-white"
-                      role="menuitem"
-                    >
-                      Last 30 days
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-gray-400 hover:bg-gray-600 hover:text-white"
-                      role="menuitem"
-                    >
-                      Last 90 days
-                    </a>
-                  </li>
-                </ul>
-                <div class="py-1" role="none">
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-gray-400 hover:bg-gray-600 hover:text-white"
-                    role="menuitem"
-                  >
-                    Custom...
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="flex-shrink-0">
-              <a
-                href="#"
-                class="inline-flex items-center p-2 text-xs font-medium uppercase rounded-lg text-primary-700 sm:text-sm hover:bg-gray-100 text-primary-500 hover:bg-gray-700"
-              >
-                Full Report
-                <svg
-                  class="w-4 h-4 ml-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 5l7 7-7 7"
-                  ></path>
-                </svg>
-              </a>
-            </div>
-          </div>
+          
         </div>
       </div>
 
       <div class="grid w-full grid-cols-1 gap-4 mt-4 xl:grid-cols-2 2xl:grid-cols-3">
         <div class="items-center justify-between p-4  border  rounded-lg shadow-sm sm:flex border-gray-700 sm:p-6 bg-gray-800">
           <div class="w-full">
-            <h3 class="text-base font-normal  text-gray-400">New products</h3>
+            <h3 class="text-base font-normal  text-gray-400">Theater</h3>
             <span class="text-2xl font-bold leading-none  sm:text-3xl text-white">
-              2,340
+              {Theater.length}
             </span>
             <p class="flex items-center text-base font-normal  text-gray-400">
               <span class="flex items-center mr-1.5 text-sm  text-green-400">

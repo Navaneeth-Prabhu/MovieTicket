@@ -25,12 +25,6 @@ app.use(
   app.use(cookieParser())
   app.use(express.json())
   
-//   app.use("/theater",TheaterRoutes)
-//   app.use('/admin',AdminRoute)
-//   app.use('/',UserRoute)
-//   app.use('/auth',authRouter)
-//   app.use('/message',MessageRouter)
-  
 
 const server = app.listen(3001, ()=>{
 console.log("server started");

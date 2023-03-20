@@ -34,7 +34,6 @@ export const movieInfo = (state = {}, action) => {
       return { loading: false, movieInformation: action.payload };
     case GET_MOVIE_INFO_MOVIEPAGE_FAIL:
       return { loading: false, error: action.payload };
-
     default:
       return state;
   }

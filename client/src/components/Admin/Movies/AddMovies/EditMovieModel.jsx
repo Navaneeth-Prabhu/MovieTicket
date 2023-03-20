@@ -2,8 +2,7 @@ import { Autocomplete, FormControl, Grid, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import axios from "axios";
+import UploadWidget from "./UploadWidget";
 
 const Gener = [
   "Action",
@@ -16,16 +15,9 @@ const Gener = [
 ];
 const Language = ["English", "Hindi", "Tamil", "Malayalam", "Kannada"];
 
-const schema = yup.object().shape({
-  title: yup.string().required(),
-  description: yup.string().min(10).max(50).required(),
-  //   Genre: yup.array().required(),
-  // director:yup.string().required(),
-  // youtubeLink:yup.string().required(),
-  // Language:yup.array().required(),
-});
 
-function EditMovieModel({ editModel, movie, seteditModel }) {
+
+function EditMovieModel({ editModel, movie, seteditModel, handleSave }) {
   // const { register, handleSubmit, setValue } = useForm();
   const {
     register,
@@ -33,31 +25,40 @@ function EditMovieModel({ editModel, movie, seteditModel }) {
     setValue,
     formState: { errors },
   } = useForm();
-  const [error, setError] = useState(null);
+ 
 
   // Populate form fields with existing movie data
+  const [selectedGener, setSelectedGener] = useState([]);
   setValue("title", movie?.title);
   setValue("description", movie?.description);
   setValue("director", movie?.director);
-  setValue("genre", movie?.genre?.join(", "));
-  setValue("language", movie?.language?.join(", "));
+  setValue("Genre", movie?.Genre?.join(", "));
+  setValue("Language", movie?.Language?.join(", "));
   // setValue('posterImg', movie?.posterImg);
   setValue("youtubeLink", movie?.youtubeLink);
-
+  const [gener, setgener] = useState([]);
+  const [language, setlanguage] = useState([]);
+  const [error, updateError] = useState();
+  const [url, seturl] = useState()
+  
   const onSubmit = async (data) => {
-    try {
-      console.log(data);
-      const res = await axios.put(`http://localhost:3001/admin/editMovie/${movie._id}`, data);
-      console.log(res.data); // Log updated movie data
-      seteditModel(!editModel)
-    } catch (error) {
-      setError(error.response.data);
-    }
-  };
+    const genreArray = data.Genre.split(",").map((s) => s.trim());
+    const LanguageArray = data.Language.split(",").map((s) => s.trim());
+    const updatedData = { ...data, Genre: genreArray ,Language:LanguageArray,PosterImg:url};
 
-  // const submitForm = async(data) => {
-  //   console.log("helloo",data);
-  // };
+    handleSave(updatedData);
+  };
+  function handleOnUpload(error, result, widget) {
+    if (error) {
+      updateError(error);
+      widget.close({
+        quiet: true,
+      });
+      return;
+    }
+    seturl(result?.info?.secure_url);
+  }
+
 
   return (
     <>
@@ -97,7 +98,7 @@ function EditMovieModel({ editModel, movie, seteditModel }) {
                         for="title"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
-                        Title   
+                        Title
                       </label>
                       <input
                         type="text"
@@ -113,7 +114,7 @@ function EditMovieModel({ editModel, movie, seteditModel }) {
                         for="title"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
-                       description
+                        description
                       </label>
                       <input
                         type="text"
@@ -122,14 +123,16 @@ function EditMovieModel({ editModel, movie, seteditModel }) {
                         defaultValue={movie.description}
                         required
                       />
-                      {errors.description && <span>This field is required</span>}
+                      {errors.description && (
+                        <span>This field is required</span>
+                      )}
                     </div>
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         for="title"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
-                       director
+                        director
                       </label>
                       <input
                         type="text"
@@ -145,39 +148,45 @@ function EditMovieModel({ editModel, movie, seteditModel }) {
                         for="title"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
-                       genre
+                        Genre
                       </label>
                       <input
                         type="text"
                         className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        {...register("genre", { required: true })}
-                        defaultValue={movie.genre}
+                        {...register("Genre", { required: true })}
+                        defaultValue={movie.Genre}
                         required
                       />
-                      {errors.description && <span>This field is required</span>}
+                      {errors.description && (
+                        <span>This field is required</span>
+                      )}
+                    </div>
+
+              
+                    <div className="col-span-6 sm:col-span-3">
+                      <label
+                        for="title"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Language
+                      </label>
+                      <input
+                        type="text"
+                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        {...register("Language", { required: true })}
+                        defaultValue={movie.Language}
+                        required
+                      />
+                      {errors.description && (
+                        <span>This field is required</span>
+                      )}
                     </div>
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         for="title"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
-                       language
-                      </label>
-                      <input
-                        type="text"
-                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        {...register("language", { required: true })}
-                        defaultValue={movie.language}
-                        required
-                      />
-                      {errors.description && <span>This field is required</span>}
-                    </div>
-                    <div className="col-span-6 sm:col-span-3">
-                      <label
-                        for="title"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >
-                       youtubeLink
+                        youtubeLink
                       </label>
                       <input
                         type="text"
@@ -186,8 +195,45 @@ function EditMovieModel({ editModel, movie, seteditModel }) {
                         defaultValue={movie.youtubeLink}
                         required
                       />
-                      {errors.description && <span>This field is required</span>}
+                      {errors.description && (
+                        <span>This field is required</span>
+                      )}
                     </div>
+                    <div className="col-span-6 sm:col-span-3">
+                      <label
+                        for="title"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Image Upload
+                      </label>
+                      <div className="container">
+              
+                  <UploadWidget onUpload={handleOnUpload}>
+                    {({ open }) => {
+                      function handleOnClick(e) {
+                        e.preventDefault();
+                        open();
+                      }
+                      return (
+                        <button className="bg-blue-900 px-4 py-2 rounded-md" onClick={handleOnClick}>Upload an Image</button>
+                      );
+                    }}
+                  </UploadWidget>
+
+                  {error && <p>{error}</p>}
+
+                  {url && (
+                    <>
+                      <p>
+                        <img className="w-20 h-full mt-4" src={url} alt="Uploaded image" />
+                      </p>
+                      <p>{url}</p>
+                    </>
+                  )}
+                </div>
+                    </div>
+                    
+                  
                   </div>
 
                   <div className="items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-700">

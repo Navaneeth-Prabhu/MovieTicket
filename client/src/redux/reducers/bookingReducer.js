@@ -15,6 +15,9 @@ import {
   ADD_BOOKING_DETAILS,
   ADD_BOOKING_DETAILS_SUCCESS,
   ADD_BOOKING_DETAILS_FAIL,
+  GET_RESERVATIONLIST_REQUEST,
+  GET_RESERVATIONLIST_SUCCESS,
+  GET_RESERVATIONLIST_FAIL,
   } from "../Constants/bookingConstants";
   
   export const dateInfoReducer = (state = { dateInfo:[]}, action) => {
@@ -76,6 +79,18 @@ import {
       case ADD_BOOKING_DETAILS_SUCCESS:
         return {loading:false, paymentSucess:action.payload};
       case ADD_BOOKING_DETAILS_FAIL:
+        return {loading:false, error: action.payload };
+      default:
+        return state;
+    }
+  };
+  export const reservationList = (state = {reserveList:[]}, action) => {
+    switch (action.type) {
+      case GET_RESERVATIONLIST_REQUEST:
+        return {loading:true, reserveList:action.payload };
+      case GET_RESERVATIONLIST_SUCCESS:
+        return {loading:false, reserveList:action.payload};
+      case GET_RESERVATIONLIST_FAIL:
         return {loading:false, error: action.payload };
       default:
         return state;

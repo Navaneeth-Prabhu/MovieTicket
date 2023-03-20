@@ -10,12 +10,12 @@ import {
     DELETE_MOVIE_SUCCESS,
     DELETE_MOVIE_FAIL,
   } from "../Constants/movieConstants";
-  import axios from "axios";
+  import axios from "../../axios/axios";
   
   export const getMovies = () => async (dispatch) => {
     try {
       dispatch({ type: GET_MOVIE_REQUEST });
-      let { data } = await axios.get("http://localhost:3001/movieInfo");
+      let { data } = await axios.get("/movieInfo");
     
       dispatch({ type: GET_MOVIE_SUCCESS, payload: data });
     } catch (error) {
@@ -32,13 +32,8 @@ import {
 
  export const moviedetails = (id) => async (dispatch) => {
     try {
-   
-
-      let { data } = await axios.get(`http://localhost:3001/moviedetails/${id}`);
-   
-      dispatch({type: GET_MOVIE_INFO_MOVIEPAGE_SUCCESS, payload: data});
- 
-      
+      let { data } = await axios.get(`/moviedetails/${id}`);  
+      dispatch({type: GET_MOVIE_INFO_MOVIEPAGE_SUCCESS, payload: data});   
     } catch (error) {
        dispatch({
         type: GET_MOVIE_INFO_MOVIEPAGE_FAIL,
@@ -52,11 +47,11 @@ import {
  export const deleteMovie = (id) => async (dispatch) => {
     try {
    
-      console.log("////////fds/////////",id)
-      let { data } = await axios.post(`http://localhost:3001/admin/deleteMovie/${id}`);
+   
+      let { data } = await axios.post(`/admin/deleteMovie/${id}`);
    
       dispatch({type: DELETE_MOVIE_SUCCESS, payload: data});
-      // console.log(data);
+ 
       
     } catch (error) {
        dispatch({
@@ -72,7 +67,7 @@ import {
   export const getTheaterMovies =() =>async(dispatch)=>{
     try {
       // dispatch({type:GET_THEATER_MOVIE_REQUEST})
-      let { data } = await axios.get('http://localhost:3001/GetTheaterMovies');
+      let { data } = await axios.get('/GetTheaterMovies');
   
       dispatch({type:GET_THEATER_MOVIE_SUCCESS,payload:data})
     } catch (error) {

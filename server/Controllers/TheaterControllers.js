@@ -66,8 +66,7 @@ module.exports.login = async (req, res, next) => {
     console.log(email, password);
     if (user.isApproved) {
       const token = createToken(user._id);
-
-      res.cookie("jwt", token, {
+      res.cookie("theaterjwt", token, {
         withCrdentials: true,
         httpOnly: false,
         message: maxAge * 1000,
@@ -86,7 +85,7 @@ module.exports.login = async (req, res, next) => {
 module.exports.addScreen = async (req, res, next) => {
   try {
     const { name, row, col } = req.body;
-    const token = req.cookies.jwt;
+    const token = req.cookies.theaterjwt;
 
     decoded = jwt.decode(token);
     id = decoded.id;
@@ -136,34 +135,14 @@ User.findOne({_id: id})
     if (err) {
       console.log(err);
     } else {
-      res.json(theater.Screen)
+      res.json(theater.Screen.reverse())
     }
   });
 
 
 };
 
-// async function deleteShowInfo(theaterId, screenIndex, showIndex) {
-//   try {
-//     const theater = await Theater.findById(theaterId);
-//     if (!theater) {
-//       throw new Error(`Theater with ID ${theaterId} not found`);
-//     }
-//     const screen = theater.Screen[screenIndex];
-//     if (!screen) {
-//       throw new Error(`Screen with index ${screenIndex} not found`);
-//     }
-//     const show = screen.showInfo[showIndex];
-//     if (!show) {
-//       throw new Error(`Show with index ${showIndex} not found`);
-//     }
-//     await show.remove();
-//     await theater.save();
-//     console.log(`Show with ID ${show._id} deleted successfully`);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+
 
 module.exports.deleteShowInfo =async(req,res,next)=>{
 

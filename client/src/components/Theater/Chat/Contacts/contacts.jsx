@@ -5,6 +5,13 @@ function Contacts({contacts,currentUser,changeChat}) {
     const [currentUserName, setCurrentUserName] = useState(undefined)
     const [currentSelected, setCurrentSelected] = useState(undefined);
 
+    const sortedContacts = contacts.sort((a, b) => {
+      const aLastMessageDate = a.latestMessage ? new Date(a.latestMessage.createdAt) : new Date(0);
+      const bLastMessageDate = b.latestMessage ? new Date(b.latestMessage.createdAt) : new Date(0);
+      return bLastMessageDate - aLastMessageDate;
+    });
+
+    
     useEffect(() => {
       if(currentUser){
         setCurrentUserName(currentUser.name)
@@ -24,7 +31,7 @@ function Contacts({contacts,currentUser,changeChat}) {
             <h3>snappy</h3>
           </div>
           <div className="contacts">
-            {contacts.map((contact, index) => {
+            {sortedContacts.map((contact, index) => {
               return (
                 <div
                   key={contact._id}

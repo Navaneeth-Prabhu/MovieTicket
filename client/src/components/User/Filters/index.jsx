@@ -13,8 +13,7 @@ function Filter({ handleFilters, filters }) {
         justifyContent: "space-between",
         alignItems: "center",
         padding: "5px 7.5%",
-        // marginTop: "101px",
-        // position:"fixed"
+  
       }}
     >
       <Calendar style={{display:"flex" ,flexDirection:"row"}}/>

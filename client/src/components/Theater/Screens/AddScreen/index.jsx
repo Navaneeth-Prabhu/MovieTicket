@@ -56,14 +56,12 @@ export default function FormMovie() {
 
   const onSubmit = async (data) => {
 
-    await axios.post("http://localhost:3001/theater/addScreen",data)
+    await axios.post("/theater/addScreen",data)
   navigate("/theater/")
   };
-
   return (
     <ThemeProvider>
       <Container component="main" maxWidth="xm" color="secondary">
-        {/* <CssBaseline /> */}
         <Typography component="h1" variant="h5">
           addScreen
         </Typography>
@@ -111,76 +109,6 @@ export default function FormMovie() {
                   </span>
                 </div>
               </Grid>
-              {/* <Grid item lg={4} xs={4}>
-                <div>
-                  <TextField
-                    className="focus"
-                    variant="filled"
-                    label="Row"
-                    color="secondary"
-                    type="number"
-                    fullWidth
-                
-                    margin="1"
-                    {...register("row", {
-                      required: true,
-                      minLength: 1,
-                      maxLength: 2,
-                      pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
-                    })}
-                  />
-                  <span className="text-danger">
-                    {errors.name?.type === "required" && (
-                      <span>name is required</span>
-                    )}
-                    {errors.name?.type === "minLength" && (
-                      <span>name must morethan or equal to 4 Character</span>
-                    )}
-                    {errors.name?.type === "maxLength" && (
-                      <span>name must less than 20 Character</span>
-                    )}
-                    {errors.name?.type === "pattern" && (
-                      <span>Should not have spaces</span>
-                    )}
-                  </span>
-                </div>
-              </Grid>
-              <Grid item lg={4} xs={4}>
-                <div>
-                  <TextField
-                    className=""
-                    variant="filled"
-                    label="Column"
-                    color="secondary"
-                    type="number"
-                    fullWidth
-                    margin="1"
-                    {...register("col", {
-                      required: true,
-                      minLength: 1,
-                      maxLength: 2,
-                      pattern: /^[^\s]+(?:$|.*[^\s]+$)/,
-                    })}
-                  />
-                  <span className="text-danger">
-                    {errors.name?.type === "required" && (
-                      <span>name is required</span>
-                    )}
-                    {errors.name?.type === "minLength" && (
-                      <span>name must morethan or equal to 4 Character</span>
-                    )}
-                    {errors.name?.type === "maxLength" && (
-                      <span>name must less than 20 Character</span>
-                    )}
-                    {errors.name?.type === "pattern" && (
-                      <span>Should not have spaces</span>
-                    )}
-                  </span>
-                </div>
-              </Grid> */}
-
-
-            
             </Grid>
 
             <Button

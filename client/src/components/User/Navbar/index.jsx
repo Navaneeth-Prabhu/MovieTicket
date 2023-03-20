@@ -57,6 +57,11 @@ const listItems = [
     listIcon: <SettingsSharpIcon />,
     listText: "Account & Settings",
   },
+  {
+    listIcon: <SettingsSharpIcon />,
+    listText: "Account & Settings",
+    path:"/theater/reg"
+  },
 ];
 
 function Navbar() {
@@ -95,7 +100,7 @@ function Navbar() {
         flexDirection: "column",
       }}
     >
-      <List>asdfasdf</List>
+      <List>{}</List>
 
       <Box
         sx={{

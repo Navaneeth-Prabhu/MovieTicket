@@ -1,30 +1,24 @@
 import axios from "axios";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import Navbar from "../../../components/User/Navbar";
 import ShowReview from "../../../components/User/Review/showReview";
 import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
-import { MovieContext } from "../../../context/movieContext";
 import { moviedetails } from "../../../redux/actions/movieAction";
 import "./detail.scss";
 import { Input, Modal } from "antd";
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
 import ReviewModel from "../../../components/User/Review/index";
 
-const { TextArea } = Input;
-
 const Detail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [submit, setsubmit] = useState(false);
   const [open, setOpen] = React.useState(false);
-
   const user = useSelector((state) => state.userLogin);
-
   const movieInfo = useSelector((state) => state.movieInfo);
   const { movieInformation } = movieInfo;
-  // const genre = movieInformation?.movie.Gener
 
   const dispatch = useDispatch();
   const handleOpen = () => {
@@ -40,7 +34,6 @@ const Detail = () => {
   }, []);
   const selectedMovieToState = () => {
     if (user?.userInfo) {
-      // dispatch(moviedetails(movieInformation.movie));
       navigate(`/buytickets/${movieInformation.movie._id}/select_screen`);
     } else {
       alert("Please login to book your tickets");
@@ -52,7 +45,7 @@ const Detail = () => {
       <Navbar />
 
       <div
-        className="main"
+        className="flex flex-col  md:flex-row md:mt-32 container md:m-auto" 
         style={{
           backgroundImage: `linear-gradient(90deg, rgb(29, 30, 34) 24.97%, rgb(29, 30, 34) 38.3%, rgba(29, 30, 34, 0.04) 97.47%, rgb(18, 18, 18) 100%),url(${`../../../../../server/public/movies/${movieInformation?.movie._id}.jpg`})`,
           backgroundPosition: "center",
@@ -60,20 +53,20 @@ const Detail = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="smthing">
-          <div className="poster" onClick={() => navigate("/movie/trailler")}>
-            <img
+        <div className="bg-blue-500 w-screen md:max-w-[240px] md:h-[350px] overflow-hidden relative">
+          <div className=" w-full md:w-full md:h-full   bg-yellow-300" onClick={() => navigate("/movie/trailler")}>
+            <img className="h-full w-full"
               src={movieInformation?.movie.PosterImg}
               alt=""
             />
           </div>
-          <div className="trailer">
+          <div className="absolute top-[50%] left-[30%] bg-white/60 px-3 py-1 rounded-full">
             <PlayCircleFilledWhiteIcon />
             <span>Trailer</span>
           </div>
         </div>
-        <div className="det">
-          <h1 className="title text-6xl ">{movieInformation?.movie.title}</h1>
+        <div className="text-white md:ml-10 md:w-full">
+          <h1 className="title text-xl lg:text-6xl">{movieInformation?.movie.title}</h1>
 
           <div className="genres"></div>
           <div className="genres">
@@ -87,9 +80,13 @@ const Detail = () => {
               {movieInformation?.movie.Review ? (
                 <span className=" flex justify-center items-center">
                   <FavoriteRoundedIcon sx={{ color: "red" }} />
-                  <h3 className="m-0 text-2xl">
-                    {movieInformation?.Percentage}%
-                  </h3>{" "}
+                  <div className="m-0 text-2xl">
+                    {
+                      movieInformation.Percentage?
+                    <p className="m-0"> {movieInformation?.Percentage}%</p> : null
+                    }
+
+                  </div>{" "}
                   <p className="m-0 px-3 text-base">
                     {movieInformation?.ReviewCount} rated
                   </p>{" "}
@@ -99,24 +96,27 @@ const Detail = () => {
               )}
             </div>
           </div>
-          <div className="cast">
-            <div
+          <div className="cast w-full">
+            <div className="flex-col"
               sx={{
                 width: 300,
-                color: "success.main",
+                color: "success.main",        
               }}
             >
               <h1 className="mt-4">3d /2d</h1> 
+              <div className="flex">
+
               {
                 movieInformation?.movie?.Language?.map((lang)=>(
 
                   <h2>.{lang}</h2>
                 ))
               }
+              </div>
             </div>
           </div>
           <div
-            className="  mt-10 text-lg flex bg-[#ff0000] font-bold rounded-md px-8 py-4 max-w-fit cursor-pointer hover:bg-[#e00404] active:bg-[#ba0202]"
+            className="  mt-5 text-lg flex bg-[#ff0000] font-bold rounded-md px-8 py-4 max-w-fit cursor-pointer hover:bg-[#e00404] active:bg-[#ba0202]"
             onClick={() => selectedMovieToState()}
           >
             <button className="">Book Tickets</button>
@@ -126,7 +126,7 @@ const Detail = () => {
 
       <div className="movieDetails">
         {/* <div className="lines mb-4"></div> */}
-        <div className="details text-white mt-5">
+        <div className="details text-white mt-5 max-w-4xl">
           <h2 className="text-2xl font-bold">About the Movie</h2>
           <p>hallooo{movieInformation?.movie.description}</p>
         </div>

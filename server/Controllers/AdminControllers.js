@@ -1,13 +1,12 @@
 const Admin = require("../Models/AdminModel");
 const Theater = require("../Models/TheaterModel")
 const jwt = require("jsonwebtoken");
-// const Application = require("../models/ApplicationModels")
-// const Admin = require("../models/AdminModels");
+
 const { response } = require("express");
 const User = require("../Models/UserModel");
+// const { Sanitizer } = require("sanitize");
 // const { default: Movie } = require("../../client/src/pages/Admin/Movies");
 const { ObjectId } = require("mongoose").Types;
-
 const maxAge = 1 * 24 * 60 * 60;
 
 const createToken = (id) => {
@@ -95,10 +94,10 @@ module.exports.getStaff = async (req, res, next) => {
 
 module.exports.blockStaff = async (req, res) => {
   try {
-    let id = req.params.id;
+    let id = Sanitizer.value(req.params.id)   
   
     // const {id} = req.body
- 
+    
     const user = await Admin.findByIdAndUpdate(
       { _id: ObjectId(id) },
       { $set: { Block: true } }
@@ -111,7 +110,7 @@ module.exports.blockStaff = async (req, res) => {
 };
 module.exports.unblockStaff = async (req, res) => {
   try {
-    let id = req.params.id;
+    let id = Sanitizer.value(req.params.id)     
     console.log("unblock");
     // const {id} = req.body
     const user = await Admin.findByIdAndUpdate(
@@ -143,24 +142,23 @@ module.exports.UserList = async(req,res)=>{
 
 module.exports.approve = async (req, res) => {
   try {
-    let id = req.params.id;
-  
+    let id = req.params.id    
     const user = await Theater.findByIdAndUpdate(
       { _id: ObjectId(id) },
       { $set: { isApproved: true } }
-    ); 
-
-    res.json(user);
-  } catch (err) {
-    console.log(err);
-    //try later 
-  }
+      ); 
+      
+      res.json(user);
+    } catch (err) {
+      console.log(err);
+      //try later 
+    }
+  
 };
 module.exports.reject = async (req, res) => {
   try {
     let id = req.params.id;
 
-    // const {id} = req.body
     const user = await Theater.findByIdAndUpdate(
       { _id: ObjectId(id) },
       { $set: { isApproved: false } }

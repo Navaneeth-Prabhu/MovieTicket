@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from "react"
-import axios from "axios";
+import axios from "../../../axios/axios";
 // import * as React from "react";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
@@ -99,19 +99,19 @@ export default function TheaterList() {
     const [state, setState] = useState([]);
 const [block, setBlock] = useState(false);
 useEffect(() => {
-  axios.get("http://localhost:3001/admin/theaterList").then((response) => {
+  axios.get("/admin/theaterList").then((response) => {
     setState(response.data);
   });
 }, [block]);
 
 const reject = (id) => {
-    axios.get(`http://localhost:3001/admin/rejectTheater/${id}`).then(({ data }) => {
+    axios.get(`/admin/rejectTheater/${id}`).then(({ data }) => {
        setBlock(!block);
     });
   };
 
   const approve = (id) => {
-    axios.get(`http://localhost:3001/admin/approveTheater/${id}`).then(({ data }) => {
+    axios.get(`/admin/approveTheater/${id}`).then(({ data }) => {
       setBlock(!block);
     });
   };

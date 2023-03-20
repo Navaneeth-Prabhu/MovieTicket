@@ -1,16 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { format } from "timeago.js";
 
-// Import Swiper styles
-// import "swiper/css";
-// import "swiper/css/pagination";
-
-// import "./carsole.css";
 import { Pagination } from "swiper";
 import { style } from "@mui/system";
 import StarIcon from "@mui/icons-material/Star";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import axios from "../../../axios/axios";
 
 function ShowReview({movieInfo,submit}) {
   
@@ -20,7 +15,7 @@ function ShowReview({movieInfo,submit}) {
 
   useEffect(() => {
     async function getReview (){
-     const {data} = await axios.get(`http://localhost:3001/getAllReview/${movie._id}`)
+     const {data} = await axios.get(`/getAllReview/${movie._id}`)
 
      setreview(data)
       
@@ -31,7 +26,7 @@ function ShowReview({movieInfo,submit}) {
 
   return (
     <>
-      <div className="mt-5">
+      <div className="mt-5 sm:max-w-[100%] md:max-w-[70%]">
         <Swiper
           slidesPerView={2}
           spaceBetween={30}
@@ -56,6 +51,7 @@ function ShowReview({movieInfo,submit}) {
                     {item.message} 
                   </p>
                 </div>
+                  <p className="text-gray-500 text-sm text-left absolute bottom-0 right-5">{format(item?.date)}</p>
               {/* </div> */}
             </SwiperSlide>
           ))}

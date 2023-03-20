@@ -124,13 +124,7 @@ function SideBar() {
             selected={selected}
             setSelected={setSelected}
           />
-          <Item
-            title="Reservation"
-            to="/reservation"
-            icon={<ReceiptOutlinedIcon />}
-            selected={selected}
-            setSelected={setSelected}
-          />
+         
 
           <Typography
             variant="h6"
@@ -153,15 +147,9 @@ function SideBar() {
             selected={selected}
             setSelected={setSelected}
           />
-          <Item
-            title="Show timming"
-            to="/shows"
-            icon={<AccessTimeIcon />}
-            selected={selected}
-            setSelected={setSelected}
-          />
+        
 
-          <Typography
+          {/* <Typography
             variant="h6"
             color={colors.grey[300]}
             sx={{ m: "15px 0 5px 20px" }}
@@ -195,7 +183,7 @@ function SideBar() {
             icon={<MapOutlinedIcon />}
             selected={selected}
             setSelected={setSelected}
-          />
+          /> */}
         </Box>
       </Menu>
     </Box>

@@ -140,38 +140,73 @@ function Movies() {
     page: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number.isRequired,
   };
+  // const Delete = async (data) => {
+  //   dispatch(deleteMovie(data._id));
+  // };
+  const Delete = async (data) => {
+    try {
+      dispatch(deleteMovie(data._id));
+  
+      setData((prevData) => {
+        const newData = prevData.filter((movie) => movie._id !== data._id);
+        return newData;
+      });
+    } catch (error) {
+      // setError(error.response.data);
+    }
+  };
+
 
   useEffect(() => {
     axios
       .get("/movieInfo")
       .then(({ data }) => {
-        setData(data);
+        setData(data.reverse());
       })
       .catch((error) => {
         console.log(error);
       });
       
   }, []);
-  const Delete = async (data) => {
-    dispatch(deleteMovie(data._id));
+
+  const handleSave = async(updatedData) => {
+    try {
+      
+      const {data} = await axios.post(`/admin/editMovie/${movie._id}`, updatedData);
+      setData((prevData) => {
+        const newData = prevData.map((movie) => {
+          if (movie._id === data._id) {
+            return data;
+          } else {
+            return movie;
+          }
+        });
+        return newData;
+      });
+  
+      seteditModel(!editModel);
+    } catch (error) {
+      // setError(error.response.data);
+    }
+
   };
 
   function EditMovie(data) {
     // if(data){
-    console.log(data);
+    // console.log(data);
     seteditModel(!editModel)
     setmovie(data)
 
     // }
   }
-  // console.log("datatatata", addModel);
+ 
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data?.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -203,19 +238,19 @@ function Movies() {
             <Table sx={{ minWidth: 300 }} aria-label="custom pagination table">
               <TableHead>
                 <TableRow>
-                  <TableCell>index</TableCell>
-                  <TableCell align="left">Name</TableCell>
-                  <TableCell align="left">Theater</TableCell>
-                  <TableCell align="left">Address</TableCell>
-                  <TableCell align="left">City</TableCell>
-                  <TableCell align="left">State</TableCell>
+                  <TableCell>No</TableCell>
+                  <TableCell align="left">Poster</TableCell>
+                  <TableCell align="left">Title</TableCell>
+                  <TableCell align="left">Language</TableCell>
+                  <TableCell align="left">Edit</TableCell>
+                  <TableCell align="left">Delete</TableCell>
                   {/* <TableCell align="left">Email</TableCell>
             <TableCell align="left">Status</TableCell> */}
                 </TableRow>
               </TableHead>
               <TableBody>
                 {(rowsPerPage > 0
-                  ? data.slice(
+                  ? data?.slice(
                       page * rowsPerPage,
                       page * rowsPerPage + rowsPerPage
                     )
@@ -304,6 +339,7 @@ function Movies() {
         editModel={editModel}
         seteditModel={seteditModel}
         movie={movie}
+        handleSave={handleSave}
       />
     </>
   );
