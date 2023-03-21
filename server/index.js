@@ -39,14 +39,14 @@ mongoose.connect(uri,{
 })
 const io = socket(server,{
     cors:{
-        origin:"http://localhost:3000",
+        origin:"https://main.d2r161lj0uo0c1.amplifyapp.com",
         methods:"*",
         credentials:true,
     }
 })
 
 app.use(cors({
-    origin:["http://localhost:3000"],
+    origin:["https://main.d2r161lj0uo0c1.amplifyapp.com"],
     methods:"*",
     credentials:true,
 }))
