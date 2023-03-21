@@ -14,7 +14,7 @@ const passport = require("passport");
 const passportsetup = require('./passport')
 const cookieSession = require("cookie-session");
 
-
+const uri ='mongodb+srv://OctA1N:Mongodb2000@cluster0.qbzz0gm.mongodb.net/TickeBooking?retryWrites=true&w=majority'
 
 app.use(
     cookieSession({ name: "session", keys: ["navaneeth"], maxAge: 24 * 60 * 60 * 1000 })
@@ -30,7 +30,7 @@ const server = app.listen(3001, ()=>{
 console.log("server started");
 })
 
-mongoose.connect("mongodb://localhost:27017/TicketBooking",{
+mongoose.connect(uri,{
     useNewUrlParser:true,useUnifiedTopology:true,
 }).then(()=>{
     console.log("db connected successfully");
