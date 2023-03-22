@@ -50,12 +50,12 @@ module.exports.Adminlogin = async(req,res,next)=> {
 
           const token = createToken(user._id);
   
-          res.cookie("adminjwt",token,{
-              withCrdentials:true,
-              httpOnly:false,
-              message:maxAge * 1000,
-          })
-          res.status(200).json({user:user._id,created:true})
+          // res.cookie("adminjwt",token,{
+          //     withCrdentials:true,
+          //     httpOnly:false,
+          //     message:maxAge * 1000,
+          // })
+          res.status(200).json({user:user._id,created:true,token})
       }else{
           console.log("blocked")
                  

@@ -50,6 +50,19 @@ app.use(cors({
     methods:"GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials:true,
 }))
+// const io = socket(server,{
+//     cors:{
+//         origin:"http://localhost:3000",
+//         methods:"*",
+//         credentials:true,
+//     }
+// })
+
+// app.use(cors({
+//     origin:["http://localhost:3000"],
+//     methods:"GET,HEAD,PUT,PATCH,POST,DELETE",
+//     credentials:true,
+// }))
 
 global.onlineUsers= new Map();
 

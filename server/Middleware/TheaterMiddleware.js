@@ -31,19 +31,14 @@ module.exports.checkTheater = (req, res, next) => {
 
 module.exports.verifyToken = async (req, res, next) => {
     try {
-      const token = req.cookies.theaterjwt;
-    
+
         
-        // let token = req.header("Authorization");
-        
+        let token = req.header("Authorization").split(" ")[1];
+
         if (!token) {
           return res.status(403).json("Access Denied");
         }
-        
-        // if (token.startsWith("Bearer ")) {
-        //   token = token.slice(7, token.length).trimLeft();
-        //   // console.log("tokennnnnnn",token)
-        // }
+
 
         const check = jwt.verify(token, "TicketBooking");
         // console.log(check)

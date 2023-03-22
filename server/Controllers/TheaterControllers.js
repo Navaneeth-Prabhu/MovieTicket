@@ -68,11 +68,7 @@ module.exports.login = async (req, res, next) => {
     if (user.isApproved) {
       const token = createToken(user._id);
       console.log("token ",token)
-      res.cookie("theaterjwt", token, {
-        withCrdentials: true,
-        httpOnly: false,
-        message: maxAge * 1000,
-      });
+     
       res.status(200).json({ user: user._id, created: true,token });
     } else {
       res.json({ errors: "blocked", created: false });
@@ -86,21 +82,20 @@ module.exports.login = async (req, res, next) => {
 
 module.exports.addScreen = async (req, res, next) => {
   try {
-    const { name, row, col } = req.body;
-    const token = req.cookies.theaterjwt;
-
-    decoded = jwt.decode(token);
-    id = decoded.id;
-
+    let token = req.header("Authorization").split(" ")[1];
+    console.log("helloo",req.body)
+    // const { name } = req.body;
+    // const token = localStorage.getItem('theater');
+    const check = jwt.verify(token, "TicketBooking");
+    console.log(check)
+   // decoded = jwt.decode(token);
+    // id = decoded.id;
     await User.findOneAndUpdate(
-      { _id: id },
+      { _id: check.id },
       {
         $push: {
-          Screen: {
-          
-            screenName: name,
-            row: row,
-            col: col,
+          Screen: {  
+            screenName: req.body.name,
           },
         },
       }

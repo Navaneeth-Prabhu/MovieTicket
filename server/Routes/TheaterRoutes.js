@@ -5,7 +5,7 @@ const {checkTheater,authTheater, verifyToken} = require("../Middleware/TheaterMi
 const { theaterreservation, reservationDetails, reseravtionHistory } = require("../Controllers/ReservationControllers");
 
 
-router.post("/theater",verifyToken)
+// router.post("/theater",verifyToken)
 
 router.post("/reg",register);
 

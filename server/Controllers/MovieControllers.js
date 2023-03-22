@@ -95,7 +95,7 @@ const getReview = asyncHandler(async (req, res) => {
   } catch (error) {}
 });
 const GetTheaterMovies = asyncHandler(async (req, res) => {
-  console.log("//////in gettheatermovies")
+  // console.log("//////in gettheatermovies")
   try {
     const data = Theater.find({}).then((theaters) => {
       console.log(theaters)
