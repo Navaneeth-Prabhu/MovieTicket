@@ -47,7 +47,7 @@ const io = socket(server,{
 
 app.use(cors({
     origin:["https://main.d2r161lj0uo0c1.amplifyapp.com"],
-    methods:"*",
+    methods:"GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials:true,
 }))
 
