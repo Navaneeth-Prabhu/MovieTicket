@@ -63,15 +63,17 @@ module.exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.login(email, password);
+    console.log('email', 'password');
     console.log(email, password);
     if (user.isApproved) {
       const token = createToken(user._id);
+      console.log("token ",token)
       res.cookie("theaterjwt", token, {
         withCrdentials: true,
         httpOnly: false,
         message: maxAge * 1000,
       });
-      res.status(200).json({ user: user._id, created: true });
+      res.status(200).json({ user: user._id, created: true,token });
     } else {
       res.json({ errors: "blocked", created: false });
     }
