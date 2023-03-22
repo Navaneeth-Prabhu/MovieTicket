@@ -94,10 +94,8 @@ module.exports.getStaff = async (req, res, next) => {
 
 module.exports.blockStaff = async (req, res) => {
   try {
-    let id = Sanitizer.value(req.params.id)   
-  
-    // const {id} = req.body
-    
+    let id = req.params.id    
+
     const user = await Admin.findByIdAndUpdate(
       { _id: ObjectId(id) },
       { $set: { Block: true } }
@@ -110,7 +108,7 @@ module.exports.blockStaff = async (req, res) => {
 };
 module.exports.unblockStaff = async (req, res) => {
   try {
-    let id = Sanitizer.value(req.params.id)     
+    let id = req.params.id  
     console.log("unblock");
     // const {id} = req.body
     const user = await Admin.findByIdAndUpdate(
