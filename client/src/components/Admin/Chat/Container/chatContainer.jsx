@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import ChatInput from "../ChatInput/chatInput";
-// import Logout from "./Logout";
 import { v4 as uuidv4 } from "uuid";
-// import axios from "axios";
 import axios from '../../../../axios/axios'
-import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
 // import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
 

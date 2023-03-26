@@ -13,10 +13,10 @@ import Movies from "../../../Admin/Movies/MovieList";
 import axios from "../../../../axios/axios";
 
 export default function ImgMediaCard() {
-  const [cookies] = useCookies([]);
+ 
   const [Screen, setScreen] = useState([]);
   const navigate = useNavigate();
-  const token = cookies.theaterjwt;
+  const token = localStorage.getItem('theater')
   const decoded = jwt_decode(token);
   const id = decoded.id;
   useEffect(() => {
