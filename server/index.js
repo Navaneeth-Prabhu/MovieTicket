@@ -37,26 +37,26 @@ mongoose.connect(uri,{
 }).catch(err=>{
     console.log(err.message)
 })
-// const io = socket(server,{
-//     cors:{
-//         origin:"https://main.d2r161lj0uo0c1.amplifyapp.com",
-//         methods:"*",
-//         credentials:true,
-//     }
-// })
+const io = socket(server,{
+    cors:{
+        origin:"https://main.d2r161lj0uo0c1.amplifyapp.com",
+        methods:"*",
+        credentials:true,
+    }
+})
 
 app.use(cors({
     origin:["https://main.d2r161lj0uo0c1.amplifyapp.com"],
     methods:"GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials:true,
 }))
-const io = socket(server,{
-    cors:{
-        origin:"http://localhost:3000",
-        methods:"*",
-        credentials:true,
-    }
-})
+// const io = socket(server,{
+//     cors:{
+//         origin:"http://localhost:3000",
+//         methods:"*",
+//         credentials:true,
+//     }
+// })
 
 // app.use(cors({
 //     origin:["http://localhost:3000"],
